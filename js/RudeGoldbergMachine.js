@@ -8,6 +8,8 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import { addCoordSystem} from "../lib/wfa-coord.js";
 import {OrbitControls} from '../lib/three/examples/jsm/controls/OrbitControls.js';
+import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
+import {sunGear} from "./SunGear.js";
 
 //Globale varianbler:
 let renderer;
@@ -73,6 +75,11 @@ export function main() {
 	//Koordinatsystem:
 	let axes = new THREE.AxesHelper(500);
 	scene.add(axes);
+
+	//ammoPhysicsWorld.init(scene);
+	sunGear.init(scene);
+	sunGear.create();
+
 
     //Håndterer endring av vindusstørrelse:
     window.addEventListener('resize', onWindowResize, false);
