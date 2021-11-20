@@ -85,12 +85,19 @@ export function main() {
 function addSkybox() {
 	const loader = new THREE.CubeTextureLoader();
 	const texture = loader.load([
-		'../assets/images/dawnmountain-xpos.png',
-		'../assets/images/dawnmountain-xneg.png',
-		'../assets/images/dawnmountain-ypos.png',
-		'../assets/images/dawnmountain-yneg.png',
-		'../assets/images/dawnmountain-zpos.png',
-		'../assets/images/dawnmountain-zneg.png',
+		'../assets/images/pngegg_xpos.png',
+		'../assets/images/pngegg_xneg.png',
+		'../assets/images/pngegg_ypos.png',
+		'../assets/images/pngegg_yneg.png',
+		'../assets/images/pngegg_zpos.png',
+		'../assets/images/pngegg_zneg.png',
+
+		// '../assets/images/grass_xpos.jpg',
+		// '../assets/images/grass_xneg.jpg',
+		// '../assets/images/grass_ypos.jpg',
+		// '../assets/images/grass_yneg.jpg',
+		// '../assets/images/grass_zpos.jpg',
+		// '../assets/images/grass_zneg.jpg',
 	]);
 	scene.background = texture;
 }
