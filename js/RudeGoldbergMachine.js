@@ -1,23 +1,40 @@
 /**
- * Demonstrerer skybox vha. CubeTextureLoader
+ * Bruker et eksempel fra faglærer Werner som startpunkt skybox2.js
  *
- * SE: https://threejsfundamentals.org/threejs/lessons/threejs-backgrounds.html
  *
- * FLERE SKYBOXBILDER: https://opengameart.org/content/skiingpenguins-skybox-pack
+ *
+ *
  */
 import * as THREE from "../lib/three/build/three.module.js";
 import { addCoordSystem} from "../lib/wfa-coord.js";
 import {OrbitControls} from '../lib/three/examples/jsm/controls/OrbitControls.js';
+import { loadTerrain } from "../lib/wfa-utils.js";
 
 //Globale varianbler:
 let renderer;
 let scene;
 let camera;
-let SIZE = 500;
+let SIZE = 1000;
 
-//Tar vare p? tastetrykk:
+//rotasjoner
+let angle = 0.0;
+let lastTime = 0.0;
+
+//Roter & zoom:
+let controls; //rotere, zoone hele scenen.
+
+//Tar vare på tastetrykk:
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
+
+//Figurer som helikoptret kan kræsje i:
+let collidableMeshList = [];
+
+//Terreng:
+let meshTerrain;
+
+// Holder på alle lastede teksturer:
+let loadedTextures = {};
 
 export function main() {
 	//Henter referanse til canvaset:
@@ -37,13 +54,15 @@ export function main() {
 
     //Kamera:
 	const fov = 75;
-	const aspect = 2;  // the canvas default
+	const aspect = window.innerWidth / window.innerHeight;  // the canvas default
 	const near = 0.1;
 	const far = 2000;
 	camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 	camera.position.x = 10;
 	camera.position.y = 10;
 	camera.position.z = 10;
+	let target = new THREE.Vector3(0.0, 0.0, 0.0);
+	camera.lookAt(target);
 
 	//Retningsorientert lys:
 	let directionalLight1 = new THREE.DirectionalLight(0xffffff, 1.0); //farge, intensitet (1=default)
@@ -54,12 +73,9 @@ export function main() {
 	directionalLight2.position.set(-2, 1, -4);
 	scene.add(directionalLight2);
 
-	const controls = new OrbitControls(camera, mycanvas);
-	controls.target.set(0, 0, 0);
-	controls.minDistance = 500;
-	controls.maxDistance = 1500;
-	//controls.addEventListener('change', renderer);
-	controls.update();
+	//Roter/zoom hele scenen:
+	controls = new OrbitControls(camera, mycanvas);
+	addControls();
 
     //Skybox:
 	addSkybox();
@@ -68,7 +84,7 @@ export function main() {
 	addCoordSystem(scene);
 
 	//Legg modeller til scenen:
-	//addModels();
+	// addModels();
 
 	//Koordinatsystem:
 	let axes = new THREE.AxesHelper(500);
@@ -79,7 +95,9 @@ export function main() {
     document.addEventListener('keyup', handleKeyUp, false);
     document.addEventListener('keydown', handleKeyDown, false);
 
-	animate();
+	// animate();
+
+	loadTextures();
 }
 
 function addSkybox() {
@@ -102,6 +120,75 @@ function addSkybox() {
 	scene.background = texture;
 }
 
+function loadTextures() {
+	let texturesToLoad = [
+		{name: 'jotunheimen-texture', url: '../assets/images/jotunheimen-texture.png'},
+		{name: 'bird1', url: '../assets/images/bird1.png'},
+		{name: 'metal1', url: '../assets/images/metal1.jpg'},
+		{name: 'chocchip', url: '../assets/images/chocchip.png'},
+	];
+	const loader = new THREE.TextureLoader();
+	for ( let image of texturesToLoad ) {
+		// Laster bilde for bilde vha. TextureLoader:
+		loader.load(
+			image.url,
+			(texture) => {
+				// Legger lastet tekstur i loadedTexures:
+				loadedTextures[image.name] = texture;
+				// Fjerner et og et element fra texturesToLoad:
+				texturesToLoad.splice(texturesToLoad.indexOf(image), 1);
+				// Når texturesToLoad er tomt er vi ferdig med lasting av teksturer:
+				if (!texturesToLoad.length) {
+					//Alle teksturer er nå lastet... FORTSETTER:
+					// Høydeverdiene ligger i en .bin fil (200x200 = 40000 verdier).
+					loadTerrain("../assets/jotunheimen.bin", terrainLoaded); 	// lib/wfa-utils.js
+				}
+			},
+			undefined,
+			function (err) {
+				console.error('Feil ved lasting av teksturfiler...');
+			});
+	}
+}
+//Denne kjøres når høydedata er ferdiga lastet og generert.
+//heightData = et array bestående av 16 bits heltall.
+function terrainLoaded(heightData) {
+	// Legger til et terreng-mesh:
+	addTerrain();
+
+	// Setter z-posisjonen til terrengmeshets vertekser i henhold til verdiene i heightData.
+	const vertexPositions = meshTerrain.geometry.attributes.position.array;    //NB! MERK .array
+	let index = 0;
+	// Gjennomløper alle vertekser (hver verteks består av tre verdier; x,y,z)
+	// til meshet, endrer z-verdien:
+	for (let i = 0; i < meshTerrain.geometry.attributes.position.count; i++)
+	{
+		index++;    // øker med 1 for å "gå forbi" x.
+		index++;    // øker med 1 for å "gå forbi" y.
+		//Endrer z-verdien, øker index med for å gå til neste verteks sin x.
+		vertexPositions[ index++] = heightData[i] / 30000 * 70;
+	}
+	meshTerrain.geometry.computeVertexNormals();      // NB! Viktig for korrekt belysning.
+
+	// Alt på plass - fortsetter!
+	addModels();
+	animate();
+}
+function addTerrain() {
+	//Gir 199 x 199 ruter (hver bestående av to trekanter). Texturen er 200x200 piksler.
+	let gPlane = new THREE.PlaneGeometry(SIZE * 2, SIZE * 2, 199, 199);
+	let mPlane = new THREE.MeshPhongMaterial({
+		//color: 0x91aff11,
+		map: loadedTextures['jotunheimen-texture']
+	});
+	// Bruker IKKE tiling her, teksturen dekker hele planet.
+	meshTerrain = new THREE.Mesh( gPlane, mPlane);
+	meshTerrain.rotation.x = -Math.PI / 2;
+	meshTerrain.receiveShadow = true;	//NB!
+	meshTerrain.position.y = -150
+	scene.add(meshTerrain);
+}
+
 function handleKeyUp(event) {
     currentlyPressedKeys[event.keyCode] = false;
 }
@@ -111,44 +198,69 @@ function handleKeyDown(event) {
 }
 
 function addModels() {
-    //Plan:
-    let textureMap = new THREE.TextureLoader().load('../assets/images/chocchip.png');
-    textureMap.wrapS = THREE.RepeatWrapping;
-    textureMap.wrapT = THREE.RepeatWrapping;
-    textureMap.repeat.x = 10;
-    textureMap.repeat.y = 10;
-
-    let mPlane = new THREE.MeshLambertMaterial(
-	{
-	    color: 0xFFAC5, // 0x912ff11,
-	    side: THREE.DoubleSide,
-	    map: textureMap,
-	    flatShading: false,
-	    wireframe: false,
-	});
-
-    let gPlane = new THREE.PlaneGeometry(SIZE, SIZE);
-
-	let meshPlane = new THREE.Mesh( gPlane, mPlane);
-	meshPlane.rotation.x = Math.PI / 2;
-	scene.add(meshPlane);
+    // //Plan:
+    // let textureMap = new THREE.TextureLoader().load('../assets/images/chocchip.png');
+    // textureMap.wrapS = THREE.RepeatWrapping;
+    // textureMap.wrapT = THREE.RepeatWrapping;
+    // textureMap.repeat.x = 10;
+    // textureMap.repeat.y = 10;
+	//
+    // let mPlane = new THREE.MeshLambertMaterial(
+	// {
+	//     color: 0xFFAC5, // 0x912ff11,
+	//     side: THREE.DoubleSide,
+	//     map: textureMap,
+	//     flatShading: false,
+	//     wireframe: false,
+	// });
+    // let gPlane = new THREE.PlaneGeometry(SIZE, SIZE);
+	// let meshPlane = new THREE.Mesh( gPlane, mPlane);
+	// meshPlane.rotation.x = Math.PI / 2;
+	// scene.add(meshPlane);
 
 	//Kube:
+	//Definerer geometri og materiale (her kun farge) for en kube:
 	let gCube = new THREE.BoxGeometry(40, 40, 40);
-	let tCube =  new THREE.TextureLoader().load("../assets/images/bird1.png");
-	let mCube = new THREE.MeshPhongMaterial({map : tCube});
+	let mCube = new THREE.MeshPhongMaterial({map : loadedTextures['bird1']});
 	let cube = new THREE.Mesh(gCube, mCube);
-	cube.name = "cube";
+	//Legger kuben til scenen:
 	cube.position.x = -70;
-	cube.position.y = 0;
+	cube.position.y = 120;
 	cube.position.z = -100;
 	cube.castShadow = true;
+	cube.receiveShadow = true;	//NB!
+	cube.geometry.computeBoundingSphere();
 	scene.add(cube);
+
+	collidableMeshList.push(cube);
+
+}
+
+function addControls() {
+
+	controls.target.set(0, 0, 0);
+	controls.minDistance = 10;
+	controls.maxDistance = 500;
+	controls.maxPolarAngle = degreesToRadians(89); //zoom går ikke under planet
+
+	// controls.addEventListener( 'change', render);
+	controls.rotateSpeed = 1.0;
+	controls.zoomSpeed = 10;
+	controls.panSpeed = 0.8;
+	controls.noZoom = false;
+	controls.noPan = false;
+	controls.staticMoving = true;
+	controls.dynamicDampingFactor = 0.3;
+
 }
 
 function animate(currentTime) {
     requestAnimationFrame(animate);
     let delta = clock.getDelta();
+
+	collisionTest();
+
+	controls.update();
 	render(delta);
 }
 
@@ -157,9 +269,38 @@ function render(delta)
     renderer.render(scene, camera);
 }
 
+function collisionTest() {
+	// //Sjekker de ulike helikopterdelene mot collidableMeshList dvs. kubene:
+	// let cockpit = helicopter.getObjectByName("cockpit", true);
+	// cockpit.updateMatrixWorld();
+	// collisionTestMesh(cockpit);
+	// let body = helicopter.getObjectByName("body", true);
+	// body.updateMatrixWorld();
+	// collisionTestMesh(body);
+	// let rotor = helicopter.getObjectByName("rotor", true);
+	// rotor.updateMatrixWorld();
+	// collisionTestMesh(rotor);
+}
+
+function collisionTestMesh(_mesh) {
+	// //Gjør først grovsjekk vha. boundingsphere:
+	// if (coarseCollisionTest(_mesh, collidableMeshList)) {		//Se wfa-collision.js
+	// 	//Dersom overlapp mellom sfærene gjøres en finere sjekk vha. Raycast
+	// 	if (fineCollisionTest(_mesh, collidableMeshList)) {  	//Se wfa-collision.js
+	// 		heliSpeed = 0;
+	// 		positionVector = new THREE.Vector3(-3,0,-1);
+	// 	}
+	// }
+}
+
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     render();
+}
+
+function degreesToRadians(degrees) {
+	var pi = Math.PI;
+	return degrees * (pi / 180);
 }
