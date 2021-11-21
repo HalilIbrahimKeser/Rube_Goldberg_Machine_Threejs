@@ -17,7 +17,7 @@ import {sunGear} from "./SunGear.js";
 let renderer;
 let scene;
 let camera;
-let SIZE = 1000;
+let SIZE = 2000;
 
 //rotasjoner
 let angle = 0.0;
@@ -41,7 +41,7 @@ let loadedTextures = {};
 
 export function main() {
 	//Henter referanse til canvaset:
-	let mycanvas = document.getElementById('webgl');
+	/*let mycanvas = document.getElementById('webgl');
 
 	//Lager en scene:
 	scene = new THREE.Scene();
@@ -62,8 +62,8 @@ export function main() {
 	const far = 2000;
 	camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 	camera.position.x = 10;
-	camera.position.y = 10;
-	camera.position.z = 10;
+	camera.position.y = 100;
+	camera.position.z = 200;
 	let target = new THREE.Vector3(0.0, 0.0, 0.0);
 	camera.lookAt(target);
 
@@ -78,20 +78,29 @@ export function main() {
 
 	//Roter/zoom hele scenen:
 	controls = new OrbitControls(camera, mycanvas);
-	addControls();
+	addControls();*/
+
+	// three:
+	myThreeScene.setupGraphics();
+	myThreeScene.camera.position.set(0, 300, 200);
+
 
     //Skybox:
 	addSkybox();
 
 	//Koordinatsystem:
-	addCoordSystem(scene);
+	addCoordSystem(myThreeScene.scene);
 
 	//Legg modeller til scenen:
 	// addModels();
 
 	//Koordinatsystem:
 	let axes = new THREE.AxesHelper(500);
-	scene.add(axes);
+	myThreeScene.scene.add(axes);
+
+	//SUNGEAR
+	sunGear.init(myThreeScene.scene);
+	sunGear.create();
 
     //Håndterer endring av vindusstørrelse:
     window.addEventListener('resize', onWindowResize, false);
@@ -120,7 +129,7 @@ function addSkybox() {
 		// '../assets/images/grass_zpos.jpg',
 		// '../assets/images/grass_zneg.jpg',
 	]);
-	scene.background = texture;
+	myThreeScene.scene.background = texture;
 }
 
 function loadTextures() {
@@ -189,7 +198,7 @@ function addTerrain() {
 	meshTerrain.rotation.x = -Math.PI / 2;
 	meshTerrain.receiveShadow = true;	//NB!
 	meshTerrain.position.y = -150
-	scene.add(meshTerrain);
+	myThreeScene.scene.add(meshTerrain);
 }
 
 function handleKeyUp(event) {
@@ -233,7 +242,7 @@ function addModels() {
 	cube.castShadow = true;
 	cube.receiveShadow = true;	//NB!
 	cube.geometry.computeBoundingSphere();
-	scene.add(cube);
+	myThreeScene.scene.add(cube);
 
 	collidableMeshList.push(cube);
 
@@ -262,9 +271,9 @@ function animate(currentTime) {
     let delta = clock.getDelta();
 
 	collisionTest();
-
-	controls.update();
-	render(delta);
+	myThreeScene.updateGraphics(delta);
+	//controls.update();
+	//render(delta);
 }
 
 function render(delta)
