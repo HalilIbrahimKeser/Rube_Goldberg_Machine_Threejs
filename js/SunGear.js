@@ -57,12 +57,8 @@ export const sunGear = {
         chainHolderMesh.position.set(0, 73, 6);
         groupMesh.add(chainHolderMesh);
 
-
-
-
-
-
     },
+
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
     createHoledCylinderShape(){
         let extrudeSettings = {
@@ -98,7 +94,6 @@ export const sunGear = {
         //spikeMesh.scale.set(5, 5, 50);
         return spikeMesh;
     },
-
 
     createSpikeSplineShape() {
         let spikeShape = new THREE.Shape();
