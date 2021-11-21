@@ -13,7 +13,7 @@ export const sunGear = {
         this.scene = scene;
     },
 
-    create(setCollisionMask = true, mass = 0, texture = true, color = 0xF5D22E, position = {x:0, y:0, z:0}, radius= 100, url = "assets/images/metalgold.jpg", height = 3){
+    create(setCollisionMask = true, mass = 0, texture = true, color = 0xF5D22E, position = {x:0, y:50, z:0}, radius= 20, url = "assets/images/metalgold.jpg", height = 7){
         if (texture){ //Hvis tekstur er ønsket
             const loadManager = new THREE.LoadingManager();
             const loader = new THREE.TextureLoader(loadManager);
@@ -30,7 +30,7 @@ export const sunGear = {
 
         //Sylinder med hol i midten
         let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(), this.material);
-        holedCylinderMesh.scale.set(100,100,30);
+        holedCylinderMesh.scale.set(radius,radius,height);
         holedCylinderMesh.position.set(position.x, position.y, position.z);
         holedCylinderMesh.castShadow = true;
         holedCylinderMesh.castShadow = true;
@@ -39,8 +39,8 @@ export const sunGear = {
         //Pigger rundt sylinder
         let spike = this.createSpikeSplineShape();
         let spikeMesh = this.createSpikeMesh(spike, this.material);
-        spikeMesh.translateZ(1.2);
-        spikeMesh.scale.set(0.08, 0.08, 2);
+        spikeMesh.translateZ(1.6);
+        spikeMesh.scale.set(0.08, 0.07, 1);
         spikeMesh.castShadow = true;
         spikeMesh.receiveShadow = true;
         let step = (2*Math.PI)/10;
@@ -52,9 +52,9 @@ export const sunGear = {
             holedCylinderMesh.add(spikeClone);
         }
 
-        let chainHolderGeo = new THREE.TorusGeometry(12, 3, 16, 100, 6.3);
+        let chainHolderGeo = new THREE.TorusGeometry(4, 1, 16, 100, 6.3);
         let chainHolderMesh = new THREE.Mesh(chainHolderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        chainHolderMesh.position.set(0, 109, 15);
+        chainHolderMesh.position.set(0, 73, 6);
         groupMesh.add(chainHolderMesh);
 
 
