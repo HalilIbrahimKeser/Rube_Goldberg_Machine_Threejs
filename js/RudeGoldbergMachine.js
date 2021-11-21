@@ -9,6 +9,9 @@ import * as THREE from "../lib/three/build/three.module.js";
 import { addCoordSystem} from "../lib/wfa-coord.js";
 import {OrbitControls} from '../lib/three/examples/jsm/controls/OrbitControls.js';
 import { loadTerrain } from "../lib/wfa-utils.js";
+import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
+import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
+import {sunGear} from "./SunGear.js";
 
 //Globale varianbler:
 let renderer;
