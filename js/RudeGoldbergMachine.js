@@ -11,6 +11,8 @@ import { loadTerrain } from "../lib/wfa-utils.js";
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 import {sunGear} from "./SunGear.js";
+import {verticalChain} from "./VerticalChain.js";
+import {startGearHolder} from "./StartGearHolder.js";
 // import {addTerrain} from "./Terrain.js";
 
 let renderer;
@@ -44,6 +46,15 @@ export function main() {
 	// SUNGEAR
 	sunGear.init(myThreeScene.scene);
 	sunGear.create();
+
+	//Chains
+	verticalChain.init(myThreeScene.scene);
+	verticalChain.create();
+
+	//startwall
+	startGearHolder.init(myThreeScene.scene);
+	startGearHolder.create();
+
 
     // RESIZE
     window.addEventListener('resize', onWindowResize, false);

@@ -1,5 +1,5 @@
 import * as THREE from "../lib/three/build/three.module.js";
-import {commons} from "../lib/ammohelpers/lib/Common.js"
+import {commons} from "../lib/ammohelpers/lib/Common.js";
 
 
 export const sunGear = {
@@ -9,11 +9,11 @@ export const sunGear = {
     rotationAxis: {x:1, y:0, z:0},
     rotationAngle: Math.PI/2,
 
-    init(scene){
+    init(scene){ //Må byttes til physicsworld
         this.scene = scene;
     },
 
-    create(setCollisionMask = true, mass = 0, texture = true, color = 0xF5D22E, position = {x:0, y:50, z:0}, radius= 20, url = "assets/images/metalgold.jpg", height = 7){
+    create(setCollisionMask = true, mass = 0, texture = true, color = 0xF5D22E, position = {x:-300, y:200, z:0}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
         if (texture){ //Hvis tekstur er ønsket
             const loadManager = new THREE.LoadingManager();
             const loader = new THREE.TextureLoader(loadManager);
@@ -33,7 +33,7 @@ export const sunGear = {
         holedCylinderMesh.scale.set(radius,radius,height);
         holedCylinderMesh.position.set(position.x, position.y, position.z);
         holedCylinderMesh.castShadow = true;
-        holedCylinderMesh.castShadow = true;
+        holedCylinderMesh.receiveShadow = true;
         groupMesh.add(holedCylinderMesh);
 
         //Pigger rundt sylinder
@@ -54,7 +54,9 @@ export const sunGear = {
 
         let chainHolderGeo = new THREE.TorusGeometry(4, 1, 16, 100, 6.3);
         let chainHolderMesh = new THREE.Mesh(chainHolderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        chainHolderMesh.position.set(0, 73, 6);
+        chainHolderMesh.position.set(-278, 200, 12);
+        chainHolderMesh.receiveShadow = true;
+        chainHolderMesh.castShadow = true;
         groupMesh.add(chainHolderMesh);
 
     },
@@ -62,7 +64,7 @@ export const sunGear = {
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
     createHoledCylinderShape(){
         let extrudeSettings = {
-            amount : 2,
+            depth : 2,
             steps : 1,
             bevelEnabled: false,
             curveSegments: 8
