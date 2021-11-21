@@ -16,7 +16,7 @@ import {sunGear} from "./SunGear.js";
 let renderer;
 let scene;
 let camera;
-let SIZE = 2000;
+let SIZE = 1000;
 
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
