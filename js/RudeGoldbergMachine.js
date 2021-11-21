@@ -17,7 +17,7 @@ import {sunGear} from "./SunGear.js";
 let renderer;
 let scene;
 let camera;
-let SIZE = 2000;
+let SIZE = 1000;
 
 //rotasjoner
 let angle = 0.0;
@@ -41,7 +41,7 @@ let loadedTextures = {};
 
 export function main() {
 	//Henter referanse til canvaset:
-	/*let mycanvas = document.getElementById('webgl');
+	let mycanvas = document.getElementById('webgl');
 
 	//Lager en scene:
 	scene = new THREE.Scene();
@@ -78,28 +78,23 @@ export function main() {
 
 	//Roter/zoom hele scenen:
 	controls = new OrbitControls(camera, mycanvas);
-	addControls();*/
-
-	// three:
-	myThreeScene.setupGraphics();
-	myThreeScene.camera.position.set(0, 300, 200);
-
+	addControls();
 
     //Skybox:
 	addSkybox();
 
 	//Koordinatsystem:
-	addCoordSystem(myThreeScene.scene);
+	addCoordSystem(scene);
 
 	//Legg modeller til scenen:
 	// addModels();
 
 	//Koordinatsystem:
 	let axes = new THREE.AxesHelper(500);
-	myThreeScene.scene.add(axes);
+	scene.add(axes);
 
 	//SUNGEAR
-	sunGear.init(myThreeScene.scene);
+	sunGear.init(scene);
 	sunGear.create();
 
     //Håndterer endring av vindusstørrelse:
@@ -129,7 +124,7 @@ function addSkybox() {
 		// '../assets/images/grass_zpos.jpg',
 		// '../assets/images/grass_zneg.jpg',
 	]);
-	myThreeScene.scene.background = texture;
+	scene.background = texture;
 }
 
 function loadTextures() {
@@ -198,7 +193,7 @@ function addTerrain() {
 	meshTerrain.rotation.x = -Math.PI / 2;
 	meshTerrain.receiveShadow = true;	//NB!
 	meshTerrain.position.y = -150
-	myThreeScene.scene.add(meshTerrain);
+	scene.add(meshTerrain);
 }
 
 function handleKeyUp(event) {
@@ -242,7 +237,7 @@ function addModels() {
 	cube.castShadow = true;
 	cube.receiveShadow = true;	//NB!
 	cube.geometry.computeBoundingSphere();
-	myThreeScene.scene.add(cube);
+	scene.add(cube);
 
 	collidableMeshList.push(cube);
 
@@ -271,9 +266,9 @@ function animate(currentTime) {
     let delta = clock.getDelta();
 
 	collisionTest();
-	myThreeScene.updateGraphics(delta);
-	//controls.update();
-	//render(delta);
+
+	controls.update();
+	render(delta);
 }
 
 function render(delta)
