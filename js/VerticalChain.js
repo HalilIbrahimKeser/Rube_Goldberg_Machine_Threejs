@@ -12,6 +12,7 @@ export const verticalChain = {
 
     create(setCollisionMask = true, mass = 2, color = 0x979A9A, position = {x:-278, y:195, z:12}, radius= 2.8, tube = 0.8, chainNr= 24){
         let chainGroup = new THREE.Group();
+        chainGroup.position.z = -500;
         this.scene.add(chainGroup);
 
         let chainFrontGeo = new THREE.TorusGeometry(radius, tube, 16, 100, 6.3);

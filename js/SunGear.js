@@ -25,7 +25,7 @@ export const sunGear = {
         let groupMesh = new THREE.Group();
         groupMesh.userData.tag = "rudegoldberg";
         groupMesh.userData.name = "sungear"
-
+        groupMesh.position.z = -500;
         this.scene.add(groupMesh);
 
         //Sylinder med hol i midten

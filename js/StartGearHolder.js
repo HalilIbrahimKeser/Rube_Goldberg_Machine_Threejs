@@ -12,6 +12,7 @@ export const startGearHolder = {
     create(setCollisionMask = true, mass = 0, color = 0xF4F0EF, position = {x:-360, y:-75, z:-8}, radius= 0.2, length = 350, width = 150){
         let groupMesh = new THREE.Group();
         //groupMesh.position.y = 50;
+        groupMesh.position.z = -500;
         this.scene.add(groupMesh);
 
         let wallShape = this.createThreeShape(length, width);
