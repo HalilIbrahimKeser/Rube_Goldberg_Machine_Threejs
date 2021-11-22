@@ -23,6 +23,7 @@ import {sunGear} from "./SunGear.js";
 import {verticalChain} from "./VerticalChain.js";
 import {startGearHolder} from "./StartGearHolder.js";
 import {tweenElevator} from "./TweenElevator.js";
+import {flatTable} from "./FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 
 let renderer;
@@ -65,6 +66,10 @@ function addModels() {
 	//startwall
 	startGearHolder.init(myThreeScene.scene);
 	startGearHolder.create();
+
+	// Flat table
+	flatTable.init(myThreeScene.scene);
+	flatTable.create();
 
 	//elevator
 	// tweenElevator.init(myThreeScene.scene);
