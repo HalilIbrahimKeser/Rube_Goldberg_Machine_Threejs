@@ -17,12 +17,46 @@ export const startGearHolder = {
         wallMesh.receiveShadow = true;
         this.scene.add(wallMesh);
 
-        let frameShape = this.createFrameShape(length, width, 10);
+        let frameShape = this.createLeftFrameShape(length, width, 10);
         let frameMesh = this.createExtrudeMesh(frameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
         frameMesh.position.set(position.x, position.y, 0);
         frameMesh.castShadow = true;
         frameMesh.receiveShadow = true;
         this.scene.add(frameMesh);
+
+        let rightFrameShape = this.createUpperRightFrameShape(length, width, 10);
+        let rightFrameMesh = this.createExtrudeMesh(rightFrameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
+        rightFrameMesh.position.set(position.x, position.y, 0);
+        rightFrameMesh.castShadow = true;
+        rightFrameMesh.receiveShadow = true;
+        this.scene.add(rightFrameMesh);
+
+        let lowerFrameShape = this.createLowerFrameShape(length, width, 10);
+        let lowerFrameMesh = this.createExtrudeMesh(lowerFrameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
+        lowerFrameMesh.position.set(position.x, position.y, 0);
+        lowerFrameMesh.castShadow = true;
+        lowerFrameMesh.receiveShadow = true;
+        this.scene.add(lowerFrameMesh);
+
+        let startStopperShape = this.createStartStopper(length, width, 10);
+        let startStopperMesh = this.createExtrudeMesh(startStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
+        startStopperMesh.position.set(position.x, position.y, 0);
+        startStopperMesh.castShadow = true;
+        startStopperMesh.receiveShadow = true;
+        this.scene.add(startStopperMesh);
+
+        let endStopperShape = this.createEndStopper(length, width);
+        let endStopperMesh = this.createExtrudeMesh(endStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
+        endStopperMesh.position.set(position.x, position.y, 0);
+        endStopperMesh.castShadow = true;
+        endStopperMesh.receiveShadow = true;
+        this.scene.add(endStopperMesh);
+
+        let glassShape = this.createThreeShape(length, width);
+        let glassMesh = this.createExtrudeMesh(glassShape, 1, 1, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.1}));
+        glassMesh.position.set(position.x, position.y, 30);
+        this.scene.add(glassMesh);
+
     },
 
     createThreeShape(length, width) {
@@ -52,15 +86,83 @@ export const startGearHolder = {
         return extrudeMesh;
     },
 
-    createFrameShape(length, width, offset){
-        let wallShapeBase = this.createThreeShape(length, width);
+    createLeftFrameShape(length, width, offset){
+        /*let wallShapeBase = this.createThreeShape(length, width);
         let hole = new THREE.Shape();
         hole.moveTo(offset,offset);
+        hole.lineTo(offset, length-40);
+        hole.lineTo(offset+15, length-50);
+        hole.lineTo(0, length - 20);
+        hole.lineTo(0, length);
+
         hole.lineTo(offset, length-offset);
         hole.lineTo(width-offset, length-offset);
         hole.lineTo(width-offset, offset);
         hole.lineTo(offset, offset);
-        wallShapeBase.holes.push(hole);
-        return wallShapeBase;
+        wallShapeBase.holes.push(hole);*/
+        let wallFrameShape = new THREE.Shape();
+        wallFrameShape.moveTo(0, 0);
+        wallFrameShape.lineTo(0, length);
+        wallFrameShape.lineTo(offset+10, length-10);
+        wallFrameShape.lineTo(3, length-10);
+        wallFrameShape.lineTo(5, length-40);
+        //wallFrameShape.lineTo(offset, length-42);
+        wallFrameShape.lineTo(offset+15, length-50);
+        wallFrameShape.lineTo(offset, length-50);
+        wallFrameShape.lineTo(offset, 0);
+        wallFrameShape.lineTo(0,0);
+
+
+
+        return wallFrameShape;
+    },
+
+    createUpperRightFrameShape(length, width, offset){
+        let wallFrameShape = new THREE.Shape();
+        wallFrameShape.moveTo(offset+10, length-30);
+        wallFrameShape.lineTo(offset+40, length);
+        wallFrameShape.lineTo(width, length);
+        wallFrameShape.lineTo(width, 170);
+        wallFrameShape.lineTo(width-50, 190);
+        wallFrameShape.lineTo(width-50, 190);
+        wallFrameShape.lineTo(width-offset, 190);
+        wallFrameShape.lineTo(width-offset, length-offset);
+        wallFrameShape.lineTo(offset+40, length-offset);
+        //wallFrameShape.lineTo(offset+30, length-20);
+        return wallFrameShape;
+    },
+
+    createLowerFrameShape(length, width, offset){
+        let lowerShape = new THREE.Shape();
+        lowerShape.moveTo(width, 0);
+        lowerShape.lineTo(width, 130);
+        lowerShape.lineTo(width-30, 150);
+        lowerShape.lineTo(width-30, 0);
+        lowerShape.lineTo(width, 0);
+        return lowerShape;
+    },
+
+    createStartStopper(length, width, offset){
+        let stopper = new THREE.Shape();
+        stopper.moveTo(0, length);
+        stopper.lineTo(offset+40, length);
+        stopper.lineTo(offset+15, length-50);
+        stopper.lineTo(0, length-50);
+        stopper.lineTo(0, length);
+        return stopper;
+    },
+
+    createEndStopper(length, width){
+        let stopper = new THREE.Shape();
+        stopper.moveTo(width, 170);
+        stopper.lineTo(width-30, 180);
+        stopper.lineTo(width-30, 150);
+        stopper.lineTo(width, 130);
+        stopper.lineTo(width, 170);
+        return stopper;
     }
+
+
+
+
 }
