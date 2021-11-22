@@ -10,52 +10,56 @@ export const startGearHolder = {
     },
 
     create(setCollisionMask = true, mass = 0, color = 0xF4F0EF, position = {x:-360, y:-75, z:-8}, radius= 0.2, length = 350, width = 150){
+        let groupMesh = new THREE.Group();
+        //groupMesh.position.y = 50;
+        this.scene.add(groupMesh);
+
         let wallShape = this.createThreeShape(length, width);
         let wallMesh = this.createExtrudeMesh(wallShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:color}));
         wallMesh.position.set(position.x, position.y, position.z);
         wallMesh.castShadow = true;
         wallMesh.receiveShadow = true;
-        this.scene.add(wallMesh);
+        groupMesh.add(wallMesh);
 
         let frameShape = this.createLeftFrameShape(length, width, 10);
         let frameMesh = this.createExtrudeMesh(frameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
         frameMesh.position.set(position.x, position.y, 0);
         frameMesh.castShadow = true;
         frameMesh.receiveShadow = true;
-        this.scene.add(frameMesh);
+        groupMesh.add(frameMesh);
 
         let rightFrameShape = this.createUpperRightFrameShape(length, width, 10);
         let rightFrameMesh = this.createExtrudeMesh(rightFrameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
         rightFrameMesh.position.set(position.x, position.y, 0);
         rightFrameMesh.castShadow = true;
         rightFrameMesh.receiveShadow = true;
-        this.scene.add(rightFrameMesh);
+        groupMesh.add(rightFrameMesh);
 
         let lowerFrameShape = this.createLowerFrameShape(length, width, 10);
         let lowerFrameMesh = this.createExtrudeMesh(lowerFrameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
         lowerFrameMesh.position.set(position.x, position.y, 0);
         lowerFrameMesh.castShadow = true;
         lowerFrameMesh.receiveShadow = true;
-        this.scene.add(lowerFrameMesh);
+        groupMesh.add(lowerFrameMesh);
 
         let startStopperShape = this.createStartStopper(length, width, 10);
         let startStopperMesh = this.createExtrudeMesh(startStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
         startStopperMesh.position.set(position.x, position.y, 0);
         startStopperMesh.castShadow = true;
         startStopperMesh.receiveShadow = true;
-        this.scene.add(startStopperMesh);
+        groupMesh.add(startStopperMesh);
 
         let endStopperShape = this.createEndStopper(length, width);
         let endStopperMesh = this.createExtrudeMesh(endStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
         endStopperMesh.position.set(position.x, position.y, 0);
         endStopperMesh.castShadow = true;
         endStopperMesh.receiveShadow = true;
-        this.scene.add(endStopperMesh);
+        groupMesh.add(endStopperMesh);
 
         let glassShape = this.createThreeShape(length, width);
         let glassMesh = this.createExtrudeMesh(glassShape, 1, 1, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.1}));
-        glassMesh.position.set(position.x, position.y, 30);
-        this.scene.add(glassMesh);
+        glassMesh.position.set(position.x, position.y, 35);
+        groupMesh.add(glassMesh);
 
     },
 
@@ -145,9 +149,15 @@ export const startGearHolder = {
     createStartStopper(length, width, offset){
         let stopper = new THREE.Shape();
         stopper.moveTo(0, length);
-        stopper.lineTo(offset+40, length);
-        stopper.lineTo(offset+15, length-50);
-        stopper.lineTo(0, length-50);
+        stopper.lineTo(width, length);
+        stopper.lineTo(width, 191);
+        stopper.lineTo(width-50, 191);
+        stopper.lineTo(width-50, length-50);
+        stopper.lineTo(offset+30, length-50);
+        stopper.lineTo(offset+30, 0);
+        stopper.lineTo(0,0);
+
+
         stopper.lineTo(0, length);
         return stopper;
     },
