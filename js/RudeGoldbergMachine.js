@@ -25,6 +25,7 @@ import {startGearHolder} from "./StartGearHolder.js";
 import {tweenElevator} from "./TweenElevator.js";
 import {flatTable} from "./FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
+import {mySphere} from "../lib/ammohelpers/MySphere.js";
 
 
 let renderer;
@@ -32,7 +33,7 @@ let scene;
 let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
-let ammo;
+
 
 export function main() {
 	// SCENE
@@ -71,6 +72,8 @@ function addModels() {
 	//startwall
 	startGearHolder.init(ammoPhysicsWorld);
 	startGearHolder.create();
+
+
 
 	// Flat table
 	flatTable.init(myThreeScene.scene);
