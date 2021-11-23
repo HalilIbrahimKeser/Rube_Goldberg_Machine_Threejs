@@ -26,16 +26,21 @@ import {tweenElevator} from "./TweenElevator.js";
 import {flatTable} from "./FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 
+
 let renderer;
 let scene;
 let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
+let ammo;
 
 export function main() {
 	// SCENE
 	myThreeScene.setupGraphics();
 	myThreeScene.camera.position.set(0, 300, 200);
+
+	//AMMO
+	ammoPhysicsWorld.init(myThreeScene.scene);
 
 	// TERRAIN
 	addTerrainFromOtherClass();
@@ -64,7 +69,7 @@ function addModels() {
 	verticalChain.create();
 
 	//startwall
-	startGearHolder.init(myThreeScene.scene);
+	startGearHolder.init(ammoPhysicsWorld);
 	startGearHolder.create();
 
 	// Flat table

@@ -8,14 +8,18 @@
 	<title>Rude Goldberg Machine</title>
 </head>
 <body>
-<canvas id="webgl" >
+<script src="../lib/ammo/ammo.js"></script>
+<!--<canvas id="webgl" >
 	Denne nettleseren støtter ikke canvas-elementet!
-</canvas>
+</canvas>-->
 
 <script type="module">
 	'use strict';
 	import {main} from "./js/RudeGoldbergMachine.js";
-	main();
+	Ammo().then( function (AmmoLib){
+		Ammo = AmmoLib;
+		main();
+	});
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
