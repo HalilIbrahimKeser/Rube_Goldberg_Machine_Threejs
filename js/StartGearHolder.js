@@ -62,6 +62,21 @@ export const startGearHolder = {
         glassMesh.position.set(0, 0, 35);
         groupMesh.add(glassMesh);
 
+        let gearHolderGeo = this.createCylinderShape(2, 20);
+        let gearHolderMesh = new THREE.Mesh(gearHolderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
+        gearHolderMesh.position.set(60, 275, 13);
+        gearHolderMesh.receiveShadow = true;
+        gearHolderMesh.castShadow = true;
+        groupMesh.add(gearHolderMesh);
+
+        let gearHolderStopperGeo = this.createCylinderShape(3.5, 4);
+        let gearHolderStopperMesh = new THREE.Mesh(gearHolderStopperGeo, new THREE.MeshPhongMaterial({color: 0xcc0000}));
+        gearHolderStopperMesh.position.set(60, 275, 31);
+        gearHolderStopperMesh.receiveShadow = true;
+        gearHolderStopperMesh.castShadow = true;
+        groupMesh.add(gearHolderStopperMesh);
+
+        //AMMO til alle deler
         this.addCompoundAmmo(wallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(frameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(rightFrameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -69,9 +84,12 @@ export const startGearHolder = {
         this.addCompoundAmmo(startStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(endStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(glassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-
+        this.addCompoundAmmo(gearHolderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(gearHolderStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
 
     },
+
+
 
     addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask){
         let compoundShape = new Ammo.btCompoundShape();
@@ -95,6 +113,22 @@ export const startGearHolder = {
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
         );
+    },
+
+    //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
+    createCylinderShape(radius, depth){
+        let extrudeSettings = {
+            depth : depth,
+            steps : 1,
+            bevelEnabled: false,
+            curveSegments: 8
+        };
+
+        let arcShape = new THREE.Shape();
+        arcShape.absarc(0, 0, radius, 0, Math.PI * 2, 0, false);
+
+        let cylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
+        return cylinderGeometry;
     },
 
     createThreeShape(length, width) {
