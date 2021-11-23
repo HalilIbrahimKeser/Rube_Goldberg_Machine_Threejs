@@ -38,7 +38,7 @@ let clock = new THREE.Clock();
 export function main() {
 	// SCENE
 	myThreeScene.setupGraphics();
-	myThreeScene.camera.position.set(0, 300, 200);
+	myThreeScene.camera.position.set(-500, 500, 200);
 
 	//AMMO
 	ammoPhysicsWorld.init(myThreeScene.scene);
@@ -73,7 +73,9 @@ function addModels() {
 	startGearHolder.init(ammoPhysicsWorld);
 	startGearHolder.create();
 
-
+	//ballhelper
+	mySphere.init(ammoPhysicsWorld);
+	mySphere.create();
 
 	// Flat table
 	flatTable.init(myThreeScene.scene);
@@ -97,6 +99,7 @@ export function animate(currentTime) {
     requestAnimationFrame(animate);
     let delta = clock.getDelta();
 
+    ammoPhysicsWorld.updatePhysics(delta);
 	TWEEN.update(currentTime);
 
 	//collisionTest();
