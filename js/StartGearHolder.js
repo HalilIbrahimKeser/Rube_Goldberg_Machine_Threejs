@@ -15,6 +15,12 @@ export const startGearHolder = {
         groupMesh.position.set(position.x, position.y, position.z);
 
         //this.scene.add(groupMesh);
+        let startStopperShape = this.createStartStopper(length, width, 10);
+        let startStopperMesh = this.createExtrudeMesh(startStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
+        //startStopperMesh.position.set(position.x, position.y, 0);
+        startStopperMesh.castShadow = true;
+        startStopperMesh.receiveShadow = true;
+        groupMesh.add(startStopperMesh);
 
         let wallShape = this.createThreeShape(length, width);
         let wallMesh = this.createExtrudeMesh(wallShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:color}));
@@ -43,12 +49,7 @@ export const startGearHolder = {
         lowerFrameMesh.receiveShadow = true;
         groupMesh.add(lowerFrameMesh);
 
-        let startStopperShape = this.createStartStopper(length, width, 10);
-        let startStopperMesh = this.createExtrudeMesh(startStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
-        //startStopperMesh.position.set(position.x, position.y, 0);
-        startStopperMesh.castShadow = true;
-        startStopperMesh.receiveShadow = true;
-        groupMesh.add(startStopperMesh);
+
 
         let endStopperShape = this.createEndStopper(length, width);
         let endStopperMesh = this.createExtrudeMesh(endStopperShape, 1, 20, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
@@ -67,14 +68,14 @@ export const startGearHolder = {
         gearHolderMesh.position.set(60, 275, 13);
         gearHolderMesh.receiveShadow = true;
         gearHolderMesh.castShadow = true;
-        groupMesh.add(gearHolderMesh);
+        //groupMesh.add(gearHolderMesh);
 
         let gearHolderStopperGeo = this.createCylinderShape(3.5, 4);
         let gearHolderStopperMesh = new THREE.Mesh(gearHolderStopperGeo, new THREE.MeshPhongMaterial({color: 0xcc0000}));
         gearHolderStopperMesh.position.set(60, 275, 31);
         gearHolderStopperMesh.receiveShadow = true;
         gearHolderStopperMesh.castShadow = true;
-        groupMesh.add(gearHolderStopperMesh);
+        //groupMesh.add(gearHolderStopperMesh);
 
         //AMMO til alle deler
         this.addCompoundAmmo(wallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -84,8 +85,8 @@ export const startGearHolder = {
         this.addCompoundAmmo(startStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(endStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(glassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(gearHolderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(gearHolderStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        //this.addCompoundAmmo(gearHolderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        //this.addCompoundAmmo(gearHolderStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
 
     },
 
@@ -111,7 +112,10 @@ export const startGearHolder = {
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+            this.myPhysicsWorld.COLLISION_GROUP_BOX |
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
+
         );
     },
 

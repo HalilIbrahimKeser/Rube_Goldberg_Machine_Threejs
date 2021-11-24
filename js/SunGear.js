@@ -8,12 +8,14 @@ export const sunGear = {
     scene: undefined,
     rotationAxis: {x:1, y:0, z:0},
     rotationAngle: Math.PI/2,
+    position: undefined,
 
     init(myPhysicsWorld){ //Må byttes til physicsworld
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 0, texture = true, color = 0xF5D22E, position = {x:-300, y:200, z:-500}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
+    create(setCollisionMask = true, mass = 1, texture = true, color = 0xF5D22E, position = {x:-300, y:195, z:-500}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
+        this.position = position;
         if (texture){ //Hvis tekstur er ønsket
             const loadManager = new THREE.LoadingManager();
             const loader = new THREE.TextureLoader(loadManager);
@@ -71,16 +73,16 @@ export const sunGear = {
             groupMesh,
             setCollisionMask,
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
             this.myPhysicsWorld.COLLISION_GROUP_PLANE |
             this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_BOX |
-            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
         );
-
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
@@ -96,7 +98,7 @@ export const sunGear = {
         arcShape.absarc(0, 0, 1, 0, Math.PI * 2, 0, false);
 
         let holePath = new THREE.Path();
-        holePath.absarc(0, 0, 0.3, 0, Math.PI * 2, true);
+        holePath.absarc(0, 0, 0.2, 0, Math.PI * 2, true);
         arcShape.holes.push(holePath);
 
         let holedCylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
@@ -105,7 +107,7 @@ export const sunGear = {
 
     createSpikeMesh(shape, material) {
         let extrudeSettings = {
-            depth: 0.4,
+            depth: 0.5,
             bevelEnabled: false,
             bevelSegments: 1,
             steps: 1,
@@ -148,12 +150,21 @@ export const sunGear = {
         this.addPhysicsAmmo(rigidBody, groupMesh, collisionMask);
     },
 
+    addCylinderAmmo(mesh, restitution, friction, position, mass, collisionMask){
+        let cylinderShape = commons.createCylinderShape(mesh);
+        let rigidBody = commons.createAmmoRigidBody(cylinderShape, mesh, restitution, friction, position, mass);
+        rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
+        rigidBody.setActivationState(4);
+
+        this.addPhysicsAmmo(rigidBody, mesh, collisionMask);
+    },
+
     addPhysicsAmmo(rigidBody, groupMesh, collisionMask){
         this.myPhysicsWorld.addPhysicsObject(
             rigidBody,
             groupMesh,
             collisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_PLANE,
+            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND,
             this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
@@ -162,7 +173,31 @@ export const sunGear = {
         );
     },
 
+    createCylinderShape(radius, depth){
+        let extrudeSettings = {
+            depth : depth,
+            steps : 1,
+            bevelEnabled: false,
+            curveSegments: 8
+        };
+
+        let arcShape = new THREE.Shape();
+        arcShape.absarc(0, 0, radius, 0, Math.PI * 2, 0, false);
+
+        let cylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
+        return cylinderGeometry;
+    },
+
     createGearParts(groupMesh, compoundShape, radius, height) {
+        let cylinderGeo = new THREE.CylinderGeometry(1, 1, 50, 50, 1, false, 0, 6.3);
+        let gearHolderMesh = new THREE.Mesh(cylinderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
+        gearHolderMesh.rotation.x = Math.PI/2;
+        gearHolderMesh.castShadow = true;
+        gearHolderMesh.receiveShadow = true;
+        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-300, y: 195, z: -495}, 0, true);
+
+
+
         //Sylinder med hol i midten
         let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(), this.material);
         holedCylinderMesh.scale.set(radius, radius, height);
@@ -170,7 +205,7 @@ export const sunGear = {
         holedCylinderMesh.receiveShadow = true;
         holedCylinderMesh.name = "holedCylinder";
         groupMesh.add(holedCylinderMesh);
-        commons.createConvexTriangleShapeAddToCompound(compoundShape, holedCylinderMesh);
+        commons.createTriangleShapeAddToCompound(compoundShape, holedCylinderMesh);
 
         //Pigger rundt sylinder
         let spike = this.createSpikeSplineShape();
