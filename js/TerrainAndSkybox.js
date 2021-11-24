@@ -1,11 +1,13 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
+// import { getHeightData } from "../lib/wfa-utils.js";
+import {updateBooleanisTerrainHeightLoaded} from "./RudeGoldbergMachine.js";
+
 
 
 let meshTerrain;
 let loadedTextures = {};
 let SIZE = 500;
-let isTerrainHeightLoaded = false;
 let heightAdjustment = 0; //min/max z-verdi på heightmap
 
 let myPhysicsWorld = undefined;
@@ -34,33 +36,6 @@ export function addSkybox() {
     myThreeScene.scene.background = texture;
 }
 
-//Denne kjøres når høydedata er ferdiga lastet og generert.
-//heightData = et array bestående av 16 bits heltall.
-export function terrainHeightLoaded(heightData) {
-    const vertexPositions = meshTerrain.geometry.attributes.position.array;    //NB! MERK .array
-    let index = 0;
-    let minZ=Number.POSITIVE_INFINITY;
-    let maxZ=0;
-    let height=0;
-    for (let i = 0; i < meshTerrain.geometry.attributes.position.count; i++)
-    {
-        index++;    // øker med 1 for å "gå forbi" x.
-        index++;    // øker med 1 for å "gå forbi" y.
-        height = heightData[i]; //verdiene kommer fra getHeightData() wfa-utils.js. Hele funksjonen er flyttet hit
-        vertexPositions[ index++] = height;
-        if (height>maxZ)
-            maxZ=height;
-        if (height<minZ)
-            minZ=height;
-    }
-    let heightDiff = maxZ-minZ;
-    heightAdjustment = -Math.abs(minZ) - (Math.abs(heightDiff)/2);
-
-    meshTerrain.geometry.computeVertexNormals();
-    meshTerrain.translateZ(heightAdjustment);
-    isTerrainHeightLoaded = true;
-}
-
 export function addTerrain() {
     let planeNoTiles = 128-1; //heightmap.png har størrelse = 128 x 128 piksler.
     let gPlane = new THREE.PlaneGeometry( SIZE*2, SIZE*2, planeNoTiles, planeNoTiles );
@@ -85,11 +60,11 @@ export function addTerrain() {
         meshTerrain = new THREE.Mesh( gPlane, mPlane);
         meshTerrain.rotation.x = -Math.PI / 2;
         meshTerrain.receiveShadow = true;	//NB!
-        meshTerrain.position.y = 90 ;
-        meshTerrain.terrainWidthExtents = SIZE * 2;
-        meshTerrain.terrainDepthExtents = SIZE * 2;
-        meshTerrain.terradepth = 128;
-        meshTerrain.terrainWidth = 128;
+        meshTerrain.position.y = -20 ;
+        // meshTerrain.terrainWidthExtents = SIZE * 2;
+        // meshTerrain.terrainDepthExtents = SIZE * 2;
+        // meshTerrain.terradepth = 128;
+        // meshTerrain.terrainWidth = 128;
         myThreeScene.scene.add(meshTerrain);
 
         //Laster fil med høydedata for planet (/lib/wfa-utils.js):
@@ -128,3 +103,33 @@ function getHeightData(fileName, _width, _height, callback) {
     //Starter nedlasting:
     img.src = fileName;
 }
+
+//Denne kjøres når høydedata er ferdiga lastet og generert.
+//heightData = et array bestående av 16 bits heltall.
+function terrainHeightLoaded(heightData) {
+    const vertexPositions = meshTerrain.geometry.attributes.position.array;    //NB! MERK .array
+    let index = 0;
+    let minZ=Number.POSITIVE_INFINITY;
+    let maxZ=0;
+    let height=0;
+    for (let i = 0; i < meshTerrain.geometry.attributes.position.count; i++)
+    {
+        index++;    // øker med 1 for å "gå forbi" x.
+        index++;    // øker med 1 for å "gå forbi" y.
+        height = heightData[i]; //verdiene kommer fra getHeightData() wfa-utils.js. Hele funksjonen er flyttet hit
+        vertexPositions[ index++] = height;
+        if (height>maxZ)
+            maxZ=height;
+        if (height<minZ)
+            minZ=height;
+    }
+    let heightDiff = maxZ-minZ;
+    heightAdjustment = -Math.abs(minZ) - (Math.abs(heightDiff)/2);
+
+    meshTerrain.geometry.computeVertexNormals();
+    meshTerrain.translateZ(heightAdjustment);
+
+    updateBooleanisTerrainHeightLoaded();
+
+}
+

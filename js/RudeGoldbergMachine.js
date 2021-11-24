@@ -33,6 +33,8 @@ let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
 
+let isTerrainHeightLoaded = false;
+
 
 export function main() {
 	// SCENE
@@ -84,8 +86,8 @@ function addModels() {
 	flatTable.create();
 
 	//elevator
-	// tweenElevator.init(myThreeScene.scene);
-	// tweenElevator.create();
+	tweenElevator.init(myThreeScene.scene);
+	tweenElevator.create();
 }
 
 
@@ -98,14 +100,20 @@ function handleKeyDown(event) {
 }
 
 export function animate(currentTime) {
-    requestAnimationFrame(animate);
-    let delta = clock.getDelta();
+	requestAnimationFrame(animate);
 
-    ammoPhysicsWorld.updatePhysics(delta);
-	TWEEN.update(currentTime);
+	if (isTerrainHeightLoaded) {
+		let delta = clock.getDelta();
 
-	//collisionTest();
-	myThreeScene.updateGraphics(delta);
+		ammoPhysicsWorld.updatePhysics(delta);
+		TWEEN.update(currentTime);
+
+		//collisionTest();
+		myThreeScene.updateGraphics(delta);
+
+		render();
+	}
+
 }
 
 function render(delta)
@@ -124,4 +132,8 @@ function onWindowResize() {
 function degreesToRadians(degrees) {
 	var pi = Math.PI;
 	return degrees * (pi / 180);
+}
+
+export function updateBooleanisTerrainHeightLoaded() {
+	isTerrainHeightLoaded = true;
 }
