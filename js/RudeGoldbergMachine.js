@@ -79,7 +79,7 @@ function addModels() {
 	sunGear.create();
 
 	//Chains
-	verticalChain.init(myThreeScene.scene);
+	verticalChain.init(ammoPhysicsWorld);
 	verticalChain.create();
 
 	//startwall
