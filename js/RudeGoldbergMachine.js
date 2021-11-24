@@ -17,18 +17,18 @@
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
-import {addSkybox} from "./HelperClass.js";
+import {addSkybox} from "../js/HelperClass.js";
 
 import {addTerrain} from "./Terrain.js";
 import {myTerrain} from "../lib/ammohelpers/MyTerrain.js";
 
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
-import {sunGear} from "./SunGear.js";
-import {verticalChain} from "./VerticalChain.js";
-import {startGearHolder} from "./StartGearHolder.js";
-import {tweenElevator} from "./TweenElevator.js";
-import {flatTable} from "./FlatTable.js";
+import {sunGear} from "../js/SunGear.js";
+import {verticalChain} from "../js/VerticalChain.js";
+import {startGearHolder} from "../js/StartGearHolder.js";
+import {tweenElevator} from "../js/TweenElevator.js";
+import {flatTable} from "../js/FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
 
@@ -95,8 +95,8 @@ function addModels() {
 	flatTable.create();
 
 	//elevator
-	//tweenElevator.init(myThreeScene.scene);
-	//tweenElevator.create();
+	tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
+	tweenElevator.create();
 }
 
 
@@ -111,30 +111,28 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	// if (isTerrainHeightLoaded) {
-		let delta = clock.getDelta();
+	let delta = clock.getDelta();
 
-		ammoPhysicsWorld.updatePhysics(delta);
-		TWEEN.update(currentTime);
+	ammoPhysicsWorld.updatePhysics(delta);
 
-		//collisionTest();
-		myThreeScene.updateGraphics(delta);
+	TWEEN.update(currentTime);
 
-		//render();
-	//}
+	//collisionTest();
+	myThreeScene.updateGraphics(delta);
 
+	render();
 }
 
 function render(delta)
 {
-    renderer.render(scene, camera);
+    //renderer.render(scene, camera);
 }
 
 function onWindowResize() {
 	/** myThreeScene.camera eller camera ? */
 	myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
 	myThreeScene.camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    //renderer.setSize(window.innerWidth, window.innerHeight);
     render();
 }
 
@@ -143,6 +141,6 @@ function degreesToRadians(degrees) {
 	return degrees * (pi / 180);
 }
 
-// export function updateBooleanisTerrainHeightLoaded() {
-// 	isTerrainHeightLoaded = true;
-// }
+export function animateOnMain() {
+	animate();
+}

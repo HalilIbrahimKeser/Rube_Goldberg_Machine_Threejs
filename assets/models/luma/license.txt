@@ -1,0 +1,11 @@
+Model Information:
+* title:	Luma - Super Mario Galaxy Fan Art
+* source:	https://sketchfab.com/3d-models/luma-super-mario-galaxy-fan-art-d40d0bfbbc904ed88d85a9d25d0502a4
+* author:	fogo00 (https://sketchfab.com/fogo00)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Luma - Super Mario Galaxy Fan Art" (https://sketchfab.com/3d-models/luma-super-mario-galaxy-fan-art-d40d0bfbbc904ed88d85a9d25d0502a4) by fogo00 (https://sketchfab.com/fogo00) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
