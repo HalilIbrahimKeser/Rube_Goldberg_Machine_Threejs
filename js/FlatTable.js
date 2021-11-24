@@ -18,7 +18,7 @@ export const flatTable = {
            width = 50) {
 
         let groupMesh = new THREE.Group();
-        this.myPhysicsWorld.add(groupMesh);
+        //this.myPhysicsWorld.add(groupMesh);
 
         // FLAT TABLE
         let tableShape = this.createThreeShape(length, width);

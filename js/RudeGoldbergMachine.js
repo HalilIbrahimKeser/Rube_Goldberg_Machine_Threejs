@@ -91,7 +91,7 @@ function addModels() {
 	mySphere.create();
 
 	// Flat table
-	flatTable.init(myThreeScene.scene);
+	flatTable.init(ammoPhysicsWorld);
 	flatTable.create();
 
 	//elevator
