@@ -45,7 +45,7 @@ export function main() {
 	ammoPhysicsWorld.init(myThreeScene.scene);
 
 	// // Camera
-	// camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
+	//camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
 
 	// TERRAIN
 	addTerrain();
@@ -86,8 +86,8 @@ function addModels() {
 	flatTable.create();
 
 	//elevator
-	tweenElevator.init(myThreeScene.scene);
-	tweenElevator.create();
+	//tweenElevator.init(myThreeScene.scene);
+	//tweenElevator.create();
 }
 
 
@@ -111,7 +111,7 @@ export function animate(currentTime) {
 		//collisionTest();
 		myThreeScene.updateGraphics(delta);
 
-		render();
+		//render();
 	}
 
 }
