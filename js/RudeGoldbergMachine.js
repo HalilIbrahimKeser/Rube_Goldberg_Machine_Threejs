@@ -62,7 +62,7 @@ export function main() {
 
 function addModels() {
 	// SUNGEAR
-	sunGear.init(myThreeScene.scene);
+	sunGear.init(ammoPhysicsWorld);
 	sunGear.create();
 
 	//Chains
