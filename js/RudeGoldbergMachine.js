@@ -14,9 +14,8 @@
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
-import {addCoordSystem} from "../lib/wfa-coord.js";
 import {addSkybox} from "./TerrainAndSkybox.js";
-import {addTerrainFromOtherClass} from "./TerrainAndSkybox.js";
+import {addTerrain} from "./TerrainAndSkybox.js";
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 import {sunGear} from "./SunGear.js";
@@ -44,11 +43,10 @@ export function main() {
 	ammoPhysicsWorld.init(myThreeScene.scene);
 
 	// // Camera
-	// /** må kanskje ha den?, halil. Får feil i nettleser at camera ikke er satt*/
 	// camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
 
 	// TERRAIN
-	addTerrainFromOtherClass();
+	addTerrain();
 
 	// SKYBOX
 	addSkybox();
@@ -117,7 +115,7 @@ function render(delta)
 
 function onWindowResize() {
 	/** myThreeScene.camera eller camera ? */
-    myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
+	myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
 	myThreeScene.camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     render();
