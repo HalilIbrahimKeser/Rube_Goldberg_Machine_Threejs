@@ -46,9 +46,9 @@ export const tweenElevator = {
 
     animateModel(position) {
         // Bruk y'en til noe...:
-        let lumaModel = scene.getObjectByName('tweenelevator', true);
-        if (lumaModel) {
-            lumaModel.position.set(position.x, position.y, 0);
+        let heis = scene.getObjectByName('tweenelevator', true);
+        if (heis) {
+            heis.position.set(position.x, position.y, 0);
         }
     },
 

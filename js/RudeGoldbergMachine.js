@@ -43,6 +43,10 @@ export function main() {
 	//AMMO
 	ammoPhysicsWorld.init(myThreeScene.scene);
 
+	// // Camera
+	// /** må kanskje ha den?, halil. Får feil i nettleser at camera ikke er satt*/
+	// camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
+
 	// TERRAIN
 	addTerrainFromOtherClass();
 
@@ -112,8 +116,9 @@ function render(delta)
 }
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+	/** myThreeScene.camera eller camera ? */
+    myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
+	myThreeScene.camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     render();
 }
