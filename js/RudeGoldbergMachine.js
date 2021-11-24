@@ -1,6 +1,9 @@
 /**
  * Bruker et eksempel fra faglærer Werner som startpunkt skybox2.js
+ *
  * For terrreng har vi hentet inn kode fra terreng2.js, deler av det er så flyttet til egen js fil.
+ * Senere har vi heller tatt i bruk terraing.js fra helpers
+ *
  * MyThreeScene kommer fra lib mappen. Den er gjort noen få endringer på.
  * Tween er implementert i TweenElevator.js, kode hentet fra Tween1.js
  *
@@ -9,13 +12,16 @@
 /**
  * TODO list
  * animate() burde kjøre etter at terreng er lagt inn.
- *
+ * terrain hentes nå fra MyTerrain. Bruker ikke lenger Terrain.js, HIK
  *
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
-import {addSkybox} from "./TerrainAndSkybox.js";
-import {addTerrain} from "./TerrainAndSkybox.js";
+import {addSkybox} from "./HelperClass.js";
+
+import {addTerrain} from "./Terrain.js";
+import {myTerrain} from "../lib/ammohelpers/MyTerrain.js";
+
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 import {sunGear} from "./SunGear.js";
@@ -25,6 +31,7 @@ import {tweenElevator} from "./TweenElevator.js";
 import {flatTable} from "./FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
+
 
 
 let renderer;
@@ -48,7 +55,9 @@ export function main() {
 	//camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
 
 	// TERRAIN
-	addTerrain();
+	//addTerrain();
+	myTerrain.init(ammoPhysicsWorld);
+	myTerrain.create();
 
 	// SKYBOX
 	addSkybox();
@@ -102,7 +111,7 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	if (isTerrainHeightLoaded) {
+	// if (isTerrainHeightLoaded) {
 		let delta = clock.getDelta();
 
 		ammoPhysicsWorld.updatePhysics(delta);
@@ -112,7 +121,7 @@ export function animate(currentTime) {
 		myThreeScene.updateGraphics(delta);
 
 		//render();
-	}
+	//}
 
 }
 
@@ -130,10 +139,10 @@ function onWindowResize() {
 }
 
 function degreesToRadians(degrees) {
-	var pi = Math.PI;
+	let pi = Math.PI;
 	return degrees * (pi / 180);
 }
 
-export function updateBooleanisTerrainHeightLoaded() {
-	isTerrainHeightLoaded = true;
-}
+// export function updateBooleanisTerrainHeightLoaded() {
+// 	isTerrainHeightLoaded = true;
+// }

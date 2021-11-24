@@ -1,7 +1,7 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 // import { getHeightData } from "../lib/wfa-utils.js";
-import {updateBooleanisTerrainHeightLoaded} from "./RudeGoldbergMachine.js";
+//import {updateBooleanisTerrainHeightLoaded} from "./RudeGoldbergMachine.js";
 
 
 
@@ -14,27 +14,6 @@ let myPhysicsWorld = undefined;
 let _width = 128;
 let _height = 128;
 let heightData = new Float32Array(_width * _height);
-
-
-export function addSkybox() {
-    const loader = new THREE.CubeTextureLoader();
-    const texture = loader.load([
-        '../assets/images/pngegg_xpos.png',
-        '../assets/images/pngegg_xneg.png',
-        '../assets/images/pngegg_ypos.png',
-        '../assets/images/pngegg_yneg.png',
-        '../assets/images/pngegg_zpos.png',
-        '../assets/images/pngegg_zneg.png',
-
-        // '../assets/images/grass_xpos.jpg',
-        // '../assets/images/grass_xneg.jpg',
-        // '../assets/images/grass_ypos.jpg',
-        // '../assets/images/grass_yneg.jpg',
-        // '../assets/images/grass_zpos.jpg',
-        // '../assets/images/grass_zneg.jpg',
-    ]);
-    myThreeScene.scene.background = texture;
-}
 
 export function addTerrain() {
     let planeNoTiles = 128-1; //heightmap.png har størrelse = 128 x 128 piksler.
