@@ -2,22 +2,42 @@
 <html lang="nb">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./css/main.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<title>Rude Goldberg Machine</title>
 </head>
+<style>
+	body {
+		overflow: hidden;
+		margin: 0;
+	}
+	.ui {
+		position: absolute;
+	}
+	button{
+		margin: 20px;
+		width: 150px;
+	}
+</style>
 <body>
+
 <script src="./lib/ammo/ammo.js"></script>
 <!--<canvas id="webgl" >
 	Denne nettleseren støtter ikke canvas-elementet!
 </canvas>-->
-<div id="loading">
-	<div>
-		<div>...loading...</div>
-		<div class="progress"><div id="progressbar"></div></div>
+
+	<div id="loading">
+		<div>
+			<div>...loading...</div>
+			<div class="progress"><div id="progressbar"></div></div>
+		</div>
 	</div>
-</div>
+	<div style="top:10px;width:100%;text-align: center; color:rebeccapurple;" class="ui">
+		Rude Goldberg Machine av Halil IK, Nancy AL og Asbjørn B<br>
+	</div>
+
 <script type="module">
 	'use strict';
 	import {main} from "./js/RudeGoldbergMachine.js";

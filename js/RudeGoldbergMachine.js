@@ -11,15 +11,15 @@
  */
 /**
  * TODO list
- * animate() burde kjøre etter at terreng er lagt inn.
- * terrain hentes nå fra MyTerrain. Bruker ikke lenger Terrain.js, HIK
  *
+ *
+ * Endret til deltatime til currenTime. Nå fungerer siden mye raskere :) tips fra Jørgen. HIK 25.11.21
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
 import {addSkybox} from "../js/HelperClass.js";
 
-import {addTerrain} from "./Terrain.js";
+// import {addTerrain} from "./Terrain.js";
 import {myTerrain} from "../lib/ammohelpers/MyTerrain.js";
 
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
@@ -31,6 +31,7 @@ import {tweenElevator} from "../js/TweenElevator.js";
 import {flatTable} from "../js/FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
+import {bricks} from "../js/Bricks.js";
 
 
 
@@ -94,9 +95,13 @@ function addModels() {
 	flatTable.init(ammoPhysicsWorld);
 	flatTable.create();
 
-	//elevator
-	tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
+	// Elevator
+	tweenElevator.init(ammoPhysicsWorld);
 	tweenElevator.create();
+
+	// Bricks
+	bricks.init(ammoPhysicsWorld);
+	bricks.create();
 }
 
 
@@ -113,17 +118,17 @@ export function animate(currentTime) {
 
 	let delta = clock.getDelta();
 
-	ammoPhysicsWorld.updatePhysics(delta);
+	ammoPhysicsWorld.updatePhysics(currentTime);
 
 	TWEEN.update(currentTime);
 
 	//collisionTest();
-	myThreeScene.updateGraphics(delta);
+	myThreeScene.updateGraphics(currentTime);
 
 	render();
 }
 
-function render(delta)
+function render(currentTime)
 {
     //renderer.render(scene, camera);
 }
@@ -133,12 +138,7 @@ function onWindowResize() {
 	myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
 	myThreeScene.camera.updateProjectionMatrix();
     //renderer.setSize(window.innerWidth, window.innerHeight);
-    render();
-}
-
-function degreesToRadians(degrees) {
-	let pi = Math.PI;
-	return degrees * (pi / 180);
+    //render();
 }
 
 export function animateOnMain() {

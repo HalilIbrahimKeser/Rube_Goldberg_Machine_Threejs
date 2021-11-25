@@ -14,7 +14,7 @@ export const sunGear = {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-300, y:195, z:-495}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
+    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-300, y:195, z:-495}, radius= 20, url = "assets/images/metalgold_small.jpg", height = 15){
         this.position = position;
         if (texture){ //Hvis tekstur er ønsket
             const loadManager = new THREE.LoadingManager();

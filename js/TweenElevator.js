@@ -4,20 +4,21 @@ import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {GLTFLoader} from '../lib/three/examples/jsm/loaders/GLTFLoader.js';
 import * as SkeletonUtils from '../lib/three/examples/jsm/utils/SkeletonUtils.js';
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
-import {animateOnMain} from "../js/RudeGoldbergMachine.js"; //må være slik for kark.no
+import {animateOnMain} from "../js/RudeGoldbergMachine.js";
+import {myArbitraryTriangleMesh2} from "../lib/ammohelpers/MyArbitraryTriangleMesh2.js"; //må være slik for kark.no
 
 export const tweenElevator = {
     myPhysicsWorld: undefined,
     scene: undefined,
     models: undefined,
     tween: undefined,
+    position: {x: -360, y: -75, z: -8},
 
     init(myPhysicsWorld) {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 0, texture = false, color = 0xF4F0EF,
-           position = {x: -360, y: -75, z: -8}, radius = 0.2, length = 350, width = 150) {
+    create(setCollisionMask = true, mass = 0, texture = false, color = 0xF4F0EF, radius = 0.2, length = 350, width = 150) {
         this.setCollisionMask = setCollisionMask;
         this.addTween();
     },
@@ -36,6 +37,7 @@ export const tweenElevator = {
 
     //Brukes av tween:
     animateModel(position) {
+        //this.position = {x: -360, y: -75, z: -8};
         // Bruk y'en til noe...:
         let lumaModel = myThreeScene.scene.getObjectByName('LumaModel', true);
         if (lumaModel) {
@@ -86,13 +88,27 @@ export const tweenElevator = {
                 }
             });
 
+            // model.position.x = 250;
+            // model.position.x = 250;
+            // model.position.x = 250;
+
             const clonedScene = SkeletonUtils.clone(model.gltf.scene);
             const root = new THREE.Object3D();
             root.name = 'LumaModel';
+            root.userData.tag = "rudegoldberg";
+            root.userData.name = "tweenelevator";
+
             //Skalerer og posisjonerer:
             root.scale.set(model.scale.x, model.scale.y, model.scale.z);
             root.position.set(model.position.x, model.position.y, model.position.z);
             root.add(clonedScene);
+
+            let gltfModelMass = 150;
+            let gltfModelStartPos = new THREE.Vector3(-20, 120, 30);
+            // myArbitraryTriangleMesh2 er basert på vilkårlig MESH-objekt. Bruker Ammo convex.
+            myArbitraryTriangleMesh2.init(this.myPhysicsWorld);
+            myArbitraryTriangleMesh2.create(true, root, gltfModelMass, gltfModelStartPos);
+
             myThreeScene.scene.add(root);
         });
     },

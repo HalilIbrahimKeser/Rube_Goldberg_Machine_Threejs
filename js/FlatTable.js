@@ -12,7 +12,7 @@ export const flatTable = {
     create(setCollisionMask = true,
            mass = 0,
            color = 0xF4F0EF,
-           position = {x: -210, y: 10, z: -460},
+           position = {x: -50, y: 10, z: -170},
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -33,7 +33,7 @@ export const flatTable = {
         // ROCKER CYLINDER
         let rockerCylinder = this.createCylinderShape(8, 40);
         let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        rockerCylinderMesh.position.set(-170, 20, -505);
+        rockerCylinderMesh.position.set(20, 20, -210);
         rockerCylinderMesh.receiveShadow = true;
         rockerCylinderMesh.castShadow = true;
         groupMesh.add(rockerCylinderMesh);
@@ -41,7 +41,7 @@ export const flatTable = {
         // ROCKER TABLE
         let rockerTableShape = this.createThreeShape(80, 50);
         let rockerTableMesh = this.createExtrudeMesh(rockerTableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        rockerTableMesh.position.set(-200, 45, -460);
+        rockerTableMesh.position.set(-15, 50, -170);
         rockerTableMesh.rotateY(1.57);
         rockerTableMesh.rotateX(1.90);
         rockerTableMesh.castShadow = true;
@@ -51,7 +51,7 @@ export const flatTable = {
         // BOX
         let boxShape = this.createThreeShape(20, 20);
         let boxMesh = this.createExtrudeMesh(boxShape, 1, 20, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boxMesh.position.set(-140, 45, -475);
+        boxMesh.position.set(12, 65, -180);
         boxMesh.rotateY(1.57);
         boxMesh.rotateX(1.90);
         boxMesh.castShadow = true;
