@@ -99,8 +99,8 @@ function addModels() {
 	flapDoor.create();
 
 	//elevator
-	/*tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
-	tweenElevator.create();*/
+	tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
+	tweenElevator.create();
 }
 
 
