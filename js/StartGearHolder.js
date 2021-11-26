@@ -10,7 +10,7 @@ export const startGearHolder = {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 0, color = 0xF4F0EF, position = {x:-360, y:-75, z:-500}, radius= 0.2, length = 350, width = 150){
+    create(setCollisionMask = true, mass = 0, color = 0xF4F0EF, position = {x:-360, y:-75, z:-500}, radius= 0.2, length = 500, width = 300){
         let groupMesh = new THREE.Group();
         groupMesh.position.set(position.x, position.y, position.z);
 
@@ -20,13 +20,25 @@ export const startGearHolder = {
         //startStopperMesh.position.set(position.x, position.y, 0);
         startStopperMesh.castShadow = true;
         startStopperMesh.receiveShadow = true;
-        groupMesh.add(startStopperMesh);
+        //groupMesh.add(startStopperMesh);
 
         let wallShape = this.createThreeShape(length, width);
         let wallMesh = this.createExtrudeMesh(wallShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:color}));
         wallMesh.castShadow = true;
         wallMesh.receiveShadow = true;
         groupMesh.add(wallMesh);
+
+        let upperMiddleShape = this.createUpperMiddleShape(length, width);
+        let upperMiddleMesh = this.createExtrudeMesh(upperMiddleShape, 1, 35, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:color}));
+        upperMiddleMesh.castShadow = true;
+        upperMiddleMesh.receiveShadow = true;
+        groupMesh.add(upperMiddleMesh);
+
+        let aroundSunShape = this.createAroundTheSun(length, width);
+        let aroundSunMesh = this.createExtrudeMesh(aroundSunShape, 1, 20, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:color}));
+        aroundSunMesh.castShadow = true;
+        aroundSunMesh.receiveShadow = true;
+        groupMesh.add(aroundSunMesh);
 
         let frameShape = this.createLeftFrameShape(length, width, 10);
         let frameMesh = this.createExtrudeMesh(frameShape, 1, 35, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide}));
@@ -56,7 +68,7 @@ export const startGearHolder = {
         //endStopperMesh.position.set(position.x, position.y, 0);
         endStopperMesh.castShadow = true;
         endStopperMesh.receiveShadow = true;
-        groupMesh.add(endStopperMesh);
+        //groupMesh.add(endStopperMesh);
 
         let glassShape = this.createThreeShape(length, width);
         let glassMesh = this.createExtrudeMesh(glassShape, 1, 1, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.1}));
@@ -78,12 +90,14 @@ export const startGearHolder = {
         //groupMesh.add(gearHolderStopperMesh);
 
         //AMMO til alle deler
+        this.addCompoundAmmo(upperMiddleMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(aroundSunMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(wallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(frameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(rightFrameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(lowerFrameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(startStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(endStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        //this.addCompoundAmmo(startStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        //this.addCompoundAmmo(endStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(glassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         //this.addCompoundAmmo(gearHolderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         //this.addCompoundAmmo(gearHolderStopperMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -164,28 +178,61 @@ export const startGearHolder = {
         let wallFrameShape = new THREE.Shape();
         wallFrameShape.moveTo(0, 0);
         wallFrameShape.lineTo(0, length);
-        wallFrameShape.lineTo(offset+10, length-10);
-        wallFrameShape.lineTo(3, length-10);
-        wallFrameShape.lineTo(5, length-40);
-        wallFrameShape.lineTo(offset+15, length-50);
+        wallFrameShape.lineTo((width/2)-13, length-20);
+        wallFrameShape.lineTo(offset, length-90);
+        //wallFrameShape.lineTo(offset, length-40);
+        //wallFrameShape.lineTo(offset+15, length-50);
         wallFrameShape.lineTo(offset, length-50);
+        wallFrameShape.lineTo(offset, length/2+80);
+
+        wallFrameShape.lineTo(width, length/2-70);
+        wallFrameShape.lineTo(width, length/2-80);
+        wallFrameShape.lineTo(offset, length/2+10);
+
         wallFrameShape.lineTo(offset, 0);
         wallFrameShape.lineTo(0,0);
         return wallFrameShape;
     },
 
+    createUpperMiddleShape(length, width){
+        let shape = new THREE.Shape();
+        shape.moveTo(width/2, length -30);
+        shape.lineTo(30, length-100);
+        shape.lineTo(30, length-150);
+        shape.lineTo(60, length-150);
+        shape.lineTo(60, length-100);
+        shape.lineTo(width/2, length-60);
+        shape.lineTo(width/2, length-80);
+        shape.lineTo(width-50, length -200);
+        shape.lineTo(width-30, length-200);
+        shape.lineTo(width-30, length-180);
+        shape.lineTo(width-50, length-180);
+        shape.lineTo(width-50, length-160);
+        shape.lineTo(width-70, length-160);
+        shape.lineTo(width-70, length-140);
+        shape.lineTo(width-80, length-140);
+        shape.lineTo(width-80, length-120);
+        shape.lineTo(width-100, length-120);
+        shape.lineTo(width-100, length-100);
+        shape.lineTo(width-120, length-100);
+        shape.lineTo(width-120, length-70);
+        return shape;
+    },
+
+
+
     createUpperRightFrameShape(length, width, offset){
         let wallFrameShape = new THREE.Shape();
-        wallFrameShape.moveTo(offset+10, length-30);
-        wallFrameShape.lineTo(offset+40, length);
+        wallFrameShape.moveTo(width/2+13, length-20);
         wallFrameShape.lineTo(width, length);
-        wallFrameShape.lineTo(width, 170);
-        wallFrameShape.lineTo(width-50, 190);
-        wallFrameShape.lineTo(width-50, 190);
-        wallFrameShape.lineTo(width-offset, 190);
-        wallFrameShape.lineTo(width-offset, length-offset);
-        wallFrameShape.lineTo(offset+40, length-offset);
-        //wallFrameShape.lineTo(offset+30, length-20);
+        wallFrameShape.lineTo(width, length/2-20);
+        wallFrameShape.lineTo(width-50, length/2-20);
+        wallFrameShape.lineTo(width-50, length/2-20);
+        wallFrameShape.lineTo(width-offset, length/2);
+        wallFrameShape.lineTo(width-offset, length-20);
+        wallFrameShape.lineTo(width/2+20, length-20);
+
+
         return wallFrameShape;
     },
 
@@ -193,8 +240,8 @@ export const startGearHolder = {
         let lowerShape = new THREE.Shape();
         lowerShape.moveTo(width, 0);
         lowerShape.lineTo(width, 130);
-        lowerShape.lineTo(width-30, 150);
-        lowerShape.lineTo(width-30, 0);
+        lowerShape.lineTo(width-120, 170);
+        lowerShape.lineTo(width-120, 0);
         lowerShape.lineTo(width, 0);
         return lowerShape;
     },
@@ -221,6 +268,22 @@ export const startGearHolder = {
         stopper.lineTo(width, 130);
         stopper.lineTo(width, 170);
         return stopper;
+    },
+
+    createAroundTheSun(length, width){
+        let shape = new THREE.Shape();
+        shape.moveTo(0, 0);
+        shape.lineTo(0, length);
+        shape.lineTo(width,length);
+        shape.lineTo(width, 0);
+        shape.lineTo(width-120, 0);
+        shape.lineTo(width-120, 150);
+        shape.lineTo(width/2+10, length/2-60);
+        shape.lineTo(width/2+10, length-100);
+        shape.lineTo(60, length-100);
+        shape.lineTo(60, 0);
+        shape.lineTo(0, 0);
+        return shape;
     }
 
 

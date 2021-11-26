@@ -32,6 +32,7 @@ import {flatTable} from "../js/FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
 
+import {flapDoor} from "./FlapDoor.js";
 
 
 let renderer;
@@ -94,9 +95,12 @@ function addModels() {
 	flatTable.init(ammoPhysicsWorld);
 	flatTable.create();
 
+	flapDoor.init(ammoPhysicsWorld);
+	flapDoor.create();
+
 	//elevator
-	tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
-	tweenElevator.create();
+	/*tweenElevator.init(myThreeScene.scene, ammoPhysicsWorld);
+	tweenElevator.create();*/
 }
 
 
