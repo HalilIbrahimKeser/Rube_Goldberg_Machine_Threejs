@@ -14,15 +14,10 @@ export const sunGear = {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-300, y:195, z:-495}, radius= 20, url = "assets/images/metalgold_small.jpg", height = 15){
+    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-248, y:235, z:-495}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
         this.position = position;
-        if (texture){ //Hvis tekstur er ønsket
-            const loadManager = new THREE.LoadingManager();
-            const loader = new THREE.TextureLoader(loadManager);
-            this.material = new THREE.MeshPhongMaterial({map: loader.load(url)});
-        } else {
-            this.material = new THREE.MeshPhongMaterial({color: color});
-        }
+        this.material = new THREE.MeshPhongMaterial({color: color});
+
 
         //Ammo-container:
         let compoundShape = new Ammo.btCompoundShape();
@@ -75,7 +70,7 @@ export const sunGear = {
 
     createSpikeMesh(shape, material) {
         let extrudeSettings = {
-            depth: 0.5,
+            depth: 1,
             bevelEnabled: false,
             bevelSegments: 1,
             steps: 1,
@@ -95,9 +90,9 @@ export const sunGear = {
         spikeShape.splineThru([
             new THREE.Vector2(-4, 0.4),
             new THREE.Vector2(-3, 1.7),
-            new THREE.Vector2(-1, 8),
-            new THREE.Vector2(0, 11),
-            new THREE.Vector2(1, 8),
+            new THREE.Vector2(-1, 9),
+            new THREE.Vector2(0, 17),
+            new THREE.Vector2(1, 9),
             new THREE.Vector2(3, 1.7),
             new THREE.Vector2(4, 0.4),
             new THREE.Vector2(6, 0),
@@ -163,7 +158,9 @@ export const sunGear = {
         gearHolderMesh.rotation.x = Math.PI/2;
         gearHolderMesh.castShadow = true;
         gearHolderMesh.receiveShadow = true;
-        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-300, y: 195, z: -490}, 0, true);
+        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-248, y: 240, z: -490}, 0, true);
+
+
 
         //Sylinder med hol i midten
         let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(), this.material);
@@ -177,7 +174,7 @@ export const sunGear = {
         //Pigger rundt sylinder
         let spike = this.createSpikeSplineShape();
         let spikeMesh = this.createSpikeMesh(spike, this.material);
-        spikeMesh.translateZ(1.6);
+        spikeMesh.translateZ(1);
         spikeMesh.scale.set(0.08, 0.07, 1);
         spikeMesh.castShadow = true;
         spikeMesh.receiveShadow = true;

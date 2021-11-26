@@ -33,6 +33,7 @@ import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
 import {bricks} from "../js/Bricks.js";
 
+import {flapDoor} from "../js/FlapDoor.js";
 
 
 let renderer;
@@ -99,6 +100,10 @@ function addModels() {
 	tweenElevator.init(ammoPhysicsWorld);
 	tweenElevator.create();
 
+	// FlappDoor
+	flapDoor.init(ammoPhysicsWorld);
+	flapDoor.create();
+
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
 	bricks.create();
@@ -118,17 +123,17 @@ export function animate(currentTime) {
 
 	let delta = clock.getDelta();
 
-	ammoPhysicsWorld.updatePhysics(currentTime);
+	ammoPhysicsWorld.updatePhysics(delta);
 
 	TWEEN.update(currentTime);
 
 	//collisionTest();
-	myThreeScene.updateGraphics(currentTime);
+	myThreeScene.updateGraphics(delta);
 
 	render();
 }
 
-function render(currentTime)
+function render(delta)
 {
     //renderer.render(scene, camera);
 }

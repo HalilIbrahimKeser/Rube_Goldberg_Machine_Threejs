@@ -12,7 +12,7 @@ export const verticalChain = {
         //this.scene = scene;
     },
 
-    create(setCollisionMask = true, mass = 1, color = 0x979A9A, position = {x:-278, y:190, z:12}, radius= 2.8, tube = 0.8, chainNr= 24){
+    create(setCollisionMask = true, mass = 1, color = 0x979A9A, position = {x:-235, y:250, z:12}, radius= 2.8, tube = 0.8, chainNr= 24){
         this.position = {x: 0, y:0, z: -495};
         let chainGroup = new THREE.Group();
         chainGroup.position.z = this.position.z;
