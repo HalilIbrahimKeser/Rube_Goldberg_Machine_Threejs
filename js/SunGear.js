@@ -14,7 +14,7 @@ export const sunGear = {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-248, y:248, z:-495}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
+    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-248, y:235, z:-495}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
         this.position = position;
         this.material = new THREE.MeshPhongMaterial({color: color});
 
@@ -158,7 +158,7 @@ export const sunGear = {
         gearHolderMesh.rotation.x = Math.PI/2;
         gearHolderMesh.castShadow = true;
         gearHolderMesh.receiveShadow = true;
-        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-248, y: 248, z: -490}, 0, true);
+        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-248, y: 240, z: -490}, 0, true);
 
 
 
