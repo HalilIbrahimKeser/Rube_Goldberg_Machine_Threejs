@@ -32,7 +32,7 @@ import {flatTable} from "../js/FlatTable.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
 import {bricks} from "../js/Bricks.js";
-
+import {trampoline} from "./Trampoline.js";
 import {flapDoor} from "../js/FlapDoor.js";
 
 
@@ -77,12 +77,12 @@ export function main() {
 
 function addModels() {
 	// SUNGEAR
-	sunGear.init(ammoPhysicsWorld);
-	sunGear.create();
+	/*sunGear.init(ammoPhysicsWorld);
+	sunGear.create();*/
 
 	//Chains
-	verticalChain.init(ammoPhysicsWorld);
-	verticalChain.create();
+	/*verticalChain.init(ammoPhysicsWorld);
+	verticalChain.create();*/
 
 	//startwall
 	startGearHolder.init(ammoPhysicsWorld);
@@ -93,16 +93,36 @@ function addModels() {
 	mySphere.create();
 
 	// Flat table
-	flatTable.init(ammoPhysicsWorld);
-	flatTable.create();
+	/*flatTable.init(ammoPhysicsWorld);
+	flatTable.create();*/
 
 	// Elevator
-	tweenElevator.init(ammoPhysicsWorld);
-	tweenElevator.create();
+	/*tweenElevator.init(ammoPhysicsWorld);
+	tweenElevator.create();*/
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);
-	flapDoor.create();
+	//Drawbridge type
+	flapDoor.create(true,
+		{x:-111, y:90, z:-477,},
+		{x: 1, y:0, z: 0},
+		Math.PI/2,
+		{x: 70, y: 27, z: 2}, 0.5, 0, 5, -1.68, Math.PI/6);
+
+	//Trampoline
+	trampoline.init(ammoPhysicsWorld);
+	trampoline.create(); //First
+	trampoline.create(true,
+		{x:350, y:230, z:-490},
+		Math.random() * 0xffffff,
+		0, 50, 30,
+		Math.PI/2, 1.25, 0, 3);
+
+	trampoline.create(true,
+		{x:-95, y:475, z:-490},
+		Math.random() * 0xffffff,
+		0, 60, 30,
+		Math.PI/2, 1.4, 0, 3);
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
@@ -125,7 +145,7 @@ export function animate(currentTime) {
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
-	TWEEN.update(currentTime);
+	//TWEEN.update(currentTime);
 
 	//collisionTest();
 	myThreeScene.updateGraphics(currentTime);

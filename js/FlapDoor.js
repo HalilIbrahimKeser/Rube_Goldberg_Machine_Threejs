@@ -38,6 +38,8 @@ export const flapDoor = {
     boardRotAngle: 3,
     IMPULSE_FORCE_STICK: 150,
     threeDirectionVectorStick: undefined,
+    lowerLim: undefined,
+    upperLim: undefined,
 
     init(myPhysicsWorld) {
         this.myPhysicsWorld = myPhysicsWorld;
@@ -49,14 +51,29 @@ export const flapDoor = {
         this.myPhysicsWorld.scene.add( arrowHelper );
     },
 
-    create(setCollisionMask=true, position = {x: -57, y: 138, z: -480}) {
+    create(setCollisionMask=true,
+           position = {x: -117, y: 138, z: -480},
+           rotationAxis = {x: 0, y:1, z: 0},
+           rotationAngle = 3,
+           boardSize = {x: 25, y: 70, z: 2},
+           boardMass = 50,
+           anchorMass = 0,
+           anchorRadius = 5,
+           lowerLim = -Math.PI-0.1,
+           upperLim = -Math.PI+1.7,
+           restitution = 0
+           ) {
+        this.boardRotAxis = rotationAxis;
+        this.boardRotAngle = rotationAngle;
+        this.lowerLim = lowerLim;
+        this.upperLim = upperLim;
         let posStick = position;     // Cube
-        let sizeStick = {x: 25, y: 70, z: 2};   // Størrelse på pinnen.
-        let massStick = 50;                     // Kuben/"stikka" festes til kula og skal kunne rotere. Må derfor ha masse.
+        let sizeStick = boardSize  // Størrelse på pinnen.
+        let massStick = boardMass;                     // Kuben/"stikka" festes til kula og skal kunne rotere. Må derfor ha masse.
 
         let posAnchor = position;    // Sphere, forankringspunkt.
-        let radiusAnchor = 5;                         // Størrelse på kula.
-        let massAnchor = 0;                     // Sphere, denne skal stå i ro.
+        let radiusAnchor = anchorRadius;                         // Størrelse på kula.
+        let massAnchor = anchorMass;                     // Sphere, denne skal stå i ro.
 
         //THREE, kule:
         let threeQuat = new THREE.Quaternion();  // Roterer i forhold til planet (dersom satt).
@@ -91,7 +108,7 @@ export const flapDoor = {
         this.stickMesh.receiveShadow = true;
         //AMMO, kube/stick:
         let stickColShape =  new Ammo.btBoxShape( new Ammo.btVector3( sizeStick.x/2, sizeStick.y/2, sizeStick.z/2 ) );
-        this.rbStick = commons.createAmmoRigidBody(stickColShape, this.stickMesh, 0.4, 0.9, posStick, massStick);
+        this.rbStick = commons.createAmmoRigidBody(stickColShape, this.stickMesh, restitution, 0.9, posStick, massStick);
         this.myPhysicsWorld.addPhysicsObject(
             this.rbStick,
             this.stickMesh,
@@ -120,8 +137,8 @@ export const flapDoor = {
             false
         );
 
-        let lowerLimit = -Math.PI-0.1;
-        let upperLimit = -Math.PI+1.7;
+        let lowerLimit = this.lowerLim;
+        let upperLimit = this.upperLim;
         let softness = 0.3;
         let biasFactor = 1;
         let relaxationFactor = 0.9;
