@@ -128,7 +128,7 @@ export function animate(currentTime) {
 	TWEEN.update(currentTime);
 
 	//collisionTest();
-	myThreeScene.updateGraphics(delta);
+	myThreeScene.updateGraphics(currentTime);
 
 	render();
 }
