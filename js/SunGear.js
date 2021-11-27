@@ -14,10 +14,25 @@ export const sunGear = {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 10, texture = true, color = 0xF5D22E, position = {x:-248, y:235, z:-495}, radius= 20, url = "assets/images/metalgold.jpg", height = 15){
+    create(setCollisionMask = true,
+           mass = 10,
+           color = 0xF5D22E,
+           position = {x:-310, y:235, z:-495},
+           radius= 20,
+           height = 30, //height of the holed cylinder
+           withGearHolder = true,
+           withSpikes = false,
+           withChainHolder = true,
+           randomizedColor = false,
+           gearHolderRotation = {x: Math.PI/2, y: 0, z: 0},
+           gearRotation = {x: 0, y: 0, z: 0},
+           holeRadiusPercent = 0.2){
         this.position = position;
-        this.material = new THREE.MeshPhongMaterial({color: color});
-
+        if (randomizedColor){
+            this.material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff});
+        } else {
+            this.material = new THREE.MeshPhongMaterial({color: color});
+        }
 
         //Ammo-container:
         let compoundShape = new Ammo.btCompoundShape();
@@ -27,7 +42,16 @@ export const sunGear = {
         groupMesh.userData.name = "sungear"
         groupMesh.position.set(position.x, position.y, position.z);
 
-        this.createGearParts(groupMesh, compoundShape, radius, height);
+        this.createGearParts(groupMesh,
+            compoundShape,
+            radius,
+            height,
+            withGearHolder,
+            withSpikes,
+            withChainHolder,
+            gearRotation,
+            gearHolderRotation,
+            holeRadiusPercent);
 
         //AMMO
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.4, 0.6, position, mass);
@@ -49,19 +73,19 @@ export const sunGear = {
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
-    createHoledCylinderShape(){
+    createHoledCylinderShape(radius, depth, holeRadiusPercent){
         let extrudeSettings = {
-            depth : 2,
+            depth : depth,
             steps : 1,
             bevelEnabled: false,
             curveSegments: 8
         };
 
         let arcShape = new THREE.Shape();
-        arcShape.absarc(0, 0, 1, 0, Math.PI * 2, 0, false);
+        arcShape.absarc(0, 0, radius, 0, Math.PI * 2, 0, false);
 
         let holePath = new THREE.Path();
-        holePath.absarc(0, 0, 0.2, 0, Math.PI * 2, true);
+        holePath.absarc(0, 0, radius*holeRadiusPercent, 0, Math.PI * 2, true);
         arcShape.holes.push(holePath);
 
         let holedCylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
@@ -151,51 +175,62 @@ export const sunGear = {
         return cylinderGeometry;
     },
 
-    createGearParts(groupMesh, compoundShape, radius, height) {
+    createGearParts(groupMesh, compoundShape, radius, height, withGearHolder, withSpikes, withChainHolder, gearRotation, gearHolderRotation, holeRadiusPercent) {
         //Holder tannhjul
-        let cylinderGeo = new THREE.CylinderGeometry(1, 1, 50, 50, 1, false, 0, 6.3);
-        let gearHolderMesh = new THREE.Mesh(cylinderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        gearHolderMesh.rotation.x = Math.PI/2;
-        gearHolderMesh.castShadow = true;
-        gearHolderMesh.receiveShadow = true;
-        this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-248, y: 240, z: -490}, 0, true);
-
-
+        if (withGearHolder){
+            let cylinderGeo = new THREE.CylinderGeometry(radius*0.1, radius*0.1, 50, 50, 1, false, 0, 6.3);
+            let gearHolderMesh = new THREE.Mesh(cylinderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
+            gearHolderMesh.rotation.x = gearHolderRotation.x;
+            gearHolderMesh.rotation.y = gearHolderRotation.y;
+            gearHolderMesh.rotation.z = gearHolderRotation.z;
+            gearHolderMesh.castShadow = true;
+            gearHolderMesh.receiveShadow = true;
+            this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-310, y: 240, z: -490}, 0, true);
+        }
 
         //Sylinder med hol i midten
-        let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(), this.material);
-        holedCylinderMesh.scale.set(radius, radius, height);
+        let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(radius, height, holeRadiusPercent), this.material);
+        //holedCylinderMesh.scale.set(radius, radius, height);
         holedCylinderMesh.castShadow = true;
         holedCylinderMesh.receiveShadow = true;
         holedCylinderMesh.name = "holedCylinder";
         groupMesh.add(holedCylinderMesh);
-        commons.createTriangleShapeAddToCompound(compoundShape, holedCylinderMesh);
-
-        //Pigger rundt sylinder
-        let spike = this.createSpikeSplineShape();
-        let spikeMesh = this.createSpikeMesh(spike, this.material);
-        spikeMesh.translateZ(1);
-        spikeMesh.scale.set(0.08, 0.07, 1);
-        spikeMesh.castShadow = true;
-        spikeMesh.receiveShadow = true;
-        let step = (2 * Math.PI) / 10;
-        for (let i = 0; i < 2 * Math.PI; i += step) {
-            let spikeClone = spikeMesh.clone();
-            spikeClone.rotation.z = i - 1.6;
-            spikeClone.position.x = Math.cos(i);
-            spikeClone.position.y = Math.sin(i);
-            holedCylinderMesh.add(spikeClone);
-            commons.createConvexTriangleShapeAddToCompound(compoundShape, spikeClone);
+        if (withGearHolder){
+            commons.createTriangleShapeAddToCompound(compoundShape, holedCylinderMesh, withChainHolder);
+        } else{
+            commons.createConvexTriangleShapeAddToCompound(compoundShape, holedCylinderMesh, withChainHolder);
         }
 
-        //chainholder
-        let chainHolderGeo = new THREE.TorusGeometry(4, 1, 16, 100, 6.3);
-        let chainHolderMesh = new THREE.Mesh(chainHolderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        chainHolderMesh.position.set(23, 0, 13);
-        chainHolderMesh.name = "chainHolder";
-        chainHolderMesh.receiveShadow = true;
-        chainHolderMesh.castShadow = true;
-        groupMesh.add(chainHolderMesh);
-        commons.createConvexTriangleShapeAddToCompound(compoundShape, chainHolderMesh);
+
+        if (withSpikes){
+            //Pigger rundt sylinder
+            let spike = this.createSpikeSplineShape();
+            let spikeMesh = this.createSpikeMesh(spike, this.material);
+            spikeMesh.translateZ(1);
+            spikeMesh.scale.set(0.08, 0.07, 1);
+            spikeMesh.castShadow = true;
+            spikeMesh.receiveShadow = true;
+            let step = (2 * Math.PI) / 10;
+            for (let i = 0; i < 2 * Math.PI; i += step) {
+                let spikeClone = spikeMesh.clone();
+                spikeClone.rotation.z = i - 1.6;
+                spikeClone.position.x = Math.cos(i);
+                spikeClone.position.y = Math.sin(i);
+                holedCylinderMesh.add(spikeClone);
+                commons.createConvexTriangleShapeAddToCompound(compoundShape, spikeClone);
+            }
+        }
+
+        if(withChainHolder){
+            //chainholder
+            let chainHolderGeo = new THREE.TorusGeometry(4, 1, 16, 100, 6.3);
+            let chainHolderMesh = new THREE.Mesh(chainHolderGeo, new THREE.MeshPhongMaterial({color: 0x979A9A}));
+            chainHolderMesh.position.set(23, 0, 13);
+            chainHolderMesh.name = "chainHolder";
+            chainHolderMesh.receiveShadow = true;
+            chainHolderMesh.castShadow = true;
+            groupMesh.add(chainHolderMesh);
+            commons.createConvexTriangleShapeAddToCompound(compoundShape, chainHolderMesh);
+        }
     }
 }

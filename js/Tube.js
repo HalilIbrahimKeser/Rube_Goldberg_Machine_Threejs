@@ -9,10 +9,11 @@ export const tube = {
     },
 
     create(setCollisionMask=true,
-           position={x:200, y:419, z:-490},
+           position={x:200, y:407, z:-490},
            color=Math.random() * 0xffffff,
            mass= 0,
-           radius= 70,
+           radius= 50,
+           holeRadiusPercent = 0.6, //Nr to multiply with the radius get the hole (Must be a nr > 0 and < 1)
            depth = 150,
            tiltX = 0,
            tiltY = Math.PI/2,
@@ -26,7 +27,7 @@ export const tube = {
         groupMesh.rotation.z = tiltZ;
 
         let compoundShape = new Ammo.btCompoundShape();
-        let tubeGeo = this.createHoledCylinderShape(radius, depth);
+        let tubeGeo = this.createHoledCylinderShape(radius, depth, holeRadiusPercent);
         let tubeMesh = new THREE.Mesh(tubeGeo, new THREE.MeshPhongMaterial({color: color}));
 
         tubeMesh.castShadow = true;
@@ -66,7 +67,7 @@ export const tube = {
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
-    createHoledCylinderShape(radius, depth){
+    createHoledCylinderShape(radius, depth, radiusPercent){
         let extrudeSettings = {
             depth : depth,
             steps : 1,
@@ -78,7 +79,7 @@ export const tube = {
         arcShape.absarc(0, 0, radius, 0, Math.PI * 2, 0, false);
 
         let holePath = new THREE.Path();
-        holePath.absarc(0, 0, radius*0.5, 0, Math.PI * 2, true);
+        holePath.absarc(0, 0, radius*radiusPercent, 0, Math.PI * 2, true);
         arcShape.holes.push(holePath);
 
         let holedCylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);

@@ -78,9 +78,8 @@ export function main() {
 
 function addModels() {
 	// SUNGEAR
-	/*sunGear.init(ammoPhysicsWorld);
-	sunGear.create();*/
-
+	sunGear.init(ammoPhysicsWorld);
+	sunGear.create();
 	//Chains
 	/*verticalChain.init(ammoPhysicsWorld);
 	verticalChain.create();*/
