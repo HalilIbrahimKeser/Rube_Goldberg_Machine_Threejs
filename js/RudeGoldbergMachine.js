@@ -35,6 +35,7 @@ import {bricks} from "../js/Bricks.js";
 import {trampoline} from "./Trampoline.js";
 import {flapDoor} from "../js/FlapDoor.js";
 import {tube} from "./Tube.js";
+import {rightTrack} from "./RightTrack.js";
 
 
 let renderer;
@@ -91,6 +92,12 @@ function addModels() {
 	//ballhelper
 	mySphere.init(ammoPhysicsWorld);
 	mySphere.create();
+	mySphere.create(true,
+		{x:420, y:510, z:-430},
+		Math.random() * 0xffffff,
+		30,
+		5,
+		0.3);
 
 	// Flat table
 	flatTable.init(ammoPhysicsWorld);
@@ -109,6 +116,17 @@ function addModels() {
 		Math.PI/2,
 		{x: 70, y: 27, z: 2}, 0.5, 0, 5, -1.68, Math.PI/6);
 
+	flapDoor.create(true,
+		{x:370, y:400, z:-400,},
+		{x: 0, y:1, z: 0},
+		Math.PI/2,
+		{x: 120, y: 80, z: 2},
+		0.5,
+		0,
+		5,
+		-2,
+		Math.PI/2-0.05);
+
 	//Trampoline
 	trampoline.init(ammoPhysicsWorld);
 	trampoline.create(); //First
@@ -126,6 +144,10 @@ function addModels() {
 	//Tube
 	tube.init(ammoPhysicsWorld);
 	tube.create();
+
+	//Bane
+	rightTrack.init(ammoPhysicsWorld);
+	rightTrack.create();
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);

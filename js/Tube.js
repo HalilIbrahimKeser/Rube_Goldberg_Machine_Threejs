@@ -9,16 +9,16 @@ export const tube = {
     },
 
     create(setCollisionMask=true,
-           position={x:200, y:407, z:-490},
+           position={x:200, y:407, z:-485},
            color=Math.random() * 0xffffff,
            mass= 0,
            radius= 50,
            holeRadiusPercent = 0.6, //Nr to multiply with the radius get the hole (Must be a nr > 0 and < 1)
-           depth = 150,
+           depth = 160,
            tiltX = 0,
            tiltY = Math.PI/2,
            tiltZ = 0,
-           restitution = 4) {
+           restitution = 0.5) {
 
         let groupMesh = new THREE.Group();
         groupMesh.position.set = (position.x, position.y, position.z);
