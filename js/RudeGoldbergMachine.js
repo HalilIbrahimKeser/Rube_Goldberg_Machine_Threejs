@@ -91,13 +91,23 @@ function addModels() {
 
 	//ballhelper
 	mySphere.init(ammoPhysicsWorld);
+	//Ball on start
 	mySphere.create();
+	//First ball on right track
 	mySphere.create(true,
 		{x:420, y:530, z:-440},
 		Math.random() * 0xffffff,
 		30,
 		3,
 		0.3);
+	//Ball on slide
+	mySphere.create(true,
+		{x:420, y:200, z:-100},
+		Math.random() * 0xffffff,
+		30,
+		1,
+		0.5);
+
 
 	// Flat table
 	flatTable.init(ammoPhysicsWorld);
