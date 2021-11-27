@@ -93,10 +93,10 @@ function addModels() {
 	mySphere.init(ammoPhysicsWorld);
 	mySphere.create();
 	mySphere.create(true,
-		{x:420, y:510, z:-430},
+		{x:420, y:530, z:-440},
 		Math.random() * 0xffffff,
 		30,
-		5,
+		3,
 		0.3);
 
 	// Flat table
@@ -109,13 +109,17 @@ function addModels() {
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);
-	//Drawbridge type
+	//Drawbridge type on start
 	flapDoor.create(true,
 		{x:-111, y:90, z:-477,},
 		{x: 1, y:0, z: 0},
 		Math.PI/2,
-		{x: 70, y: 27, z: 2}, 0.5, 0, 5, -1.68, Math.PI/6);
+		{x: 70, y: 27, z: 2},
+		0.5,
+		0,
+		5, -1.68, Math.PI/6);
 
+	//Door by the end of tunnel
 	flapDoor.create(true,
 		{x:370, y:400, z:-400,},
 		{x: 0, y:1, z: 0},
@@ -126,6 +130,18 @@ function addModels() {
 		5,
 		-2,
 		Math.PI/2-0.05);
+
+	//Door by the stairs
+	flapDoor.create(true,
+		{x:400, y:280, z:-130,},
+		{x: 0, y:1, z: 0},
+		Math.PI/2,
+		{x: 90, y: 205, z: 2},
+		0.5,
+		0,
+		5,
+		4,
+		-4);
 
 	//Trampoline
 	trampoline.init(ammoPhysicsWorld);

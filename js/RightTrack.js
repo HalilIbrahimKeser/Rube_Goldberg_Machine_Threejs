@@ -17,6 +17,7 @@ export const rightTrack = {
            colorFloor = Math.random() * 0xffffff,
            colorWall =  Math.random() * 0xffffff,
            colorSideWall = Math.random() * 0xffffff,
+           slideColor = Math.random() * 0xffffff,
            position = {x:400, y:350, z:-525},
            radius= 0.2,
            length = 500,
@@ -87,22 +88,37 @@ export const rightTrack = {
         midFloor.position.set(0, -82, 143);
         groupMesh.add(midFloor);
 
+        let midVertical = backWallMesh.clone();
+        midVertical.scale.set(1, 0.17, 1);
+        midVertical.position.set(0, -90, 191);
+        groupMesh.add(midVertical);
+
         let lowerMidFloor = midFloor.clone();
-        lowerMidFloor.scale.set(0.5, 0.5, 0.5);
-        lowerMidFloor.position.set(0, -87, 200);
+        lowerMidFloor.scale.set(1, 2, 1);
+        lowerMidFloor.position.set(-10, -87, 195);
         groupMesh.add(lowerMidFloor);
 
         let leftWallShape = this.createThreeShape(200, 150);
         let leftWallMesh = this.createExtrudeMesh(leftWallShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
-        leftWallMesh.scale.set(1, 1, 1);
-        leftWallMesh.position.set(0, -200, 190);
+        leftWallMesh.scale.set(1.3, 1, 1);
+        leftWallMesh.position.set(0, -200, 195);
         leftWallMesh.rotation.y = Math.PI/2;
         groupMesh.add(leftWallMesh);
 
         let rightWallMesh = leftWallMesh.clone();
-        rightWallMesh.scale.set(1, 1, 1);
-        rightWallMesh.position.set(50, -200, 220);
+        rightWallMesh.scale.set(1.3, 1, 1);
+        rightWallMesh.position.set(50, -170, 250);
         groupMesh.add(rightWallMesh);
+
+        let slideFromStairs = this.createThreeShape(100, 30);
+        let slideFromStairsMesh = this.createExtrudeMesh(slideFromStairs, 1, 2.5, true, 0.1, 1, 0, 1, new THREE.MeshPhongMaterial({color: slideColor}));
+        slideFromStairsMesh.rotation.z = -1;
+        slideFromStairsMesh.scale.set(0.1, 1, 37);
+        slideFromStairsMesh.position.set(-98, -140, 200);
+
+
+        groupMesh.add(slideFromStairsMesh);
+
 
 
         //AMMO til alle deler
@@ -110,17 +126,19 @@ export const rightTrack = {
         this.addCompoundAmmo(backWallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(topFloorMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(horizontalStair1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(horizontalStair1, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(horizontalStair2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(horizontalStair2, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair3, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(horizontalStair3, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(horizontalStair3, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair4, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(horizontalStair4, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(horizontalStair4, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair5, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(midFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(lowerMidFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(leftWallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(rightWallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(midVertical, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
 
 
     },
