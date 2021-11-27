@@ -34,6 +34,7 @@ import {mySphere} from "../lib/ammohelpers/MySphere.js";
 import {bricks} from "../js/Bricks.js";
 import {trampoline} from "./Trampoline.js";
 import {flapDoor} from "../js/FlapDoor.js";
+import {tube} from "./Tube.js";
 
 
 let renderer;
@@ -93,8 +94,8 @@ function addModels() {
 	mySphere.create();
 
 	// Flat table
-	/*flatTable.init(ammoPhysicsWorld);
-	flatTable.create();*/
+	flatTable.init(ammoPhysicsWorld);
+	flatTable.create();
 
 	// Elevator
 	/*tweenElevator.init(ammoPhysicsWorld);
@@ -117,12 +118,15 @@ function addModels() {
 		Math.random() * 0xffffff,
 		0, 50, 30,
 		Math.PI/2, 1.25, 0, 3);
-
 	trampoline.create(true,
 		{x:-95, y:475, z:-490},
 		Math.random() * 0xffffff,
 		0, 60, 30,
 		Math.PI/2, 1.4, 0, 3);
+
+	//Tube
+	tube.init(ammoPhysicsWorld);
+	tube.create();
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);

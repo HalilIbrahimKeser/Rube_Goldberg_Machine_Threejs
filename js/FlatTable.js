@@ -12,7 +12,7 @@ export const flatTable = {
     create(setCollisionMask = true,
            mass = 0,
            color = 0xF4F0EF,
-           position = {x: -55, y: 10, z: -450},
+           position = {x: -300, y: 0, z: -400},
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -52,9 +52,9 @@ export const flatTable = {
         // BOX
         let boxShape = this.createThreeShape(20, 20);
         let boxMesh = this.createExtrudeMesh(boxShape, 1, 20, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        //boxMesh.position.set(12, 65, -180);
-        boxMesh.rotateY(1.57);
-        boxMesh.rotateX(1.90);
+        boxMesh.position.set(35, 23, -30);
+        //boxMesh.rotateY(1.57);
+        //boxMesh.rotateX(1.90);
         boxMesh.castShadow = true;
         boxMesh.receiveShadow = true;
         groupMesh.add(boxMesh);
