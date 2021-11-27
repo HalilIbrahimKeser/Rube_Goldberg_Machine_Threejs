@@ -47,11 +47,10 @@ export const tube = {
             rigidBody,
             tubeMesh,
             setCollisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
-            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND,
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+            this.myPhysicsWorld.COLLISION_GROUP_SPHERE|
             this.myPhysicsWorld.COLLISION_GROUP_PLANE |
-            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_BOX |
