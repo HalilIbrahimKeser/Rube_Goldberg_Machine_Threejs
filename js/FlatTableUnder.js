@@ -10,9 +10,10 @@ export const flatTableUnder = {
     },
 
     create(setCollisionMask = true,
-           mass = 10,
+           mass = 0,
            color = Math.random() * 0xffffff,
-           position = {x: -20, y: -30, z: -200},
+           position = {x: -40, y: -30, z: -230},
+           //position = {x: -200, y: -60, z: -224}, //Alternativ seasaw
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -20,6 +21,8 @@ export const flatTableUnder = {
         let groupMesh = new THREE.Group();
         groupMesh.position.set(position.x, position.y, position.z);
         //this.myPhysicsWorld.add(groupMesh);
+
+        let compoundShape = new Ammo.btCompoundShape();
 
         // FLAT TABLE
         let tableShape = this.createThreeShape(length, width);
@@ -30,18 +33,47 @@ export const flatTableUnder = {
         tableMesh.castShadow = true;
         tableMesh.receiveShadow = true;
         groupMesh.add(tableMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, tableMesh);
 
         // ROCKER CYLINDER
-        let rockerCylinder = this.createCylinderShape(8, 40);
+        let rockerCylinder = this.createCylinderShape(8, 50);
         let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        rockerCylinderMesh.position.set(75, 10, -50);
+        rockerCylinderMesh.position.set(70, 10, -50);
         rockerCylinderMesh.receiveShadow = true;
         rockerCylinderMesh.castShadow = true;
         groupMesh.add(rockerCylinderMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, rockerCylinderMesh);
 
-        // AMMO
-        this.addCompoundAmmo(tableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(rockerCylinderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        let boundaryBack = this.createThreeShape(100, 200);
+        let boundaryBackMesh = this.createExtrudeMesh(boundaryBack, 1, 1, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.2}));
+        boundaryBackMesh.position.set(0, 0, -50);
+        boundaryBackMesh.castShadow = true;
+        boundaryBackMesh.receiveShadow = true;
+        groupMesh.add(boundaryBackMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryBackMesh);
+
+        let boundaryFrontMesh = boundaryBackMesh.clone();
+        boundaryFrontMesh.position.set(0, 0, 0);
+        groupMesh.add(boundaryFrontMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryFrontMesh);
+
+        //AMMO
+        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);
+        this.myPhysicsWorld.addPhysicsObject(
+            rigidBody,
+            groupMesh,
+            setCollisionMask,
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+            this.myPhysicsWorld.COLLISION_GROUP_PLANE |
+            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
+            this.myPhysicsWorld.COLLISION_GROUP_BOX |
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+        );
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
@@ -74,7 +106,6 @@ export const flatTableUnder = {
     },
 
 
-
     createExtrudeMesh(shape, steps, depth, bevelEnabled, bevelThickness, bevelSize, bevelOffset, bevelSegments, material) {
         let extrudeSettings = {
             steps: steps,
@@ -88,29 +119,6 @@ export const flatTableUnder = {
         let shapeGeometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
         let extrudeMesh = new THREE.Mesh(shapeGeometry, material);
         return extrudeMesh;
-    },
+    }
 
-    addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask) {
-        let compoundShape = new Ammo.btCompoundShape();
-        commons.createTriangleShapeAddToCompound(compoundShape, mesh);
-        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, friction, position, mass);
-        rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
-        rigidBody.setActivationState(4);
-
-        this.addPhysicsAmmo(rigidBody, groupMesh, collisionMask);
-    },
-
-    addPhysicsAmmo(rigidBody, groupMesh, collisionMask) {
-        this.myPhysicsWorld.addPhysicsObject(
-            rigidBody,
-            groupMesh,
-            collisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_PLANE,
-            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
-            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
-        );
-    },
 }

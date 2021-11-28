@@ -24,7 +24,7 @@ export const rightTrack = {
            width = 300,
            scale = {x: 2, y: 2, z:2}){
 
-        let glassMaterial = new THREE.MeshPhongMaterial({color: colorSideWall, side: THREE.DoubleSide, transparent: true, opacity: 0.2})
+        let glassMaterial = new THREE.MeshPhongMaterial({color: colorSideWall, side: THREE.DoubleSide, transparent: true, opacity: 0.2});
 
         let groupMesh = new THREE.Group();
         groupMesh.position.set(position.x, position.y, position.z);

@@ -9,9 +9,9 @@ export const flatTableTop = {
     },
 
     create(setCollisionMask = true,
-           mass = 10,
+           mass = 1,
            color = Math.random() * 0xffffff,
-           position = {x: 40, y: 0, z: -230},
+           position = {x: -30, y: -15, z: -230},
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -20,8 +20,10 @@ export const flatTableTop = {
         groupMesh.position.set(position.x, position.y, position.z);
         groupMesh.name = "Flat Table Top"
 
+        let compoundShape = new Ammo.btCompoundShape();
+
         // ROCKER TABLE
-        let rockerTableShape = this.createThreeShape(50, 80);
+        let rockerTableShape = this.createThreeShape(45, 150);
         let rockerTableMesh = this.createExtrudeMesh(rockerTableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         //rockerTableMesh.position.set(35, 17, 0);
         rockerTableMesh.rotateX(-Math.PI/2);
@@ -29,24 +31,37 @@ export const flatTableTop = {
         rockerTableMesh.castShadow = true;
         rockerTableMesh.receiveShadow = true;
         groupMesh.add(rockerTableMesh);
-        // //Ammo rocker table
-        // let ammoShapeRockerTable = new Ammo.btBoxShape(100,100);
-        // let rigidBodyRockerTable = commons.createAmmoRigidBody(ammoShapeRockerTable, rockerTableMesh, 1, 0.6, position, mass);
-        // this.myPhysicsWorld.addPhysicsObject(
-        //     rigidBodyRockerTable,
-        //     rockerTableMesh,
-        //     setCollisionMask,
-        //     this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE,
-        //     this.myPhysicsWorld.COLLISION_GROUP_PLANE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-        //     this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-        //     this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE
-        // );
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, rockerTableMesh);
 
-        // AMMO
-        this.addCompoundAmmo(rockerTableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        let boarderShape = this.createThreeShape(10, 5);
+        let boarderMesh = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
+        boarderMesh.position.set(0, 5, -45);
+        //boarderMesh.rotateX(-Math.PI/2);
+        //boarderMesh.rotateX(1.90);
+        boarderMesh.castShadow = true;
+        boarderMesh.receiveShadow = true;
+        groupMesh.add(boarderMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh);
+
+
+
+        //AMMO
+        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);
+        this.myPhysicsWorld.addPhysicsObject(
+            rigidBody,
+            groupMesh,
+            setCollisionMask,
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+            this.myPhysicsWorld.COLLISION_GROUP_PLANE |
+            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
+            this.myPhysicsWorld.COLLISION_GROUP_BOX |
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+        );
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
@@ -93,27 +108,5 @@ export const flatTableTop = {
         return extrudeMesh;
     },
 
-    addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask) {
-        let compoundShape = new Ammo.btCompoundShape();
-        commons.createTriangleShapeAddToCompound(compoundShape, mesh);
-        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, friction, position, mass);
-        rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
-        rigidBody.setActivationState(4);
 
-        this.addPhysicsAmmo(rigidBody, groupMesh, collisionMask);
-    },
-
-    addPhysicsAmmo(rigidBody, groupMesh, collisionMask) {
-        this.myPhysicsWorld.addPhysicsObject(
-            rigidBody,
-            groupMesh,
-            collisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_PLANE,
-            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
-            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
-        );
-    },
 }

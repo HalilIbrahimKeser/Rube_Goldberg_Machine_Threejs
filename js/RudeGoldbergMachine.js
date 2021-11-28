@@ -81,6 +81,20 @@ function addModels() {
 	// SUNGEAR
 	sunGear.init(ammoPhysicsWorld);
 	sunGear.create();
+	sunGear.create(true,
+		70,
+		Math.random() * 0xffffff,
+		{x:132, y:150, z:-250},
+		15,
+		15,
+		false,
+		false,
+		false,
+		true,
+		{x: 0, y: 0, z: 0},
+		{x: Math.PI/2, y: 0, z: 0},
+		0.2,
+		0.1);
 
 	//Chains
 	/*verticalChain.init(ammoPhysicsWorld);
@@ -110,24 +124,24 @@ function addModels() {
 	mySphere.create(true,
 		{x:390, y:220, z:-85},
 		Math.random() * 0xffffff,
-		10,
+		30,
 		1,
-		3);
+		1);
 	//Ball after the large ball
-	mySphere.create(true,
+	/*mySphere.create(true,
 		{x:130, y:150, z:-250},
 		Math.random() * 0xffffff,
 		30,
 		1,
-		0.3);
+		0.3);*/
 
 	//Ball on table
 	mySphere.create(true,
-		{x:100, y:150, z:-250},
+		{x:0, y:20, z:-250},
 		Math.random() * 0xffffff,
-		30,
-		1,
-		0.3);
+		10,
+		0.5,
+		1);
 
 
 	// FlappDoor
@@ -148,7 +162,7 @@ function addModels() {
 		{x: 0, y:1, z: 0},
 		Math.PI/2,
 		{x: 120, y: 80, z: 2},
-		0.5,
+		20,
 		0,
 		5,
 		-2,
@@ -172,7 +186,7 @@ function addModels() {
 		{x: 0, y:1, z: 0},
 		Math.PI/2,
 		{x: 130, y: 60, z: 2},
-		0.5,
+		50,
 		0,
 		5,
 		-Math.PI/2,
