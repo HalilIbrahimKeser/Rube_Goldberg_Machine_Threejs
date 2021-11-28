@@ -1,8 +1,7 @@
 /**
  * Bruker et eksempel fra faglærer Werner som startpunkt skybox2.js
  *
- * For terrreng har vi hentet inn kode fra terreng2.js, deler av det er så flyttet til egen js fil.
- * Senere har vi heller tatt i bruk terraing.js fra helpers
+ * Terreng har vi heller tatt i bruk terraing.js fra helpers
  *
  * MyThreeScene kommer fra lib mappen. Den er gjort noen få endringer på.
  * Tween er implementert i TweenElevator.js, kode hentet fra Tween1.js
@@ -11,9 +10,9 @@
  */
 /**
  * TODO list
+ * Tween gjør at alt henger seg
  *
  *
- * Endret til deltatime til currenTime. Nå fungerer siden mye raskere :) tips fra Jørgen. HIK 25.11.21
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
@@ -93,7 +92,12 @@ function addModels() {
 	//Balls
 	mySphere.init(ammoPhysicsWorld);
 	//Ball on start
-	mySphere.create();
+	mySphere.create(true,
+		{x:-270, y:410, z:-475},
+		Math.random() * 0xffffff,
+		30,
+		0.7,
+		0.2);
 	//First ball on right track
 	mySphere.create(true,
 		{x:420, y:530, z:-440},
@@ -101,13 +105,13 @@ function addModels() {
 		30,
 		3,
 		0.3);
-	//Ball on slide
+	//Ball on slide, big one
 	mySphere.create(true,
-		{x:420, y:200, z:-80},
+		{x:390, y:220, z:-85},
 		Math.random() * 0xffffff,
-		30,
+		20,
 		1,
-		1);
+		1.7);
 	//Ball after the large ball
 	mySphere.create(true,
 		{x:130, y:150, z:-250},
@@ -199,13 +203,13 @@ function addModels() {
 	flatTable.init(ammoPhysicsWorld);
 	flatTable.create();
 
-	// Elevator
-	/*tweenElevator.init(ammoPhysicsWorld);
-	tweenElevator.create();*/
-
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
 	bricks.create();
+
+	// Elevator
+	// tweenElevator.init(ammoPhysicsWorld);
+	// tweenElevator.create();
 }
 
 
@@ -220,14 +224,14 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	let delta = clock.getDelta();
+	let delta = clock.getDelta() * 6;
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
-	//TWEEN.update(currentTime);
-
 	//collisionTest();
-	myThreeScene.updateGraphics(currentTime);
+	myThreeScene.updateGraphics(delta);
+
+	TWEEN.update(delta);
 
 	render();
 }

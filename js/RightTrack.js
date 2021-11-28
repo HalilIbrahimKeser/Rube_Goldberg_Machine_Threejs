@@ -130,6 +130,7 @@ export const rightTrack = {
 
         let slideFloor = topFloorMesh.clone();
         slideFloor.scale.set(0.4, 0.5, 1);
+        slideFloor.rotation.x = 1.4;
         slideFloor.position.set(-135, -142.5, 225);
         groupMesh.add(slideFloor);
 

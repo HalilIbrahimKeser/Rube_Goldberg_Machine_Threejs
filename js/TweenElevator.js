@@ -9,17 +9,22 @@ import {myArbitraryTriangleMesh2} from "../lib/ammohelpers/MyArbitraryTriangleMe
 
 export const tweenElevator = {
     myPhysicsWorld: undefined,
-    scene: undefined,
-    models: undefined,
-    tween: undefined,
-    position: {x: -360, y: -75, z: -8},
 
     init(myPhysicsWorld) {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
-    create(setCollisionMask = true, mass = 0, texture = false, color = 0xF4F0EF, radius = 0.2, length = 350, width = 150) {
-        this.setCollisionMask = setCollisionMask;
+    create(setCollisionMask=true,
+           position={x:200, y:410, z:-485},
+           color=Math.random() * 0xffffff,
+           mass= 0,
+           radius= 50,
+           holeRadiusPercent = 0.6,
+           depth = 160,
+           tiltX = 0,
+           tiltY = Math.PI/2,
+           tiltZ = 0,
+           restitution = 0.5) {
         this.addTween();
     },
 
@@ -50,11 +55,11 @@ export const tweenElevator = {
         const progressbarElem = document.querySelector('#progressbar');
         const manager = new THREE.LoadingManager();
         manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            progressbarElem.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
         }
         manager.onLoad = () => {
             this.initModels();
         }
+        // this.initModels();
 
         this.models = {
             luma: {
@@ -78,8 +83,8 @@ export const tweenElevator = {
 
     initModels() {
         // hide the loading bar
-        const loadingElem = document.querySelector('#loading');
-        loadingElem.style.display = 'none';
+        // const loadingElem = document.querySelector('#loading');
+        // loadingElem.style.display = 'none';
 
         Object.values(this.models).forEach((model, ndx) => {
             model.gltf.scene.traverse(function (child) {
