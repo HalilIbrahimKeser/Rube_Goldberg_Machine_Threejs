@@ -11,11 +11,14 @@ export const bricks = {
 
     create(setCollisionMask = true,
            mass = 10,
-           color = 0x81387a,
+           color = Math.random() * 0xffffff,
            position = {x: 60, y: -18, z: 50},
            radius = 0.2,
            length = 50,
-           width = 20) {
+           width = 20,
+           degrees1 = 20,
+           degrees2 = 2,
+           degrees3 = -60) {
 
         let groupMesh = new THREE.Group();
 
@@ -35,17 +38,18 @@ export const bricks = {
             nameShape = this.createThreeShape(length, width);
             nameMesh = this.createExtrudeMesh(nameShape, 1, 5, true, 2, 2, 0, 1, new THREE.MeshPhongMaterial({color: color}));
             nameMesh.position.set(temp_x_pos, temp_y_pos, temp_z_pos);
-            nameMesh.rotateY(this.degreesToRadians(20));
-            nameMesh.rotateX(this.degreesToRadians(0));
+            nameMesh.rotateY(this.degreesToRadians(degrees1));
+            //nameMesh.rotateX(this.degreesToRadians(degrees2));
             nameMesh.castShadow = true;
             nameMesh.receiveShadow = true;
             nameMesh.name = "brickMesh" + i;
 
-            temp_x_pos += x_dif_beetween_bricks + (i * 2);
+            temp_x_pos += x_dif_beetween_bricks + (i * degrees2);
             temp_y_pos += y_dif_beetween_bricks
             temp_z_pos += z_dif_beetween_bricks;
 
             groupMesh.add(nameMesh);
+            groupMesh.rotation.y = this.degreesToRadians(degrees3);
             // AMMO
             this.addCompoundAmmo(nameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         }
@@ -90,7 +94,7 @@ export const bricks = {
         this.addPhysicsAmmo(rigidBody, groupMesh, collisionMask);
     },
 
-    addPhysicsAmmo(rigidBody, groupMesh, collisionMask) {
+    addPhysicsAmmo(rigidBody, groupMesh, collisionMask){
         this.myPhysicsWorld.addPhysicsObject(
             rigidBody,
             groupMesh,
@@ -100,7 +104,9 @@ export const bricks = {
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+            this.myPhysicsWorld.COLLISION_GROUP_BOX |
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
         );
     },
 

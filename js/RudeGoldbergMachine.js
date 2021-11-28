@@ -232,7 +232,16 @@ function addModels() {
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
-	bricks.create();
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 60, y: -18, z: 50},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -75, y: -26, z: -20},
+		0.2,50,20,20, 0.5, -60 );
 
 	// Elevator
 	// tweenElevator.init(ammoPhysicsWorld);
@@ -278,4 +287,9 @@ function onWindowResize() {
 
 export function animateOnMain() {
 	animate();
+}
+
+function degreesToRadians(degrees) {
+	let pi = Math.PI;
+	return degrees * (pi / 180);
 }
