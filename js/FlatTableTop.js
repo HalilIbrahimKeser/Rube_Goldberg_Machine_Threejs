@@ -10,8 +10,10 @@ export const flatTableTop = {
 
     create(setCollisionMask = true,
            mass = 10,
+           restitution = 0.1,
+           friction = 0.3,
            color = Math.random() * 0xffffff,
-           position = {x: 40, y: 0, z: -230},
+           position = {x: 40, y: 0, z: -500},
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -29,24 +31,9 @@ export const flatTableTop = {
         rockerTableMesh.castShadow = true;
         rockerTableMesh.receiveShadow = true;
         groupMesh.add(rockerTableMesh);
-        // //Ammo rocker table
-        // let ammoShapeRockerTable = new Ammo.btBoxShape(100,100);
-        // let rigidBodyRockerTable = commons.createAmmoRigidBody(ammoShapeRockerTable, rockerTableMesh, 1, 0.6, position, mass);
-        // this.myPhysicsWorld.addPhysicsObject(
-        //     rigidBodyRockerTable,
-        //     rockerTableMesh,
-        //     setCollisionMask,
-        //     this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE,
-        //     this.myPhysicsWorld.COLLISION_GROUP_PLANE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-        //     this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-        //     this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
-        //     this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE
-        // );
 
         // AMMO
-        this.addCompoundAmmo(rockerTableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(rockerTableMesh, groupMesh, restitution, 0.3, position, mass, setCollisionMask);
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
@@ -113,7 +100,10 @@ export const flatTableTop = {
             this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
             this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+            this.myPhysicsWorld.COLLISION_GROUP_BOX |
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
+
         );
     },
 }

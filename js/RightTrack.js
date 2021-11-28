@@ -194,8 +194,6 @@ export const rightTrack = {
 
     },
 
-
-
     addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask){
         let compoundShape = new Ammo.btCompoundShape();
         commons.createTriangleShapeAddToCompound(compoundShape, mesh);
@@ -219,7 +217,6 @@ export const rightTrack = {
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
             this.myPhysicsWorld.COLLISION_GROUP_BOX |
             this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
-
         );
     },
 

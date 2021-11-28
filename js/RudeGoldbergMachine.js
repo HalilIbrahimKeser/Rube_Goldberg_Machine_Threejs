@@ -123,11 +123,11 @@ function addModels() {
 
 	//Ball on table
 	mySphere.create(true,
-		{x:100, y:150, z:-250},
+		{x:50, y:50, z:-250},
 		Math.random() * 0xffffff,
-		30,
+		10,
 		1,
-		0.3);
+		1);
 
 
 	// FlappDoor
@@ -211,14 +211,35 @@ function addModels() {
 
 	// Flat table
 	flatTableUnder.init(ammoPhysicsWorld);
-	flatTableUnder.create();
+	flatTableUnder.create(true,
+		0,
+		0.1,
+		0.3,
+		Math.random() * 0xffffff,
+		{x: -20, y: -20, z: -230}, 0.2, 200,
+		50, );
 
 	flatTableTop.init(ammoPhysicsWorld);
-	flatTableTop.create();
+	flatTableTop.create(true,
+		10,
+		0.1,
+		0.3,
+		Math.random() * 0xffffff,
+		{x: 40, y: 0, z: -230}, 50, 30,
+		50);
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
-	bricks.create();
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 60, y: -18, z: 50},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -75, y: -26, z: -20},
+		0.2,50,20,20, 0.5, -60 );
 
 	// Elevator
 	// tweenElevator.init(ammoPhysicsWorld);
@@ -264,4 +285,9 @@ function onWindowResize() {
 
 export function animateOnMain() {
 	animate();
+}
+
+function degreesToRadians(degrees) {
+	let pi = Math.PI;
+	return degrees * (pi / 180);
 }
