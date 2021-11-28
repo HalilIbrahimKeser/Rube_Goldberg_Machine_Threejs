@@ -110,9 +110,9 @@ function addModels() {
 	mySphere.create(true,
 		{x:390, y:220, z:-85},
 		Math.random() * 0xffffff,
-		20,
+		10,
 		1,
-		1.7);
+		3);
 	//Ball after the large ball
 	mySphere.create(true,
 		{x:130, y:150, z:-250},
@@ -120,6 +120,15 @@ function addModels() {
 		30,
 		1,
 		0.3);
+
+	//Ball on table
+	mySphere.create(true,
+		{x:100, y:150, z:-250},
+		Math.random() * 0xffffff,
+		30,
+		1,
+		0.3);
+
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);

@@ -3,7 +3,6 @@ import {commons} from "../lib/ammohelpers/lib/Common.js";
 
 export const flatTableTop = {
     myPhysicsWorld: undefined,
-    //scene: undefined,
 
     init(myPhysicsWorld) { // må endres til ammophysicsworld
         this.myPhysicsWorld = myPhysicsWorld;
@@ -12,37 +11,42 @@ export const flatTableTop = {
     create(setCollisionMask = true,
            mass = 10,
            color = Math.random() * 0xffffff,
-           position = {x: -20, y: 0, z: -200},
+           position = {x: 40, y: 0, z: -230},
            radius = 0.2,
            length = 150,
            width = 50) {
 
         let groupMesh = new THREE.Group();
         groupMesh.position.set(position.x, position.y, position.z);
+        groupMesh.name = "Flat Table Top"
 
         // ROCKER TABLE
         let rockerTableShape = this.createThreeShape(50, 80);
         let rockerTableMesh = this.createExtrudeMesh(rockerTableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        rockerTableMesh.position.set(35, 17, 0);
+        //rockerTableMesh.position.set(35, 17, 0);
         rockerTableMesh.rotateX(-Math.PI/2);
         //rockerTableMesh.rotateX(1.90);
         rockerTableMesh.castShadow = true;
         rockerTableMesh.receiveShadow = true;
         groupMesh.add(rockerTableMesh);
-
-        // BOX
-        let boxShape = this.createThreeShape(20, 20);
-        let boxMesh = this.createExtrudeMesh(boxShape, 1, 20, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boxMesh.position.set(35, 23, -30);
-        //boxMesh.rotateY(1.57);
-        //boxMesh.rotateX(1.90);
-        boxMesh.castShadow = true;
-        boxMesh.receiveShadow = true;
-        groupMesh.add(boxMesh);
+        // //Ammo rocker table
+        // let ammoShapeRockerTable = new Ammo.btBoxShape(100,100);
+        // let rigidBodyRockerTable = commons.createAmmoRigidBody(ammoShapeRockerTable, rockerTableMesh, 1, 0.6, position, mass);
+        // this.myPhysicsWorld.addPhysicsObject(
+        //     rigidBodyRockerTable,
+        //     rockerTableMesh,
+        //     setCollisionMask,
+        //     this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE,
+        //     this.myPhysicsWorld.COLLISION_GROUP_PLANE |
+        //     this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
+        //     this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+        //     this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+        //     this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+        //     this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE
+        // );
 
         // AMMO
         this.addCompoundAmmo(rockerTableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(boxMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
@@ -73,8 +77,6 @@ export const flatTableTop = {
 
         return shape;
     },
-
-
 
     createExtrudeMesh(shape, steps, depth, bevelEnabled, bevelThickness, bevelSize, bevelOffset, bevelSegments, material) {
         let extrudeSettings = {

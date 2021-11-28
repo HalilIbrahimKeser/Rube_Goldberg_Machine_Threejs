@@ -18,7 +18,6 @@ export const bricks = {
            width = 20) {
 
         let groupMesh = new THREE.Group();
-        //this.myPhysicsWorld.add(groupMesh);
 
         let x_dif_beetween_bricks = 11;
         let y_dif_beetween_bricks = -0.2;
@@ -36,7 +35,7 @@ export const bricks = {
             nameShape = this.createThreeShape(length, width);
             nameMesh = this.createExtrudeMesh(nameShape, 1, 5, true, 2, 2, 0, 1, new THREE.MeshPhongMaterial({color: color}));
             nameMesh.position.set(temp_x_pos, temp_y_pos, temp_z_pos);
-            nameMesh.rotateY(this.degreesToRadians(30));
+            nameMesh.rotateY(this.degreesToRadians(20));
             nameMesh.rotateX(this.degreesToRadians(0));
             nameMesh.castShadow = true;
             nameMesh.receiveShadow = true;
