@@ -101,7 +101,7 @@ export const flapDoor = {
         );
 
         //THREE, kube/stick:
-        this.stickMesh = new THREE.Mesh(new THREE.BoxGeometry(sizeStick.x, sizeStick.y, sizeStick.z), new THREE.MeshPhongMaterial({color: 0xf78a1d}));
+        this.stickMesh = new THREE.Mesh(new THREE.BoxGeometry(sizeStick.x, sizeStick.y, sizeStick.z), new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff}));
         this.stickMesh.userData.tag = 'stick';
         this.stickMesh.position.set(posStick.x, posStick.y, posStick.z);
         this.stickMesh.castShadow = true;

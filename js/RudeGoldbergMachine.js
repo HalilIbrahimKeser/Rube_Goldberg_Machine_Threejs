@@ -81,6 +81,7 @@ function addModels() {
 	// SUNGEAR
 	sunGear.init(ammoPhysicsWorld);
 	sunGear.create();
+
 	//Chains
 	/*verticalChain.init(ammoPhysicsWorld);
 	verticalChain.create();*/
@@ -89,7 +90,7 @@ function addModels() {
 	startGearHolder.init(ammoPhysicsWorld);
 	startGearHolder.create();
 
-	//ballhelper
+	//Balls
 	mySphere.init(ammoPhysicsWorld);
 	//Ball on start
 	mySphere.create();
@@ -102,20 +103,18 @@ function addModels() {
 		0.3);
 	//Ball on slide
 	mySphere.create(true,
-		{x:420, y:200, z:-100},
+		{x:420, y:200, z:-80},
 		Math.random() * 0xffffff,
 		30,
 		1,
-		0.5);
-
-
-	// Flat table
-	flatTable.init(ammoPhysicsWorld);
-	flatTable.create();
-
-	// Elevator
-	/*tweenElevator.init(ammoPhysicsWorld);
-	tweenElevator.create();*/
+		1);
+	//Ball after the large ball
+	mySphere.create(true,
+		{x:130, y:150, z:-250},
+		Math.random() * 0xffffff,
+		30,
+		1,
+		0.3);
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);
@@ -153,6 +152,18 @@ function addModels() {
 		4,
 		-4);
 
+	//Door by the end of slide
+	flapDoor.create(true,
+		{x:130, y:120, z:-140,},
+		{x: 0, y:1, z: 0},
+		Math.PI/2,
+		{x: 130, y: 60, z: 2},
+		0.5,
+		0,
+		5,
+		-Math.PI/2,
+		Math.PI/2);
+
 	//Trampoline
 	trampoline.init(ammoPhysicsWorld);
 	trampoline.create(); //First
@@ -165,15 +176,32 @@ function addModels() {
 		{x:-95, y:475, z:-490},
 		Math.random() * 0xffffff,
 		0, 60, 30,
-		Math.PI/2, 1.4, 0, 3);
+		Math.PI/2, 1.4, 0, 5);
 
 	//Tube
 	tube.init(ammoPhysicsWorld);
 	tube.create();
+	tube.create(true,
+		{x:200, y:20, z:-485},
+		Math.random() * 0xffffff,
+		0,
+		90,
+		0.7,
+		160,
+		0,0,0,
+		0.2);
 
-	//Bane
+	//Høyre bane
 	rightTrack.init(ammoPhysicsWorld);
 	rightTrack.create();
+
+	// Flat table
+	flatTable.init(ammoPhysicsWorld);
+	flatTable.create();
+
+	// Elevator
+	/*tweenElevator.init(ammoPhysicsWorld);
+	tweenElevator.create();*/
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);

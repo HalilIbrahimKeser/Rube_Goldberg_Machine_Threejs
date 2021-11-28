@@ -17,7 +17,7 @@ export const sunGear = {
     create(setCollisionMask = true,
            mass = 10,
            color = 0xF5D22E,
-           position = {x:-310, y:235, z:-495},
+           position = {x:-310, y:240, z:-495},
            radius= 20,
            height = 30, //height of the holed cylinder
            withGearHolder = true,
@@ -26,7 +26,8 @@ export const sunGear = {
            randomizedColor = false,
            gearHolderRotation = {x: Math.PI/2, y: 0, z: 0},
            gearRotation = {x: 0, y: 0, z: 0},
-           holeRadiusPercent = 0.2){
+           holeRadiusPercent = 0.2,
+           restitution = 0.4){
         this.position = position;
         if (randomizedColor){
             this.material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff});
@@ -54,7 +55,7 @@ export const sunGear = {
             holeRadiusPercent);
 
         //AMMO
-        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.4, 0.6, position, mass);
+        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, 0.6, position, mass);
         this.myPhysicsWorld.addPhysicsObject(
             rigidBody,
             groupMesh,
@@ -191,6 +192,7 @@ export const sunGear = {
         //Sylinder med hol i midten
         let holedCylinderMesh = new THREE.Mesh(this.createHoledCylinderShape(radius, height, holeRadiusPercent), this.material);
         //holedCylinderMesh.scale.set(radius, radius, height);
+        holedCylinderMesh.rotation.set(gearRotation.x, gearRotation.y, gearRotation.z);
         holedCylinderMesh.castShadow = true;
         holedCylinderMesh.receiveShadow = true;
         holedCylinderMesh.name = "holedCylinder";
@@ -206,16 +208,16 @@ export const sunGear = {
             //Pigger rundt sylinder
             let spike = this.createSpikeSplineShape();
             let spikeMesh = this.createSpikeMesh(spike, this.material);
-            spikeMesh.translateZ(1);
-            spikeMesh.scale.set(0.08, 0.07, 1);
+            spikeMesh.translateZ(28);
+            spikeMesh.scale.set(1.5, 1.5, 2);
             spikeMesh.castShadow = true;
             spikeMesh.receiveShadow = true;
             let step = (2 * Math.PI) / 10;
             for (let i = 0; i < 2 * Math.PI; i += step) {
                 let spikeClone = spikeMesh.clone();
                 spikeClone.rotation.z = i - 1.6;
-                spikeClone.position.x = Math.cos(i);
-                spikeClone.position.y = Math.sin(i);
+                spikeClone.position.x = 20*Math.cos(i);
+                spikeClone.position.y = 20*Math.sin(i);
                 holedCylinderMesh.add(spikeClone);
                 commons.createConvexTriangleShapeAddToCompound(compoundShape, spikeClone);
             }

@@ -118,7 +118,7 @@ export const rightTrack = {
         groupMesh.add(slideFromStairsMesh);
 
         let rightWallSlideStairs = leftWallMesh.clone();
-        rightWallSlideStairs.scale.set(1.3, 0.6, 1);
+        rightWallSlideStairs.scale.set(1.3, 0.69, 1);
         rightWallSlideStairs.position.set(0, -200, 252);
         rightWallSlideStairs.rotation.set(0, 0, Math.PI/2);
         groupMesh.add(rightWallSlideStairs);
@@ -129,13 +129,13 @@ export const rightTrack = {
         groupMesh.add(leftWallSlideStairs);
 
         let slideFloor = topFloorMesh.clone();
-        slideFloor.scale.set(0.25, 0.5, 1);
-        slideFloor.position.set(-117, -142.5, 225);
+        slideFloor.scale.set(0.4, 0.5, 1);
+        slideFloor.position.set(-135, -142.5, 225);
         groupMesh.add(slideFloor);
 
         let slideCollisionWall = leftWallMesh.clone();
-        slideCollisionWall.scale.set(0.6, 1, 1);
-        slideCollisionWall.position.set(-119, -190, 251);
+        slideCollisionWall.scale.set(0.38, 0.5, 1);
+        slideCollisionWall.position.set(-137, -190, 251);
         groupMesh.add(slideCollisionWall);
 
         let verticalWallBelowSlide = slideCollisionWall.clone();
@@ -146,9 +146,21 @@ export const rightTrack = {
         let slimSlide = this.createThreeShape(100, 50);
         let slimSlideMesh = this.createExtrudeMesh(slimSlide, 1, 2.5, true, 0.1, 1, 0, 1, new THREE.MeshPhongMaterial({color: slideColor}));
         slimSlideMesh.rotation.x = 1.1;
-        slimSlideMesh.scale.set(0.4, 0.7, 1);
-        slimSlideMesh.position.set(-117, -175, 162);
+        slimSlideMesh.scale.set(0.7, 0.7, 1);
+        slimSlideMesh.position.set(-133, -175, 162);
         groupMesh.add(slimSlideMesh);
+
+        let newLevelFloor = lowerMidFloor.clone();
+        newLevelFloor.scale.set(0.7, 0.7, 1);
+        newLevelFloor.position.set(-135, -135, 120);
+        groupMesh.add(newLevelFloor);
+
+        let wallUnderDoor = slideCollisionWall.clone();
+        wallUnderDoor.scale.set(0.5, 0.5, 1);
+        wallUnderDoor.position.set(-137, -240, 193);
+        groupMesh.add(wallUnderDoor);
+
+
 
 
 
@@ -164,7 +176,7 @@ export const rightTrack = {
         this.addCompoundAmmo(verticalStair4, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(horizontalStair4, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalStair5, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(midFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(midFloor, groupMesh, 0.3, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(lowerMidFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(leftWallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(rightWallMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -173,9 +185,11 @@ export const rightTrack = {
         this.addCompoundAmmo(rightWallSlideStairs, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(leftWallSlideStairs, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(slideFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(slideCollisionWall, groupMesh, 0.7, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(slideCollisionWall, groupMesh, 1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalWallBelowSlide, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(slimSlideMesh, groupMesh, 0.1, 0, position, mass, setCollisionMask);
+        this.addCompoundAmmo(newLevelFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(wallUnderDoor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
 
     },
 
