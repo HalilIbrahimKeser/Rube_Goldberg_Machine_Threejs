@@ -17,10 +17,7 @@
 
 import * as THREE from "../lib/three/build/three.module.js";
 import {addSkybox} from "../js/HelperClass.js";
-
-// import {addTerrain} from "./Terrain.js";
 import {myTerrain} from "../lib/ammohelpers/MyTerrain.js";
-
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 import {sunGear} from "../js/SunGear.js";
@@ -36,6 +33,7 @@ import {flapDoor} from "../js/FlapDoor.js";
 import {tube} from "./Tube.js";
 import {rightTrack} from "./RightTrack.js";
 import {flatTableTop} from "./FlatTableTop.js";
+import {leftTrack} from "./LeftTrack.js";
 
 
 let renderer;
@@ -242,6 +240,10 @@ function addModels() {
 		Math.random() * 0xffffff,
 		{x: -75, y: -26, z: -20},
 		0.2,50,20,20, 0.5, -60 );
+
+	//Venstre bane
+	leftTrack.init(ammoPhysicsWorld);
+	leftTrack.create();
 
 	// Elevator
 	// tweenElevator.init(ammoPhysicsWorld);
