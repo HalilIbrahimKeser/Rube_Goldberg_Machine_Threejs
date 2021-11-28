@@ -27,7 +27,7 @@ import {sunGear} from "../js/SunGear.js";
 import {verticalChain} from "../js/VerticalChain.js";
 import {startGearHolder} from "../js/StartGearHolder.js";
 import {tweenElevator} from "../js/TweenElevator.js";
-import {flatTable} from "../js/FlatTable.js";
+import {flatTableUnder} from "./FlatTableUnder.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
 import {bricks} from "../js/Bricks.js";
@@ -35,6 +35,7 @@ import {trampoline} from "./Trampoline.js";
 import {flapDoor} from "../js/FlapDoor.js";
 import {tube} from "./Tube.js";
 import {rightTrack} from "./RightTrack.js";
+import {flatTableTop} from "./FlatTableTop.js";
 
 
 let renderer;
@@ -200,8 +201,11 @@ function addModels() {
 	rightTrack.create();
 
 	// Flat table
-	flatTable.init(ammoPhysicsWorld);
-	flatTable.create();
+	flatTableUnder.init(ammoPhysicsWorld);
+	flatTableUnder.create();
+
+	flatTableTop.init(ammoPhysicsWorld);
+	flatTableTop.create();
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);

@@ -58,12 +58,6 @@ export const trampoline = {
             this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
         );
-
-
-
-
-
-
     },
     createCylinderShape(radius, depth){
         let extrudeSettings = {

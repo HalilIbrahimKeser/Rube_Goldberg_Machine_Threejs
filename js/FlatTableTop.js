@@ -1,7 +1,7 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
-export const flatTable = {
+export const flatTableTop = {
     myPhysicsWorld: undefined,
     //scene: undefined,
 
@@ -10,34 +10,15 @@ export const flatTable = {
     },
 
     create(setCollisionMask = true,
-           mass = 0,
-           color = 0xF4F0EF,
-           position = {x: -20, y: -30, z: -200},
+           mass = 10,
+           color = Math.random() * 0xffffff,
+           position = {x: -20, y: 0, z: -200},
            radius = 0.2,
            length = 150,
            width = 50) {
 
         let groupMesh = new THREE.Group();
         groupMesh.position.set(position.x, position.y, position.z);
-        //this.myPhysicsWorld.add(groupMesh);
-
-        // FLAT TABLE
-        let tableShape = this.createThreeShape(length, width);
-        let tableMesh = this.createExtrudeMesh(tableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        //tableMesh.position.set(position.x, position.y, position.z);
-        tableMesh.rotateY(1.57);
-        tableMesh.rotateX(1.57);
-        tableMesh.castShadow = true;
-        tableMesh.receiveShadow = true;
-        groupMesh.add(tableMesh);
-
-        // ROCKER CYLINDER
-        let rockerCylinder = this.createCylinderShape(8, 40);
-        let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        rockerCylinderMesh.position.set(75, 10, -50);
-        rockerCylinderMesh.receiveShadow = true;
-        rockerCylinderMesh.castShadow = true;
-        groupMesh.add(rockerCylinderMesh);
 
         // ROCKER TABLE
         let rockerTableShape = this.createThreeShape(50, 80);
@@ -60,8 +41,6 @@ export const flatTable = {
         groupMesh.add(boxMesh);
 
         // AMMO
-        this.addCompoundAmmo(tableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(rockerCylinderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(rockerTableMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(boxMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
