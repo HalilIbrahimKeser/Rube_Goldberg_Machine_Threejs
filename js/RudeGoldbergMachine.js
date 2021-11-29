@@ -246,11 +246,11 @@ function addModels() {
 	rightTrack.create();
 
 	// Flat table
-	flatTableUnder.init(ammoPhysicsWorld);
-	flatTableUnder.create();
-
-	flatTableTop.init(ammoPhysicsWorld);
-	flatTableTop.create();
+	// flatTableUnder.init(ammoPhysicsWorld);
+	// flatTableUnder.create();
+	//
+	// flatTableTop.init(ammoPhysicsWorld);
+	// flatTableTop.create();
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
@@ -262,14 +262,15 @@ function addModels() {
 	bricks.create(true,
 		10,
 		Math.random() * 0xffffff,
-		{x: -75, y: -26, z: -20},
-		0.2,50,20,20, 0.5, -60 );
+		{x: -110, y: 28, z: -35},  ///////////
+		0.2,50,25,20, 0, 58 );
 
 	//Venstre bane
 	leftTrack.init(ammoPhysicsWorld);
 	leftTrack.create();
 
 	// Elevator
+	// Kommentert ut, gjør at siden blir veldig forsinket. Sendt mail til Werner, ikke hørt noe enda.
 	// tweenElevator.init(ammoPhysicsWorld);
 	// tweenElevator.create();
 }
@@ -286,14 +287,13 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	let delta = clock.getDelta() * 6;
+	let delta = clock.getDelta() * 5; //Juster denne for å få fart på ting under testing
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
-	//collisionTest();
 	myThreeScene.updateGraphics(delta);
 
-	TWEEN.update(delta);
+	TWEEN.update(currentTime);
 
 	render();
 }
@@ -311,7 +311,7 @@ function onWindowResize() {
     //render();
 }
 
-export function animateOnMain() {
+export function animateOnMain(time) {
 	animate();
 }
 

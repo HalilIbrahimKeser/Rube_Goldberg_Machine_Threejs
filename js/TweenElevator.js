@@ -30,8 +30,8 @@ export const tweenElevator = {
 
     addTween() {
         // https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
-        this.tween = new TWEEN.Tween({y: 0, x: 0})
-            .to({y: 200, x: 0}, 3000)
+        this.tween = new TWEEN.Tween({y: 220, x: 450})
+            .to({y: 175, x: 450}, 5000)
             .easing(TWEEN.Easing.Bounce.InOut)
             .yoyo(true)
             .repeat(Infinity)
@@ -78,7 +78,8 @@ export const tweenElevator = {
 
         this.tween.start();
 
-        animateOnMain();
+        this.animate();
+        //animateOnMain();
     },
 
     initModels() {
@@ -117,4 +118,8 @@ export const tweenElevator = {
             myThreeScene.scene.add(root);
         });
     },
+
+    animate(currentTime) {
+        animateOnMain(currentTime)
+    }
 }

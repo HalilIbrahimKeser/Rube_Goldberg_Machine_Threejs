@@ -131,6 +131,15 @@ export const leftTrack = {
         latteMesh.position.y = -50;
         groupMesh.add(latteMesh);
 
+        let brickButtonGroundShape = this.createThreeShape(1700, 100);
+        let brickButtonGroundMesh = this.createExtrudeMesh(brickButtonGroundShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        brickButtonGroundMesh.scale.set(0.2, 0.1, 0.1);
+        brickButtonGroundMesh.position.set(250, -150, -65);//
+        brickButtonGroundMesh.rotation.z = this.degreesToRadians(100);
+        brickButtonGroundMesh.rotation.x = this.degreesToRadians(90);
+        brickButtonGroundMesh.rotation.y = this.degreesToRadians(-1);
+        groupMesh.add(brickButtonGroundMesh);
+
         //AMMO til alle deler
         this.addCompoundAmmo(topGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(tubeMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -143,6 +152,7 @@ export const leftTrack = {
         this.addCompoundAmmo(middleGlassWallMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(middleGlassWallMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(latteMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(brickButtonGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
 
     degreesToRadians(degrees) {
@@ -153,7 +163,8 @@ export const leftTrack = {
     addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask){
         let compoundShape = new Ammo.btCompoundShape();
         commons.createTriangleShapeAddToCompound(compoundShape, mesh);
-        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, friction, position, mass);
+
+        let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);
         rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
         rigidBody.setActivationState(4);
 

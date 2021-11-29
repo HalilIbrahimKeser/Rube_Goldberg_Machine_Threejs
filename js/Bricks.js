@@ -93,6 +93,7 @@ export const bricks = {
     addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask) {
         let compoundShape = new Ammo.btCompoundShape();
         commons.createTriangleShapeAddToCompound(compoundShape, mesh);
+
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, friction, position, mass);
         rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
         rigidBody.setActivationState(4);
