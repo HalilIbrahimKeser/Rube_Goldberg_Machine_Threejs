@@ -53,7 +53,7 @@ export const flatTableTop = {
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh2);
 
         let boarderMesh3 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boarderMesh3.scale.set(1.1,1,0.5);
+        boarderMesh3.scale.set(1.5,1,0.5);
         boarderMesh3.position.set(25, 20, -42);
         boarderMesh3.rotateY(-Math.PI/2);
         //boarderMesh.rotateX(1.90);
@@ -63,7 +63,7 @@ export const flatTableTop = {
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh3);
 
         let boarderMesh4 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boarderMesh4.scale.set(1.7,1,0.5);
+        boarderMesh4.scale.set(1.5,1,0.5);
         boarderMesh4.position.set(25, 20, -13);
         boarderMesh4.rotateY(-Math.PI/2);
         //boarderMesh.rotateX(1.90);

@@ -138,9 +138,9 @@ function addModels() {
 	mySphere.create(true,
 		{x:-150, y:40, z:-250},
 		Math.random() * 0xffffff,
-		10,
+		8,
 		0.5,
-		1);
+		1.4);
 
 	//Ball on top of the Left track
 	mySphere.create(true,
@@ -212,20 +212,23 @@ function addModels() {
 		Math.random() * 0xffffff,
 		0, 60, 30,
 		Math.PI/2, 1.4, 0, 5);
+	//Lower Trampoline towards left track
 	trampoline.create(true,
 		{x:-90, y:90, z:-250},
 		Math.random() * 0xffffff,
 		0, 30, 20,
-		Math.PI/2, -0.3, 0, 6);
+		Math.PI/2, -0.3, 0, 5.5);
+	//Middle Trampoline towards Left track
 	trampoline.create(true,
-		{x:80, y:300, z:-250},
+		{x:100, y:290, z:-250},
 		Math.random() * 0xffffff,
-		0, 30, 20,
+		0, 50, 20,
 		-0.9, -Math.PI/3, 0, 5);
+	//Upper trampoline towards left track
 	trampoline.create(true,
 		{x:-220, y:310, z:-90},
 		Math.random() * 0xffffff,
-		0, 30, 20,
+		0, 50, 20,
 		-1, Math.PI/3, 0, 5);
 
 
