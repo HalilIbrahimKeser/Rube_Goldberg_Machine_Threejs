@@ -216,7 +216,7 @@ function addModels() {
 		{x:-90, y:90, z:-250},
 		Math.random() * 0xffffff,
 		0, 30, 20,
-		Math.PI/2, -0.3, 0, 5);
+		Math.PI/2, -0.3, 0, 6);
 	trampoline.create(true,
 		{x:80, y:300, z:-250},
 		Math.random() * 0xffffff,
