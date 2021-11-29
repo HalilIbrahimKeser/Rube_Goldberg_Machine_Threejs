@@ -9,7 +9,7 @@ export const tube = {
     },
 
     create(setCollisionMask=true,
-           position={x:200, y:410, z:-485},
+           position={x:200, y:415, z:-485},
            color=Math.random() * 0xffffff,
            mass= 0,
            radius= 50,

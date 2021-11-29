@@ -11,7 +11,7 @@ export const flatTableTop = {
     create(setCollisionMask = true,
            mass = 1,
            color = Math.random() * 0xffffff,
-           position = {x: -30, y: -15, z: -230},
+           position = {x: -120, y: -5, z: -230},
            radius = 0.2,
            length = 150,
            width = 50) {
@@ -23,9 +23,9 @@ export const flatTableTop = {
         let compoundShape = new Ammo.btCompoundShape();
 
         // ROCKER TABLE
-        let rockerTableShape = this.createThreeShape(45, 150);
+        let rockerTableShape = this.createThreeShape(45, 300);
         let rockerTableMesh = this.createExtrudeMesh(rockerTableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        //rockerTableMesh.position.set(35, 17, 0);
+        rockerTableMesh.position.set(0, 20, 0);
         rockerTableMesh.rotateX(-Math.PI/2);
         //rockerTableMesh.rotateX(1.90);
         rockerTableMesh.castShadow = true;
@@ -35,13 +35,31 @@ export const flatTableTop = {
 
         let boarderShape = this.createThreeShape(10, 5);
         let boarderMesh = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boarderMesh.position.set(0, 5, -45);
+        boarderMesh.position.set(0, 20, -45);
         //boarderMesh.rotateX(-Math.PI/2);
         //boarderMesh.rotateX(1.90);
         boarderMesh.castShadow = true;
         boarderMesh.receiveShadow = true;
         groupMesh.add(boarderMesh);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh);
+
+        let boarderMesh2 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
+        boarderMesh2.position.set(30, 20, -45);
+        //boarderMesh.rotateX(-Math.PI/2);
+        //boarderMesh.rotateX(1.90);
+        boarderMesh2.castShadow = true;
+        boarderMesh2.receiveShadow = true;
+        groupMesh.add(boarderMesh2);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh2);
+
+
+        let rockerCylinder = this.createCylinderShape(25, 40);
+        let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
+        rockerCylinderMesh.position.set(150, 0, -47);
+        rockerCylinderMesh.receiveShadow = true;
+        rockerCylinderMesh.castShadow = true;
+        groupMesh.add(rockerCylinderMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, rockerCylinderMesh);
 
 
 

@@ -38,7 +38,7 @@ export const trampoline = {
         }
 
         // AMMO:
-        commons.createTriangleShapeAddToCompound(compoundShape, trampolineMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, trampolineMesh);
 
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, 0.6, position, mass);
         this.myPhysicsWorld.addPhysicsObject(

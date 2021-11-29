@@ -80,7 +80,7 @@ function addModels() {
 	sunGear.init(ammoPhysicsWorld);
 	sunGear.create();
 	sunGear.create(true,
-		70,
+		100,
 		Math.random() * 0xffffff,
 		{x:132, y:150, z:-250},
 		15,
@@ -135,7 +135,7 @@ function addModels() {
 
 	//Ball on table
 	mySphere.create(true,
-		{x:0, y:20, z:-250},
+		{x:-150, y:40, z:-250},
 		Math.random() * 0xffffff,
 		10,
 		0.5,
@@ -211,6 +211,11 @@ function addModels() {
 		Math.random() * 0xffffff,
 		0, 60, 30,
 		Math.PI/2, 1.4, 0, 5);
+	trampoline.create(true,
+		{x:-107, y:87, z:-250},
+		Math.random() * 0xffffff,
+		0, 30, 20,
+		Math.PI/2, -0.3, 0, 5);
 
 	//Tube
 	tube.init(ammoPhysicsWorld);
