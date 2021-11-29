@@ -5,7 +5,7 @@
  *
  * MyThreeScene kommer fra lib mappen. Den er gjort noen få endringer på.
  * Tween er implementert i TweenElevator.js, kode hentet fra Tween1.js
- *
+ * Slutt animasjon er laget med partikler fra particles1.js
  *
  */
 /**
@@ -42,7 +42,8 @@ let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
 
-let isTerrainHeightLoaded = false;
+let finnished = false;
+let points;
 
 
 export function main() {
@@ -246,11 +247,11 @@ function addModels() {
 	rightTrack.create();
 
 	// Flat table
-	// flatTableUnder.init(ammoPhysicsWorld);
-	// flatTableUnder.create();
-	//
-	// flatTableTop.init(ammoPhysicsWorld);
-	// flatTableTop.create();
+	flatTableUnder.init(ammoPhysicsWorld);
+	flatTableUnder.create();
+
+	flatTableTop.init(ammoPhysicsWorld);
+	flatTableTop.create();
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
@@ -273,8 +274,45 @@ function addModels() {
 	// Kommentert ut, gjør at siden blir veldig forsinket. Sendt mail til Werner, ikke hørt noe enda.
 	// tweenElevator.init(ammoPhysicsWorld);
 	// tweenElevator.create();
+
+	// Particles on finnish, set true to test
+	if (finnished) {
+		addParticles();
+	}
+
 }
 
+function addParticles() {
+	createParticles2();
+}
+
+//Lage partikler vha. PointsMaterial
+function createParticles2() {
+	let material = new THREE.PointsMaterial({
+		size: 5,
+		vertexColors : true,
+		color : Math.random() * 0xff500
+	});
+
+	// Liste med vertekser:
+	let range = 2000;
+	let vertices = [];
+	let colors = [];
+	for (let i = 0; i < 15000; i++) {
+		const x = THREE.MathUtils.randFloatSpread( range );
+		const y = THREE.MathUtils.randFloatSpread( range );
+		const z = THREE.MathUtils.randFloatSpread( range );
+		vertices.push( x, y, z );
+		let color = new THREE.Color(Math.random() * 0x00ffff);
+		colors.push(color.r, color.g, color.b);
+	}
+
+	const geometry = new THREE.BufferGeometry();
+	geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+	geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( vertices, 3 ) );
+	points = new THREE.Points(geometry, material);
+	myThreeScene.scene.add(points);
+}
 
 function handleKeyUp(event) {
     currentlyPressedKeys[event.keyCode] = false;
@@ -295,6 +333,12 @@ export function animate(currentTime) {
 
 	TWEEN.update(currentTime);
 
+	if (finnished) {
+		let x = points.position.x;
+		let y = points.position.y
+		let z = points.position.z;
+		points.position.y = y + 2;
+	}
 	render();
 }
 
