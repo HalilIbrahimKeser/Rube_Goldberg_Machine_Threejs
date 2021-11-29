@@ -9,7 +9,7 @@ export const flatTableTop = {
     },
 
     create(setCollisionMask = true,
-           mass = 1,
+           mass = 0.1,
            color = Math.random() * 0xffffff,
            position = {x: -120, y: -5, z: -230},
            radius = 0.2,
@@ -54,7 +54,7 @@ export const flatTableTop = {
 
         let boarderMesh3 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         boarderMesh3.scale.set(1.5,1,0.5);
-        boarderMesh3.position.set(25, 20, -42);
+        boarderMesh3.position.set(25, 20, -44);
         boarderMesh3.rotateY(-Math.PI/2);
         //boarderMesh.rotateX(1.90);
         boarderMesh3.castShadow = true;
@@ -64,7 +64,7 @@ export const flatTableTop = {
 
         let boarderMesh4 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         boarderMesh4.scale.set(1.5,1,0.5);
-        boarderMesh4.position.set(25, 20, -13);
+        boarderMesh4.position.set(25, 20, -8);
         boarderMesh4.rotateY(-Math.PI/2);
         //boarderMesh.rotateX(1.90);
         boarderMesh4.castShadow = true;
@@ -80,8 +80,6 @@ export const flatTableTop = {
         rockerCylinderMesh.castShadow = true;
         groupMesh.add(rockerCylinderMesh);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, rockerCylinderMesh);
-
-
 
         //AMMO
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);

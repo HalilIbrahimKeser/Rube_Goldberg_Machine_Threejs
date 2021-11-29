@@ -5,7 +5,7 @@ export const flatTableUnder = {
     myPhysicsWorld: undefined,
     //scene: undefined,
 
-    init(myPhysicsWorld) { // må endres til ammophysicsworld
+    init(myPhysicsWorld) { // ammoPhysicsWorld
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
@@ -24,10 +24,9 @@ export const flatTableUnder = {
 
         let compoundShape = new Ammo.btCompoundShape();
 
-        // FLAT TABLE
+        // FLAT TABLE UNDER
         let tableShape = this.createThreeShape(length, width);
         let tableMesh = this.createExtrudeMesh(tableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        //tableMesh.position.set(position.x, position.y, position.z);
         tableMesh.rotateY(1.57);
         tableMesh.rotateX(1.57);
         tableMesh.castShadow = true;
@@ -35,14 +34,14 @@ export const flatTableUnder = {
         groupMesh.add(tableMesh);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, tableMesh);
 
-        // ROCKER CYLINDER
-        /*let rockerCylinder = this.createCylinderShape(8, 50);
-        let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
-        rockerCylinderMesh.position.set(70, 10, -50);
-        rockerCylinderMesh.receiveShadow = true;
-        rockerCylinderMesh.castShadow = true;
-        groupMesh.add(rockerCylinderMesh);
-        commons.createConvexTriangleShapeAddToCompound(compoundShape, rockerCylinderMesh);*/
+        let stopperBlockShape = this.createThreeShape(30, 5);
+        let stopperBlockRearMesh = this.createExtrudeMesh(stopperBlockShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
+        stopperBlockRearMesh.position.set(125, 0, -47);
+        stopperBlockRearMesh.castShadow = true;
+        stopperBlockRearMesh.receiveShadow = true;
+        groupMesh.add(stopperBlockRearMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, stopperBlockRearMesh);
+
 
         let boundaryBack = this.createThreeShape(100, 300);
         let boundaryBackMesh = this.createExtrudeMesh(boundaryBack, 1, 1, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.2}));
@@ -57,12 +56,12 @@ export const flatTableUnder = {
         groupMesh.add(boundaryFrontMesh);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryFrontMesh);
 
-        let boundaryLeftMesh = boundaryFrontMesh.clone();
+       /* let boundaryLeftMesh = boundaryFrontMesh.clone();
         boundaryLeftMesh.scale.set(0.17, 1, 1);
         boundaryLeftMesh.rotateY(Math.PI/2);
         boundaryLeftMesh.position.set(0, 0, 0);
         groupMesh.add(boundaryLeftMesh);
-        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryLeftMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryLeftMesh);*/
 
         //AMMO
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);

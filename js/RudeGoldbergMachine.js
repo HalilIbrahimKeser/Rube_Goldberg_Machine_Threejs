@@ -136,11 +136,11 @@ function addModels() {
 
 	//Ball on table
 	mySphere.create(true,
-		{x:-150, y:40, z:-250},
+		{x:-160, y:40, z:-250},
 		Math.random() * 0xffffff,
-		8,
-		0.5,
-		1.4);
+		1,
+		1.5,
+		10);
 
 	//Ball on top of the Left track
 	mySphere.create(true,
@@ -214,22 +214,22 @@ function addModels() {
 		Math.PI/2, 1.4, 0, 5);
 	//Lower Trampoline towards left track
 	trampoline.create(true,
-		{x:-90, y:90, z:-250},
+		{x:-70, y:60, z:-250},
 		Math.random() * 0xffffff,
-		0, 30, 20,
-		Math.PI/2, -0.3, 0, 5.5);
+		0, 50, 20,
+		Math.PI/2, 0.3, 0, 2);
 	//Middle Trampoline towards Left track
 	trampoline.create(true,
-		{x:100, y:290, z:-250},
+		{x:-220, y:280, z:-250},
 		Math.random() * 0xffffff,
-		0, 50, 20,
-		-0.9, -Math.PI/3, 0, 5);
+		0, 60, 20,
+		-1.2, Math.PI/3, 0, 5);
 	//Upper trampoline towards left track
 	trampoline.create(true,
-		{x:-220, y:310, z:-90},
+		{x:200, y:450, z:-190},
 		Math.random() * 0xffffff,
 		0, 50, 20,
-		-1, Math.PI/3, 0, 5);
+		0.1, -Math.PI/2.9, 0, 2.5);
 
 
 	//Tube
@@ -243,6 +243,55 @@ function addModels() {
 		0.7,
 		160,
 		0,0,0,
+		0.2);
+
+	// Tubes til venstre bane
+	tube.init(ammoPhysicsWorld);
+	tube.create();
+	tube.create(true,
+		{x:120, y:440, z:-120},
+		Math.random() * 0xffffff,
+		0,
+		50,
+		0.7,
+		160,
+		0, -Math.PI/4, 0,
+		0.2);
+
+	tube.init(ammoPhysicsWorld);
+	tube.create();
+	tube.create(true,
+		{x:10, y:430, z:-15},
+		Math.random() * 0xffffff,
+		0,
+		40,
+		0.7,
+		160,
+		0.1, -Math.PI/3.8, 0,
+		0.2);
+
+	tube.init(ammoPhysicsWorld);
+	tube.create();
+	tube.create(true,
+		{x:-110, y:410, z:90},
+		Math.random() * 0xffffff,
+		0,
+		30,
+		0.7,
+		160,
+		0.2, -Math.PI/3.4, 0,
+		0.2);
+
+	tube.init(ammoPhysicsWorld);
+	tube.create();
+	tube.create(true,
+		{x:-240, y:380, z:180},
+		Math.random() * 0xffffff,
+		0,
+		20,
+		0.7,
+		120,
+		0.2, -Math.PI/2.5, 0,
 		0.2);
 
 	//Høyre bane
