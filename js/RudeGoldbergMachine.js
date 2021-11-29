@@ -80,7 +80,7 @@ function addModels() {
 	sunGear.init(ammoPhysicsWorld);
 	sunGear.create();
 	sunGear.create(true,
-		100,
+		110,
 		Math.random() * 0xffffff,
 		{x:132, y:150, z:-250},
 		15,
@@ -212,10 +212,21 @@ function addModels() {
 		0, 60, 30,
 		Math.PI/2, 1.4, 0, 5);
 	trampoline.create(true,
-		{x:-107, y:87, z:-250},
+		{x:-90, y:90, z:-250},
 		Math.random() * 0xffffff,
 		0, 30, 20,
 		Math.PI/2, -0.3, 0, 5);
+	trampoline.create(true,
+		{x:80, y:300, z:-250},
+		Math.random() * 0xffffff,
+		0, 30, 20,
+		-0.9, -Math.PI/3, 0, 5);
+	trampoline.create(true,
+		{x:-220, y:310, z:-90},
+		Math.random() * 0xffffff,
+		0, 30, 20,
+		-1, Math.PI/3, 0, 5);
+
 
 	//Tube
 	tube.init(ammoPhysicsWorld);

@@ -191,8 +191,10 @@ export const leftTrack = {
             points1.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
         }
         const geometry = new THREE.LatheGeometry( points1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+        const material = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
         const lathe = new THREE.Mesh( geometry, material );
+        lathe.castShadow = true;
+        lathe.receiveShadow = true;
         return lathe
     },
 

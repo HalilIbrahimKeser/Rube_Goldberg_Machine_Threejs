@@ -44,13 +44,24 @@ export const flatTableTop = {
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh);
 
         let boarderMesh2 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
-        boarderMesh2.position.set(30, 20, -45);
+        boarderMesh2.position.set(25, 20, -45);
         //boarderMesh.rotateX(-Math.PI/2);
         //boarderMesh.rotateX(1.90);
         boarderMesh2.castShadow = true;
         boarderMesh2.receiveShadow = true;
         groupMesh.add(boarderMesh2);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh2);
+
+        let boarderMesh3 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
+        boarderMesh3.scale.set(1.7,1,0.5);
+        boarderMesh3.position.set(25, 20, -42);
+        boarderMesh3.rotateY(-Math.PI/2);
+
+        //boarderMesh.rotateX(1.90);
+        boarderMesh3.castShadow = true;
+        boarderMesh3.receiveShadow = true;
+        groupMesh.add(boarderMesh3);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh3);
 
 
         let rockerCylinder = this.createCylinderShape(25, 40);

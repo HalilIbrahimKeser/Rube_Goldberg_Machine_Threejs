@@ -186,7 +186,7 @@ export const rightTrack = {
         this.addCompoundAmmo(rightWallSlideStairs, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(leftWallSlideStairs, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(slideFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        this.addCompoundAmmo(slideCollisionWall, groupMesh, 1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(slideCollisionWall, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(verticalWallBelowSlide, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(slimSlideMesh, groupMesh, 0.1, 0, position, mass, setCollisionMask);
         this.addCompoundAmmo(newLevelFloor, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
