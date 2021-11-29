@@ -36,7 +36,7 @@ export const bricks = {
             let nameMesh = "brickMesh" + i;
 
             nameShape = this.createThreeShape(length, width);
-            nameMesh = this.createExtrudeMesh(nameShape, 1, 5, true, 2, 2, 0, 1, new THREE.MeshPhongMaterial({color: color}));
+            nameMesh = this.createExtrudeMesh(nameShape, 1, 1, true, 2, 2, 0, 2, new THREE.MeshPhongMaterial({color: color}));
             nameMesh.position.set(temp_x_pos, temp_y_pos, temp_z_pos);
             nameMesh.rotateY(this.degreesToRadians(degrees1));
             //nameMesh.rotateX(this.degreesToRadians(degrees2));
@@ -50,7 +50,13 @@ export const bricks = {
 
             groupMesh.add(nameMesh);
             groupMesh.rotation.y = this.degreesToRadians(degrees3);
+
             // AMMO
+            // let meshList = [];
+            // groupMesh.forEach(function (item, index, array){
+            //     meshList.add = item;
+            // })
+
             this.addCompoundAmmo(nameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         }
 

@@ -141,6 +141,14 @@ function addModels() {
 		0.5,
 		1);
 
+	//Ball on top of the Left track
+	mySphere.create(true,
+		{x:-390, y:380, z:190},
+		Math.random() * 0xffffff,
+		10,
+		0.5,
+		1);
+
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);

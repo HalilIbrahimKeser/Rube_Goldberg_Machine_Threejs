@@ -21,18 +21,16 @@ export const leftTrack = {
            slideColor = Math.random() * 0xffffff,
            position = {x:-400, y:350, z:200},
            radius= 0.2,
-           length = 100,
-           width = 200,
+           length = 20,
+           width = 20,
            scale = {x: 2, y: 2, z:2}){
-
-        let glassMaterial = new THREE.MeshPhongMaterial({color: colorSideWall, side: THREE.DoubleSide, transparent: true, opacity: 0.2})
 
         let groupMesh = new THREE.Group();
         groupMesh.name = "Left track"
         groupMesh.position.set(position.x, position.y, position.z);
         groupMesh.scale.set(scale.x, scale.y, scale.z);
 
-        let topGroundShape = this.createThreeShape(50, 100);
+        let topGroundShape = this.createThreeShape(length, width);
         let topGroundMesh = this.createExtrudeMesh(topGroundShape, 1, 0.1, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color:colorWall}));
         topGroundMesh.rotation.x = this.degreesToRadians(90);
         topGroundMesh.castShadow = true;
@@ -50,20 +48,101 @@ export const leftTrack = {
         //tubeMesh.position.set(position.x, position.y, position.z)
         tubeMesh.castShadow = true;
         tubeMesh.receiveShadow = true;
-        groupMesh.add(tubeMesh);
+        //groupMesh.add(tubeMesh);
 
-        let compoundShape = new Ammo.btCompoundShape();
+        // Øverst topp
         let cylinderShape = this.createCylinderShape(1, 100);
+
         let cylinderMesh = new THREE.Mesh(cylinderShape, new THREE.MeshPhongMaterial({color: color}));
         cylinderMesh.castShadow = true;
         cylinderMesh.receiveShadow = true;
+        cylinderMesh.position.z = -94;
+        cylinderMesh.position.x = 5;
+        cylinderMesh.position.y = -34;
+        cylinderMesh.rotation.x = this.degreesToRadians(-20);
         groupMesh.add(cylinderMesh);
+
+        let cylinderMesh1 = new THREE.Mesh(cylinderShape, new THREE.MeshPhongMaterial({color: color}));
+        cylinderMesh1.castShadow = true;
+        cylinderMesh1.receiveShadow = true;
+        cylinderMesh1.position.z = -94;
+        cylinderMesh1.position.x = 10;
+        cylinderMesh1.position.y = -34;
+        cylinderMesh1.rotation.x = this.degreesToRadians(-20);
+        groupMesh.add(cylinderMesh1);
+
+        // Mellom
+        let cylinderShape2 = this.createCylinderShape(1, 100);
+        let cylinderMesh2 = new THREE.Mesh(cylinderShape2, new THREE.MeshPhongMaterial({color: color}));
+        cylinderMesh2.castShadow = true;
+        cylinderMesh2.receiveShadow = true;
+        cylinderMesh2.position.z = -100;
+        cylinderMesh2.position.x = 0;
+        cylinderMesh2.position.y = -40;
+        cylinderMesh2.rotation.x = this.degreesToRadians(10);
+        cylinderMesh2.rotation.y = this.degreesToRadians(80);//////////////////
+        groupMesh.add(cylinderMesh2);
+
+        let cylinderMesh3 = new THREE.Mesh(cylinderShape2, new THREE.MeshPhongMaterial({color: color}));
+        cylinderMesh3.castShadow = true;
+        cylinderMesh3.receiveShadow = true;
+        cylinderMesh3.position.z = -106;
+        cylinderMesh3.position.x = 0;
+        cylinderMesh3.position.y = -40;
+        cylinderMesh3.rotation.x = this.degreesToRadians(10);
+        cylinderMesh3.rotation.y = this.degreesToRadians(80);//////////////////
+        groupMesh.add(cylinderMesh3);
+
+        let glassMaterial = new THREE.MeshPhongMaterial({color: colorSideWall, side: THREE.DoubleSide, transparent: true, opacity: 0.2});
+
+        // top glass wall 1
+        let topWallGlassShape = this.createThreeShape(200, 150);
+        let topWallGlassMesh = this.createExtrudeMesh(topWallGlassShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        topWallGlassMesh.scale.set(0.2, 0.1, 0.1);
+        topWallGlassMesh.position.set(-5, 0, 20);
+        groupMesh.add(topWallGlassMesh);
+        // top glass wall 2
+        let topWallGlassMesh1 = this.createExtrudeMesh(topWallGlassShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        topWallGlassMesh1.scale.set(0.2, 0.1, 0.1);
+        topWallGlassMesh1.position.set(0, 0, 20); ///
+        topWallGlassMesh1.rotation.y = this.degreesToRadians(90);
+        groupMesh.add(topWallGlassMesh1);
+
+        // middle glass wall 1
+        let middleGlassWallShape1 = this.createThreeShape(150, 50);
+        let middleGlassWallMesh1 = this.createExtrudeMesh(middleGlassWallShape1, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        middleGlassWallMesh1.scale.set(0.2, 0.1, 0.1);
+        middleGlassWallMesh1.position.set(0, -40, -100);
+        middleGlassWallMesh1.rotation.y = this.degreesToRadians(90);
+        groupMesh.add(middleGlassWallMesh1);
+
+        // ball stopp glass in middle part
+        let middleGlassWallShape2 = this.createThreeShape(200, 150);
+        let middleGlassWallMesh2 = this.createExtrudeMesh(middleGlassWallShape2, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        middleGlassWallMesh2.scale.set(0.2, 0.1, 0.1);
+        middleGlassWallMesh2.position.set(0, -40, -110);//
+        middleGlassWallMesh2.rotation.z = this.degreesToRadians(-5);
+        middleGlassWallMesh2.rotation.y = this.degreesToRadians(-10);
+        groupMesh.add(middleGlassWallMesh2);
+
+        let latteMesh = this.createLatteMesh(20, 10, Math.PI )
+        latteMesh.position.x = 105;
+        latteMesh.position.z = -85;
+        latteMesh.position.y = -50;
+        groupMesh.add(latteMesh);
 
         //AMMO til alle deler
         this.addCompoundAmmo(topGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(tubeMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-
-
+        this.addCompoundAmmo(cylinderMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(cylinderMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(cylinderMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(cylinderMesh3, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(topWallGlassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(topWallGlassMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(middleGlassWallMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(middleGlassWallMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(latteMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
 
     degreesToRadians(degrees) {
@@ -86,14 +165,16 @@ export const leftTrack = {
             rigidBody,
             groupMesh,
             collisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_PLANE,
-            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
             this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
+            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+            this.myPhysicsWorld.COLLISION_GROUP_PLANE |
+            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
             this.myPhysicsWorld.COLLISION_GROUP_BOX |
-            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
+            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
+            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
         );
     },
 
@@ -102,6 +183,17 @@ export const leftTrack = {
         let material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xeeffff } );
         let mesh = new THREE.Mesh( geometry, material );
         return mesh
+    },
+
+    createLatteMesh(segments , phiStart , phiLength ){
+        const points1 = [];
+        for ( let i = 0; i < 10; i ++ ) {
+            points1.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
+        }
+        const geometry = new THREE.LatheGeometry( points1 );
+        const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+        const lathe = new THREE.Mesh( geometry, material );
+        return lathe
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
