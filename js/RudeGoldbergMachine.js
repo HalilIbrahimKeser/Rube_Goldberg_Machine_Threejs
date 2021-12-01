@@ -45,6 +45,7 @@ let points;
 let particlesAdded = false;
 
 
+
 export function main() {
 	// SCENE
 	myThreeScene.setupGraphics();
@@ -71,7 +72,11 @@ export function main() {
     document.addEventListener('keyup', handleKeyUp, false);
     document.addEventListener('keydown', handleKeyDown, false);
 
+
+
+
 	animate();
+
 }
 
 
@@ -491,9 +496,11 @@ export function animate(currentTime) {
 
 	timer = currentTime;
 	if(timer > 110000) {
+
 		finnished = true;
 	}
 	if (finnished) {
+		document.getElementById('audio').play();
 		if (!particlesAdded) {
 			addParticles();
 		}
