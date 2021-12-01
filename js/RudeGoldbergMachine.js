@@ -34,6 +34,7 @@ import {tube} from "./Tube.js";
 import {rightTrack} from "./RightTrack.js";
 import {flatTableTop} from "./FlatTableTop.js";
 import {leftTrack} from "./LeftTrack.js";
+import {domino} from "./Domino.js";
 
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
@@ -144,9 +145,9 @@ function addModels() {
 	mySphere.create(true,
 		{x:-390, y:380, z:190},
 		Math.random() * 0xffffff,
-		10,
+		20,
 		0.5,
-		1);
+		0.5);
 
 	//Teste baller for brickene ///////////////////////////////
 	mySphere.create(true,
@@ -161,13 +162,13 @@ function addModels() {
 	flapDoor.init(ammoPhysicsWorld);
 	//Drawbridge type on start
 	flapDoor.create(true,
-		{x:-111, y:90, z:-477,},
+		{x:-109, y:90, z:-477,},
 		{x: 1, y:0, z: 0},
 		Math.PI/2,
 		{x: 70, y: 27, z: 2},
 		0.5,
 		0,
-		5, -1.9, Math.PI/6);
+		5, -1.8, Math.PI/6,0);
 
 	//Door by the end of tunnel
 	flapDoor.create(true,
@@ -179,7 +180,7 @@ function addModels() {
 		0,
 		5,
 		-2,
-		Math.PI/2-0.05);
+		Math.PI/2-0.05,0);
 
 	//Door by the stairs
 	flapDoor.create(true,
@@ -191,7 +192,8 @@ function addModels() {
 		0,
 		5,
 		4,
-		-4);
+		-4,
+		0.1);
 
 	//Door by the end of slide
 	flapDoor.create(true,
@@ -203,7 +205,8 @@ function addModels() {
 		0,
 		5,
 		-Math.PI/2,
-		Math.PI/2);
+		Math.PI/2,
+		0.1);
 
 	//Trampoline
 	trampoline.init(ammoPhysicsWorld);
@@ -312,10 +315,10 @@ function addModels() {
 	flatTableTop.create();
 
 	// Bricks
-	bricks.init(ammoPhysicsWorld);
+	//bricks.init(ammoPhysicsWorld);
 	// høyre side
 
-	bricks.create(true,
+	/*bricks.create(true,
 		10,
 		Math.random() * 0xffffff,
 		{x: 60, y: -19, z: 50},
@@ -416,7 +419,12 @@ function addModels() {
 		10,
 		Math.random() * 0xffffff,
 		{x: -140, y: 28, z: -50},
-		0.2,50,25,20, 0, 58 );
+		0.2,50,25,20, 0, 58 );*/
+
+
+	domino.init(ammoPhysicsWorld);
+	setLeftDominoes();
+	setRightDominoes();
 
 	leftTrack.init(ammoPhysicsWorld);
 	leftTrack.create();
@@ -518,4 +526,126 @@ export function animateOnMain(time) {
 function degreesToRadians(degrees) {
 	let pi = Math.PI;
 	return degrees * (pi / 180);
+}
+
+function setLeftDominoes(){
+	//domino.create();
+
+	domino.create(true,
+		{x:-140, y:45, z:40},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+
+	domino.create(true,
+		{x:-100, y:45, z:47},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+
+	domino.create(true,
+		{x:-60, y:45, z:54},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+
+	domino.create(true,
+		{x:-20, y:45, z:61},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+
+	domino.create(true,
+		{x:20, y:45, z:68},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+
+	domino.create(true,
+		{x:60, y:45, z:75},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:1.4, z:0});
+}
+
+function setRightDominoes(){
+
+	domino.create(true,
+		{x:120, y:-50, z:140},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:140, y:-50, z:160},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:160, y:-50, z:180},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:180, y:-50, z:200},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:200, y:-50, z:220},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:220, y:-50, z:240},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+	domino.create(true,
+		{x:240, y:-50, z:260},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+
+	domino.create(true,
+		{x:260, y:-50, z:280},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:280, y:-50, z:300},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+	domino.create(true,
+		{x:300, y:-50, z:320},
+		Math.random() * 0xffffff,
+		1,
+		{x:2.5, y:8, z:8},
+		{x:0, y:0.5, z:0});
+
+
+
 }

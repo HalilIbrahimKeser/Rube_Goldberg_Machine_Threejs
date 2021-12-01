@@ -178,6 +178,16 @@ export const leftTrack = {
         commons.createConvexTriangleShapeAddToCompound(compoundShape, brickButtonGroundMesh);
         groupMesh.add(brickButtonGroundMesh);
 
+        let slideMesh = brickButtonGroundMesh.clone();
+        slideMesh.scale.set(0.2, 0.05, 0.05);
+        slideMesh.position.set(130, -120, -100);//
+        slideMesh.rotation.y = this.degreesToRadians(-40);
+        //slideMesh.rotation.x = this.degreesToRadians(90);
+        //slideMesh.rotation.y = this.degreesToRadians(-1);
+        groupMesh.add(slideMesh);
+
+
+
         //AMMO til alle deler
         this.addCompoundAmmo(topGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(tubeMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -194,6 +204,8 @@ export const leftTrack = {
         this.addCompoundAmmo(latteMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(brickButtonGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(latteTrampolineMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(slideMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+
     },
 
     degreesToRadians(degrees) {
