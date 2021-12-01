@@ -226,10 +226,10 @@ function addModels() {
 		-1.2, Math.PI/3, 0, 5);
 	//Upper trampoline towards left track
 	trampoline.create(true,
-		{x:200, y:450, z:-190},
+		{x:200, y:450, z:-180},
 		Math.random() * 0xffffff,
 		0, 50, 20,
-		0.1, -Math.PI/2.9, 0, 2.5);
+		0.1, -Math.PI/2.9, 0, 0.5);
 
 
 	//Tube
@@ -246,7 +246,7 @@ function addModels() {
 		0.2);
 
 	// Tubes til venstre bane
-	tube.init(ammoPhysicsWorld);
+	/*tube.init(ammoPhysicsWorld);
 	tube.create();
 	tube.create(true,
 		{x:120, y:440, z:-120},
@@ -292,7 +292,7 @@ function addModels() {
 		0.7,
 		120,
 		0.2, -Math.PI/2.5, 0,
-		0.2);
+		0.2);*/
 
 	//Høyre bane
 	rightTrack.init(ammoPhysicsWorld);

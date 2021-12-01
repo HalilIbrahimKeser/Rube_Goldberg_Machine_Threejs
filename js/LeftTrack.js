@@ -125,11 +125,45 @@ export const leftTrack = {
         middleGlassWallMesh2.rotation.y = this.degreesToRadians(-10);
         groupMesh.add(middleGlassWallMesh2);
 
-        let latteMesh = this.createLatteMesh(20, 10, Math.PI )
+        let material = new THREE.MeshBasicMaterial( { color: color, side: THREE.DoubleSide } );
+        let latteMesh = this.createLatteMesh(10, 10, 2, material )
         latteMesh.position.x = 105;
         latteMesh.position.z = -85;
         latteMesh.position.y = -50;
         groupMesh.add(latteMesh);
+
+        // Latte From last trampoline
+        let latteTrampolineMesh = this.createLatteMesh(10, 20, 10, glassMaterial)
+        latteTrampolineMesh.position.x = 240;
+        latteTrampolineMesh.position.z = -140;
+        latteTrampolineMesh.position.y = 40;
+        latteTrampolineMesh.rotateX(-1);
+        latteTrampolineMesh.rotateY(0);
+        latteTrampolineMesh.rotateZ(-Math.PI/3.8);
+        latteTrampolineMesh.mate
+        groupMesh.add(latteTrampolineMesh);
+
+        let cylinderShape3 = this.createCylinderShape(1, 250);
+
+        let cylinderMesh5 = new THREE.Mesh(cylinderShape3, new THREE.MeshPhongMaterial({color: color}));
+        cylinderMesh5.castShadow = true;
+        cylinderMesh5.receiveShadow = true;
+        cylinderMesh5.position.x = 220;
+        cylinderMesh5.position.z = -120;
+        cylinderMesh5.position.y = 18;
+        cylinderMesh5.rotation.x = this.degreesToRadians(6);
+        cylinderMesh5.rotation.y = this.degreesToRadians(-56);
+        groupMesh.add(cylinderMesh5);
+
+        let cylinderMesh6 = new THREE.Mesh(cylinderShape3, new THREE.MeshPhongMaterial({color: color}));
+        cylinderMesh6.castShadow = true;
+        cylinderMesh6.receiveShadow = true;
+        cylinderMesh6.position.x = 215;
+        cylinderMesh6.position.z = -125;
+        cylinderMesh6.position.y = 18;
+        cylinderMesh6.rotation.x = this.degreesToRadians(6);
+        cylinderMesh6.rotation.y = this.degreesToRadians(-56);
+        groupMesh.add(cylinderMesh6);
 
         let brickButtonGroundShape = this.createThreeShape(1700, 100);
         let brickButtonGroundMesh = this.createExtrudeMesh(brickButtonGroundShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
@@ -147,12 +181,15 @@ export const leftTrack = {
         this.addCompoundAmmo(cylinderMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(cylinderMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(cylinderMesh3, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(cylinderMesh5, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(cylinderMesh6, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(topWallGlassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(topWallGlassMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(middleGlassWallMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(middleGlassWallMesh1, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(latteMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(brickButtonGroundMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(latteTrampolineMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
 
     degreesToRadians(degrees) {
@@ -196,13 +233,12 @@ export const leftTrack = {
         return mesh
     },
 
-    createLatteMesh(segments , phiStart , phiLength ){
+    createLatteMesh(segments, phiStart, phiLength, material ){
         const points1 = [];
-        for ( let i = 0; i < 10; i ++ ) {
-            points1.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
+        for ( let i = 0; i < segments; i ++ ) {
+            points1.push( new THREE.Vector2( Math.sin( i * 0.2 ) * phiStart + 5, ( i - 5 ) * phiLength ) );
         }
         const geometry = new THREE.LatheGeometry( points1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
         const lathe = new THREE.Mesh( geometry, material );
         lathe.castShadow = true;
         lathe.receiveShadow = true;
