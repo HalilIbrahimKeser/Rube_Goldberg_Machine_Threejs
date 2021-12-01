@@ -35,16 +35,13 @@ import {rightTrack} from "./RightTrack.js";
 import {flatTableTop} from "./FlatTableTop.js";
 import {leftTrack} from "./LeftTrack.js";
 
-
-let renderer;
-let scene;
-let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
 let timer = 0;
 
 let finnished = false;
 let points;
+let particlesAdded = false;
 
 
 export function main() {
@@ -430,10 +427,7 @@ function addModels() {
 	// tweenElevator.create();
 
 	// Particles on finnish, set true to test
-	if (finnished) {
-		addParticles();
-	}
-
+	//addParticles();
 }
 
 function addParticles() {
@@ -485,17 +479,21 @@ export function animate(currentTime) {
 
 	myThreeScene.updateGraphics(delta);
 
-	TWEEN.update(currentTime);
+	//TWEEN.update(currentTime);
 
-	timer = delta + 1000;
-	if(timer = 10000) {
+	timer = currentTime;
+	if(timer > 110000) {
 		finnished = true;
 	}
 	if (finnished) {
+		if (!particlesAdded) {
+			addParticles();
+		}
+		particlesAdded = true;
 		let x = points.position.x;
 		let y = points.position.y
 		let z = points.position.z;
-		points.position.y = y + 2;
+		points.position.y = y + 4;
 	}
 	render();
 }
