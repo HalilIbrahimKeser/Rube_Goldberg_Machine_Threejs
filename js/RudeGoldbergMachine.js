@@ -161,7 +161,7 @@ function addModels() {
 		{x: 70, y: 27, z: 2},
 		0.5,
 		0,
-		5, -1.68, Math.PI/6);
+		5, -1.9, Math.PI/6);
 
 	//Door by the end of tunnel
 	flapDoor.create(true,
