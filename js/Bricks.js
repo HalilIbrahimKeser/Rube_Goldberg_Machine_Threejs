@@ -12,10 +12,10 @@ export const bricks = {
     create(setCollisionMask = true,
            mass = 10,
            color = Math.random() * 0xffffff,
-           position = {x: 60, y: -18, z: 50},
+           position = {x: 60, y: -15, z: 50},
            radius = 0.2,
-           length = 50,
-           width = 20,
+           length = 10,
+           width = 10,
            degrees1 = 20,
            degrees2 = 2,
            degrees3 = -60) {
@@ -31,20 +31,21 @@ export const bricks = {
         let temp_z_pos = position.z + z_dif_beetween_bricks;
 
         // BRICKS
-        for (let i = 1; i < 10; i++) {
-            let nameShape = "brickShape" + i;
-            let nameMesh = "brickMesh" + i;
+        // for (let i = 1; i < 10; i++) {
+            let nameShape = "brickShape";
+            let nameMesh = "brickMesh";
 
             nameShape = this.createThreeShape(length, width);
-            nameMesh = this.createExtrudeMesh(nameShape, 1, 1, true, 2, 2, 0, 2, new THREE.MeshPhongMaterial({color: color}));
+            nameMesh = this.createExtrudeMesh(nameShape, 1, 7, true, 0, 0, 0, 0,
+                new THREE.MeshPhongMaterial({color: color}));
             nameMesh.position.set(temp_x_pos, temp_y_pos, temp_z_pos);
             nameMesh.rotateY(this.degreesToRadians(degrees1));
             //nameMesh.rotateX(this.degreesToRadians(degrees2));
             nameMesh.castShadow = true;
             nameMesh.receiveShadow = true;
-            nameMesh.name = "brickMesh" + i;
+            nameMesh.name = "brickMesh";
 
-            temp_x_pos += x_dif_beetween_bricks + (i * degrees2);
+            temp_x_pos += x_dif_beetween_bricks + (1 * degrees2);
             temp_y_pos += y_dif_beetween_bricks
             temp_z_pos += z_dif_beetween_bricks;
 
@@ -57,8 +58,28 @@ export const bricks = {
             //     meshList.add = item;
             // })
 
-            this.addCompoundAmmo(nameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
-        }
+            let compoundShape = new Ammo.btCompoundShape();
+            commons.createConvexTriangleShapeAddToCompound(compoundShape, nameMesh);
+
+            //AMMO
+            let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, 0.1, 0.3, position, mass);
+            this.myPhysicsWorld.addPhysicsObject(
+                rigidBody,
+                groupMesh,
+                setCollisionMask,
+                this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE,
+                this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+                this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
+                this.myPhysicsWorld.COLLISION_GROUP_PLANE |
+                this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
+                this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
+                this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
+                this.myPhysicsWorld.COLLISION_GROUP_BOX |
+                this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
+                this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
+            );
+            // this.addCompoundAmmo(nameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        // }
 
     },
 

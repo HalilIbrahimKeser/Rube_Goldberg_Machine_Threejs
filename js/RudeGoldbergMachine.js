@@ -41,6 +41,7 @@ let scene;
 let camera;
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
+let timer = 0;
 
 let finnished = false;
 let points;
@@ -149,6 +150,14 @@ function addModels() {
 		10,
 		0.5,
 		1);
+
+	//Teste baller for brickene ///////////////////////////////
+	mySphere.create(true,
+		{x:140, y:200, z:120},
+		Math.random() * 0xffffff,
+		10,
+		0.5,
+		2);
 
 
 	// FlappDoor
@@ -294,7 +303,7 @@ function addModels() {
 		0.2, -Math.PI/2.5, 0,
 		0.2);*/
 
-	//Høyre bane
+	// //Høyre bane
 	rightTrack.init(ammoPhysicsWorld);
 	rightTrack.create();
 
@@ -307,18 +316,111 @@ function addModels() {
 
 	// Bricks
 	bricks.init(ammoPhysicsWorld);
+	// høyre side
+
 	bricks.create(true,
 		10,
 		Math.random() * 0xffffff,
-		{x: 60, y: -18, z: 50},
+		{x: 60, y: -19, z: 50},
 		0.2,50,20,20, 2, 0);
 	bricks.create(true,
 		10,
 		Math.random() * 0xffffff,
-		{x: -110, y: 28, z: -35},  ///////////
+		{x: 59, y: -15, z: 65},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 62, y: -15, z: 80},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 70, y: -15, z: 95},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 75, y: -15, z: 110},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 85, y: -15, z: 125},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 90, y: -16, z: 140},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 100, y: -16, z: 155},
+		0.2,50,20,20, 2, 0);
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 110, y: -16, z: 170},
+		0.2,50,20,20, 2, 0);
+
+	//venstre side
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: 10, y: 25, z: 50},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -5, y: 28, z: 40},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -20, y: 28, z: 30},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -35, y: 28, z: 20},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -50, y: 28, z: 10},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -65, y: 28, z: 0},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -80, y: 28, z: -10},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -95, y: 28, z: -20},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -110, y: 28, z: -30},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -125, y: 28, z: -40},
+		0.2,50,25,20, 0, 58 );
+	bricks.create(true,
+		10,
+		Math.random() * 0xffffff,
+		{x: -140, y: 28, z: -50},
 		0.2,50,25,20, 0, 58 );
 
-	//Venstre bane
 	leftTrack.init(ammoPhysicsWorld);
 	leftTrack.create();
 
@@ -377,7 +479,7 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	let delta = clock.getDelta() * 5; //Juster denne for å få fart på ting under testing
+	let delta = clock.getDelta() * 1; //Juster denne for å få fart på ting under testing
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
@@ -385,6 +487,10 @@ export function animate(currentTime) {
 
 	TWEEN.update(currentTime);
 
+	timer = delta + 1000;
+	if(timer = 10000) {
+		finnished = true;
+	}
 	if (finnished) {
 		let x = points.position.x;
 		let y = points.position.y

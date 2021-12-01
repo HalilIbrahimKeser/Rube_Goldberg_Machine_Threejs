@@ -80,7 +80,7 @@ export const leftTrack = {
         cylinderMesh2.position.x = 0;
         cylinderMesh2.position.y = -40;
         cylinderMesh2.rotation.x = this.degreesToRadians(10);
-        cylinderMesh2.rotation.y = this.degreesToRadians(80);//////////////////
+        cylinderMesh2.rotation.y = this.degreesToRadians(80);
         groupMesh.add(cylinderMesh2);
 
         let cylinderMesh3 = new THREE.Mesh(cylinderShape2, new THREE.MeshPhongMaterial({color: color}));
@@ -90,7 +90,7 @@ export const leftTrack = {
         cylinderMesh3.position.x = 0;
         cylinderMesh3.position.y = -40;
         cylinderMesh3.rotation.x = this.degreesToRadians(10);
-        cylinderMesh3.rotation.y = this.degreesToRadians(80);//////////////////
+        cylinderMesh3.rotation.y = this.degreesToRadians(80);
         groupMesh.add(cylinderMesh3);
 
         let glassMaterial = new THREE.MeshPhongMaterial({color: colorSideWall, side: THREE.DoubleSide, transparent: true, opacity: 0.2});
@@ -165,13 +165,17 @@ export const leftTrack = {
         cylinderMesh6.rotation.y = this.degreesToRadians(-56);
         groupMesh.add(cylinderMesh6);
 
-        let brickButtonGroundShape = this.createThreeShape(1700, 100);
-        let brickButtonGroundMesh = this.createExtrudeMesh(brickButtonGroundShape, 1, 2.5, true, 1, 1, 0, 1, glassMaterial);
+        // Under the bricks
+        let brickButtonGroundShape = this.createThreeShape(1700, 200);
+        let brickButtonGroundMesh = this.createExtrudeMesh(brickButtonGroundShape, 2, 50, true,
+            1, 1, 0, 1, glassMaterial);
         brickButtonGroundMesh.scale.set(0.2, 0.1, 0.1);
-        brickButtonGroundMesh.position.set(250, -150, -65);//
+        brickButtonGroundMesh.position.set(250, -150, -80);//
         brickButtonGroundMesh.rotation.z = this.degreesToRadians(100);
         brickButtonGroundMesh.rotation.x = this.degreesToRadians(90);
         brickButtonGroundMesh.rotation.y = this.degreesToRadians(-1);
+        let compoundShape = new Ammo.btCompoundShape();
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, brickButtonGroundMesh);
         groupMesh.add(brickButtonGroundMesh);
 
         //AMMO til alle deler
