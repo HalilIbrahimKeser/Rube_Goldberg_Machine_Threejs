@@ -154,13 +154,13 @@ function addModels() {
 		0.5,
 		0.5);
 
-	//Teste baller for brickene ///////////////////////////////
-	mySphere.create(true,
-		{x:140, y:200, z:120},
-		Math.random() * 0xffffff,
-		10,
-		0.5,
-		2);
+	// //Teste baller for brickene ///////////////////////////////
+	// mySphere.create(true,
+	// 	{x:140, y:200, z:120},
+	// 	Math.random() * 0xffffff,
+	// 	10,
+	// 	0.5,
+	// 	2);
 
 
 	// FlappDoor
@@ -259,55 +259,6 @@ function addModels() {
 		0,0,0,
 		0.2);
 
-	// Tubes til venstre bane
-	/*tube.init(ammoPhysicsWorld);
-	tube.create();
-	tube.create(true,
-		{x:120, y:440, z:-120},
-		Math.random() * 0xffffff,
-		0,
-		50,
-		0.7,
-		160,
-		0, -Math.PI/4, 0,
-		0.2);
-
-	tube.init(ammoPhysicsWorld);
-	tube.create();
-	tube.create(true,
-		{x:10, y:430, z:-15},
-		Math.random() * 0xffffff,
-		0,
-		40,
-		0.7,
-		160,
-		0.1, -Math.PI/3.8, 0,
-		0.2);
-
-	tube.init(ammoPhysicsWorld);
-	tube.create();
-	tube.create(true,
-		{x:-110, y:410, z:90},
-		Math.random() * 0xffffff,
-		0,
-		30,
-		0.7,
-		160,
-		0.2, -Math.PI/3.4, 0,
-		0.2);
-
-	tube.init(ammoPhysicsWorld);
-	tube.create();
-	tube.create(true,
-		{x:-240, y:380, z:180},
-		Math.random() * 0xffffff,
-		0,
-		20,
-		0.7,
-		120,
-		0.2, -Math.PI/2.5, 0,
-		0.2);*/
-
 	// //Høyre bane
 	rightTrack.init(ammoPhysicsWorld);
 	rightTrack.create();
@@ -320,113 +271,6 @@ function addModels() {
 	flatTableTop.create();
 
 	// Bricks
-	//bricks.init(ammoPhysicsWorld);
-	// høyre side
-
-	/*bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 60, y: -19, z: 50},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 59, y: -15, z: 65},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 62, y: -15, z: 80},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 70, y: -15, z: 95},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 75, y: -15, z: 110},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 85, y: -15, z: 125},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 90, y: -16, z: 140},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 100, y: -16, z: 155},
-		0.2,50,20,20, 2, 0);
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 110, y: -16, z: 170},
-		0.2,50,20,20, 2, 0);
-
-	//venstre side
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: 10, y: 25, z: 50},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -5, y: 28, z: 40},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -20, y: 28, z: 30},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -35, y: 28, z: 20},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -50, y: 28, z: 10},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -65, y: 28, z: 0},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -80, y: 28, z: -10},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -95, y: 28, z: -20},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -110, y: 28, z: -30},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -125, y: 28, z: -40},
-		0.2,50,25,20, 0, 58 );
-	bricks.create(true,
-		10,
-		Math.random() * 0xffffff,
-		{x: -140, y: 28, z: -50},
-		0.2,50,25,20, 0, 58 );*/
-
-
 	domino.init(ammoPhysicsWorld);
 	setLeftDominoes();
 	setRightDominoes();
@@ -486,7 +330,7 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	let delta = clock.getDelta() * 1; //Juster denne for å få fart på ting under testing
+	let delta = clock.getDelta() * 5; //Juster denne for å få fart på ting under testing
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
@@ -495,7 +339,7 @@ export function animate(currentTime) {
 	//TWEEN.update(currentTime);
 
 	timer = currentTime;
-	if(timer > 110000) {
+	if(timer > 150000) {
 
 		finnished = true;
 	}

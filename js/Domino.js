@@ -58,4 +58,5 @@ export const domino = {
             this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
         );
     },
+
 }
