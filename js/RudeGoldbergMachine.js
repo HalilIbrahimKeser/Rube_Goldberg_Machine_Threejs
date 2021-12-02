@@ -148,7 +148,7 @@ function addModels() {
 
 	//Ball on top of the Left track
 	mySphere.create(true,
-		{x:-390, y:380, z:190},
+		{x:-400, y:360, z:200},
 		Math.random() * 0xffffff,
 		20,
 		0.5,
