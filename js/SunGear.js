@@ -17,11 +17,11 @@ export const sunGear = {
     create(setCollisionMask = true,
            mass = 10,
            color = 0xF5D22E,
-           position = {x:-310, y:240, z:-495},
+           position = {x:-310, y:280, z:-495},
            radius= 20,
            height = 30, //height of the holed cylinder
            withGearHolder = true,
-           withSpikes = false,
+           withSpikes = true,
            withChainHolder = true,
            randomizedColor = false,
            gearHolderRotation = {x: Math.PI/2, y: 0, z: 0},
@@ -186,7 +186,7 @@ export const sunGear = {
             gearHolderMesh.rotation.z = gearHolderRotation.z;
             gearHolderMesh.castShadow = true;
             gearHolderMesh.receiveShadow = true;
-            this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-310, y: 240, z: -490}, 0, true);
+            this.addCylinderAmmo(gearHolderMesh, 0.1,0.3, {x:-310, y: 280, z: -490}, 0, true);
         }
 
         //Sylinder med hol i midten
