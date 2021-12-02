@@ -12,7 +12,7 @@ export const flatTableUnder = {
     create(setCollisionMask = true,
            mass = 0,
            color = Math.random() * 0xffffff,
-           position = {x: -180, y: -50, z: -230},
+           position = {x: -180, y: -40, z: -230},
            //position = {x: -200, y: -60, z: -224}, //Alternativ seasaw
            radius = 0.2,
            length = 300,
@@ -43,7 +43,7 @@ export const flatTableUnder = {
         commons.createConvexTriangleShapeAddToCompound(compoundShape, stopperBlockRearMesh);
 
 
-        let boundaryBack = this.createThreeShape(100, 300);
+        /*let boundaryBack = this.createThreeShape(100, 300);
         let boundaryBackMesh = this.createExtrudeMesh(boundaryBack, 1, 1, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.2}));
         boundaryBackMesh.position.set(0, 0, -50);
         boundaryBackMesh.castShadow = true;
@@ -54,7 +54,7 @@ export const flatTableUnder = {
         let boundaryFrontMesh = boundaryBackMesh.clone();
         boundaryFrontMesh.position.set(0, 0, 0);
         groupMesh.add(boundaryFrontMesh);
-        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryFrontMesh);
+        commons.createConvexTriangleShapeAddToCompound(compoundShape, boundaryFrontMesh);*/
 
        /* let boundaryLeftMesh = boundaryFrontMesh.clone();
         boundaryLeftMesh.scale.set(0.17, 1, 1);

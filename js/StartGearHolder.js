@@ -59,6 +59,10 @@ export const startGearHolder = {
         glassMesh.position.set(0, 0, 35);
         groupMesh.add(glassMesh);
 
+        let glassMesh2 = this.createExtrudeMesh(glassShape, 1, 1, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: 0x007EA7, side: THREE.DoubleSide, transparent: true, opacity: 0.1}));
+        glassMesh2.scale.set(0.4, 0.1, 1);
+        glassMesh2.position.set(55, 245, 19);
+        groupMesh.add(glassMesh2);
 
         //AMMO til alle deler
         this.addCompoundAmmo(upperMiddleMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -69,6 +73,8 @@ export const startGearHolder = {
         this.addCompoundAmmo(lowerFrameMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
 
         this.addCompoundAmmo(glassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+        this.addCompoundAmmo(glassMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
+
 
     },
 

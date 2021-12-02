@@ -100,8 +100,8 @@ function addModels() {
 		0.1);
 
 	//Chains
-	/*verticalChain.init(ammoPhysicsWorld);
-	verticalChain.create();*/
+	verticalChain.init(ammoPhysicsWorld);
+	verticalChain.create();
 
 	//startwall
 	startGearHolder.init(ammoPhysicsWorld);
@@ -130,13 +130,6 @@ function addModels() {
 		30,
 		1,
 		1);
-	//Ball after the large ball
-	/*mySphere.create(true,
-		{x:130, y:150, z:-250},
-		Math.random() * 0xffffff,
-		30,
-		1,
-		0.3);*/
 
 	//Ball on table
 	mySphere.create(true,
@@ -429,7 +422,7 @@ function addModels() {
 
 	domino.init(ammoPhysicsWorld);
 	setLeftDominoes();
-	setRightDominoes();
+	//setRightDominoes();
 
 	leftTrack.init(ammoPhysicsWorld);
 	leftTrack.create();
