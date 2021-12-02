@@ -17,7 +17,7 @@ export const trampoline = {
            tiltX = Math.PI/2,
            tiltY = -0.3,
            tiltZ = 0,
-           restitution = 4.2) {
+           restitution = 4.5) {
 
         let groupMesh = new THREE.Group();
         groupMesh.position.set = (position.x, position.y, position.z);

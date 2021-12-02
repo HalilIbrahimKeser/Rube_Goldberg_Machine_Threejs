@@ -148,12 +148,12 @@ function addModels() {
 		0.5);
 
 	//Teste baller for brickene ///////////////////////////////
-	mySphere.create(true,
+	/*mySphere.create(true,
 		{x:140, y:200, z:120},
 		Math.random() * 0xffffff,
 		10,
 		0.5,
-		2);
+		2);*/
 
 
 	// FlappDoor
