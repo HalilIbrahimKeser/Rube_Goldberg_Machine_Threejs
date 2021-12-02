@@ -2,33 +2,7 @@ import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
 /**
- * Pinnen er forankret i kula (som står i ro, dvs. masse=0).
- * Man bestemmer selv om ankret (Kula) skal tegnes/vises.
- * Pinnen kan beveges - gjøres vha. applyCentralImpulse
- * MERK: dersom posStick og posAnchor er ulik vil "sticken" rotere frem og tilbake ved oppstart. Er de lik vil den stå i ro (stort sett).
- *
- * Se: https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=4145
- * og: https://gamedev.stackexchange.com/questions/71436/what-are-the-parameters-for-bthingeconstraintsetlimit
- * MERK:
- void btHingeConstraint::setLimit    (
- btScalar    low,
- btScalar    high,
- btScalar    _softness = 0.9f,
- btScalar    _biasFactor = 0.3f,
- btScalar    _relaxationFactor = 1.0f
- )
- The parameters low and high are the angles restricting the hinge.
- The angle between the two bodies stays in that range.
- For no restriction, you pass a lower limit <= -pi and an upper limit >= pi here. This might be useful for things that
- rotate completely around other things, for example wheels on a car. For the other three parameters, I can only guess,
- so I don't claim this answer is complete.
- _softness might be a negative measure of the friction that determines how much the hinge rotates for a given force.
- A high softness would make the hinge rotate easily like it's oiled then.
- _biasFactor might be an offset for the relaxed rotation of the hinge. It won't be right in the middle of the low
- and high angles anymore. 1.0f is the neural value.
- _relaxationFactor might be a measure of how much force is applied internally to bring the hinge in its central rotation.
- This is right in the middle of the low and high angles. For example, consider a western swing door.
- After walking through it will swing in both directions but at the end it stays right in the middle.
+Basert på myhinge.js fra Werner
  */
 export const flapDoor = {
     myPhysicsWorld: undefined,

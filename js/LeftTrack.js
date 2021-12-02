@@ -6,10 +6,8 @@ export const leftTrack = {
     myPhysicsWorld: undefined,
     colorWall: undefined,
     colorFloor: undefined,
-    //scene: undefined,
 
-    init(myPhysicsWorld){ // må endres til ammophysicsworld
-        //this.scene = scene;
+    init(myPhysicsWorld){
         this.myPhysicsWorld = myPhysicsWorld;
     },
 

@@ -3,10 +3,8 @@ import {commons} from "../lib/ammohelpers/lib/Common.js";
 
 export const startGearHolder = {
     myPhysicsWorld: undefined,
-    //scene: undefined,
 
-    init(myPhysicsWorld){ // må endres til ammophysicsworld
-        //this.scene = scene;
+    init(myPhysicsWorld){
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
@@ -53,7 +51,6 @@ export const startGearHolder = {
         lowerFrameMesh.receiveShadow = true;
         groupMesh.add(lowerFrameMesh);
 
-
         let glassShape = this.createThreeShape(length, width);
         let glassMesh = this.createExtrudeMesh(glassShape, 1, 1, true, 1, 1,0, 1, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.1}));
         glassMesh.position.set(0, 0, 35);
@@ -63,7 +60,6 @@ export const startGearHolder = {
         glassMesh2.scale.set(0.4, 0.1, 1);
         glassMesh2.position.set(55, 245, 19);
         groupMesh.add(glassMesh2);
-
 
         //AMMO til alle deler
         this.addCompoundAmmo(upperMiddleMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
@@ -76,8 +72,6 @@ export const startGearHolder = {
         this.addCompoundAmmo(glassMesh, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
         this.addCompoundAmmo(glassMesh2, groupMesh, 0.1, 0.3, position, mass, setCollisionMask);
     },
-
-
 
     addCompoundAmmo(mesh,  groupMesh, restitution, friction, position, mass, collisionMask){
         let compoundShape = new Ammo.btCompoundShape();
@@ -102,7 +96,6 @@ export const startGearHolder = {
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
             this.myPhysicsWorld.COLLISION_GROUP_BOX |
             this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
-
         );
     },
 
@@ -192,8 +185,6 @@ export const startGearHolder = {
         return shape;
     },
 
-
-
     createUpperRightFrameShape(length, width, offset){
         let wallFrameShape = new THREE.Shape();
         wallFrameShape.moveTo(width/2+13, length-20);
@@ -204,8 +195,6 @@ export const startGearHolder = {
         wallFrameShape.lineTo(width-offset, length/2);
         wallFrameShape.lineTo(width-offset, length-20);
         wallFrameShape.lineTo(width/2+20, length-20);
-
-
         return wallFrameShape;
     },
 
@@ -258,8 +247,4 @@ export const startGearHolder = {
         shape.lineTo(0, 0);
         return shape;
     }
-
-
-
-
 }

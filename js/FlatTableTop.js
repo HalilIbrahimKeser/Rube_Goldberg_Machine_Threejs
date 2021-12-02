@@ -1,6 +1,8 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
+// utgangspunkt mygameboard.js og pinball.js
+
 export const flatTableTop = {
     myPhysicsWorld: undefined,
 
@@ -27,7 +29,6 @@ export const flatTableTop = {
         let rockerTableMesh = this.createExtrudeMesh(rockerTableShape, 1, 5, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         rockerTableMesh.position.set(0, 20, 0);
         rockerTableMesh.rotateX(-Math.PI/2);
-        //rockerTableMesh.rotateX(1.90);
         rockerTableMesh.castShadow = true;
         rockerTableMesh.receiveShadow = true;
         groupMesh.add(rockerTableMesh);
@@ -36,8 +37,6 @@ export const flatTableTop = {
         let boarderShape = this.createThreeShape(10, 5);
         let boarderMesh = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         boarderMesh.position.set(0, 20, -45);
-        //boarderMesh.rotateX(-Math.PI/2);
-        //boarderMesh.rotateX(1.90);
         boarderMesh.castShadow = true;
         boarderMesh.receiveShadow = true;
         groupMesh.add(boarderMesh);
@@ -45,8 +44,6 @@ export const flatTableTop = {
 
         let boarderMesh2 = this.createExtrudeMesh(boarderShape, 1, 46, true, 1, 1, 0, 1, new THREE.MeshPhongMaterial({color: color}));
         boarderMesh2.position.set(25, 20, -45);
-        //boarderMesh.rotateX(-Math.PI/2);
-        //boarderMesh.rotateX(1.90);
         boarderMesh2.castShadow = true;
         boarderMesh2.receiveShadow = true;
         groupMesh.add(boarderMesh2);
@@ -56,7 +53,6 @@ export const flatTableTop = {
         boarderMesh3.scale.set(1.5,1,0.5);
         boarderMesh3.position.set(25, 20, -44);
         boarderMesh3.rotateY(-Math.PI/2);
-        //boarderMesh.rotateX(1.90);
         boarderMesh3.castShadow = true;
         boarderMesh3.receiveShadow = true;
         groupMesh.add(boarderMesh3);
@@ -66,12 +62,10 @@ export const flatTableTop = {
         boarderMesh4.scale.set(1.5,1,0.5);
         boarderMesh4.position.set(25, 20, -8);
         boarderMesh4.rotateY(-Math.PI/2);
-        //boarderMesh.rotateX(1.90);
         boarderMesh4.castShadow = true;
         boarderMesh4.receiveShadow = true;
         groupMesh.add(boarderMesh4);
         commons.createConvexTriangleShapeAddToCompound(compoundShape, boarderMesh4);
-
 
         let rockerCylinder = this.createCylinderShape(25, 40);
         let rockerCylinderMesh = new THREE.Mesh(rockerCylinder, new THREE.MeshPhongMaterial({color: 0x979A9A}));
@@ -117,8 +111,6 @@ export const flatTableTop = {
     },
 
     createThreeShape(length, width) {
-        //let length = this.TERRAIN_SIZE * 2;
-        //let width = this.TERRAIN_SIZE * 3;
         let shape = new THREE.Shape();
         shape.moveTo(0, 0);
         shape.lineTo(0, length);
@@ -143,6 +135,4 @@ export const flatTableTop = {
         let extrudeMesh = new THREE.Mesh(shapeGeometry, material);
         return extrudeMesh;
     },
-
-
 }

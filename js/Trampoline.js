@@ -1,6 +1,8 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
+//https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
+
 export const trampoline = {
     myPhysicsWorld: undefined,
 
@@ -70,51 +72,5 @@ export const trampoline = {
 
         let cylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
         return cylinderGeometry;
-    },
-    addCylinderAmmo(mesh, restitution, friction, position, mass, collisionMask){
-        let cylinderShape = commons.createCylinderShape(mesh);
-        let rigidBody = commons.createAmmoRigidBody(cylinderShape, mesh, restitution, friction, position, mass);
-        rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | 2);
-        rigidBody.setActivationState(4);
-
-        this.addPhysicsAmmo(rigidBody, mesh, collisionMask);
-    },
-
-    addPhysicsAmmo(rigidBody, groupMesh, collisionMask){
-        this.myPhysicsWorld.addPhysicsObject(
-            rigidBody,
-            groupMesh,
-            collisionMask,
-            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND,
-            this.myPhysicsWorld.COLLISION_GROUP_COMPOUND |
-            this.myPhysicsWorld.COLLISION_GROUP_SPHERE |
-            this.myPhysicsWorld.COLLISION_GROUP_PLANE |
-            this.myPhysicsWorld.COLLISION_GROUP_MOVEABLE |
-            this.myPhysicsWorld.COLLISION_GROUP_CONVEX |
-            this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE |
-            this.myPhysicsWorld.COLLISION_GROUP_BOX |
-            this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE
-
-        );
-    },
-
-    //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js
-    createHoledCylinderShape(){
-        let extrudeSettings = {
-            depth : 2,
-            steps : 1,
-            bevelEnabled: false,
-            curveSegments: 8
-        };
-
-        let arcShape = new THREE.Shape();
-        arcShape.absarc(0, 0, 1, 0, Math.PI * 2, 0, false);
-
-        let holePath = new THREE.Path();
-        holePath.absarc(0, 0, 0.2, 0, Math.PI * 2, true);
-        arcShape.holes.push(holePath);
-
-        let holedCylinderGeometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
-        return holedCylinderGeometry;
     },
 }

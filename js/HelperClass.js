@@ -1,6 +1,7 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
 
+// bilde er hentet fra pngegg.com og klippet ut
 
 export function addSkybox() {
     const loader = new THREE.CubeTextureLoader();
@@ -11,13 +12,6 @@ export function addSkybox() {
         '../assets/images/pngegg_yneg.png',
         '../assets/images/pngegg_zpos.png',
         '../assets/images/pngegg_zneg.png',
-
-        // '../assets/images/grass_xpos.jpg',
-        // '../assets/images/grass_xneg.jpg',
-        // '../assets/images/grass_ypos.jpg',
-        // '../assets/images/grass_yneg.jpg',
-        // '../assets/images/grass_zpos.jpg',
-        // '../assets/images/grass_zneg.jpg',
     ]);
     myThreeScene.scene.background = texture;
 }

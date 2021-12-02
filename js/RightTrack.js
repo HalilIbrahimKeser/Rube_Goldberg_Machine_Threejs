@@ -5,10 +5,8 @@ export const rightTrack = {
     myPhysicsWorld: undefined,
     colorWall: undefined,
     colorFloor: undefined,
-    //scene: undefined,
 
-    init(myPhysicsWorld){ // må endres til ammophysicsworld
-        //this.scene = scene;
+    init(myPhysicsWorld){
         this.myPhysicsWorld = myPhysicsWorld;
     },
 
@@ -267,8 +265,6 @@ export const rightTrack = {
         wallFrameShape.lineTo(0, length);
         wallFrameShape.lineTo((width/2)-13, length-20);
         wallFrameShape.lineTo(offset, length-90);
-        //wallFrameShape.lineTo(offset, length-40);
-        //wallFrameShape.lineTo(offset+15, length-50);
         wallFrameShape.lineTo(offset, length-50);
         wallFrameShape.lineTo(offset, length/2+80);
 
@@ -372,8 +368,4 @@ export const rightTrack = {
         shape.lineTo(0, 0);
         return shape;
     }
-
-
-
-
 }

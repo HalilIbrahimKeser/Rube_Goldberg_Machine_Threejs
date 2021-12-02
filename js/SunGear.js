@@ -1,7 +1,6 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
-
 export const sunGear = {
     myPhysicsWorld: undefined,
     material: undefined,
@@ -10,7 +9,7 @@ export const sunGear = {
     rotationAngle: Math.PI/2,
     position: undefined,
 
-    init(myPhysicsWorld){ //Må byttes til physicsworld
+    init(myPhysicsWorld){
         this.myPhysicsWorld = myPhysicsWorld;
     },
 

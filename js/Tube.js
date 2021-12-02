@@ -4,6 +4,7 @@ import {commons} from "../lib/ammohelpers/lib/Common.js";
 export const tube = {
     myPhysicsWorld: undefined,
 
+
     init(myPhysicsWorld) {
         this.myPhysicsWorld = myPhysicsWorld;
     },
@@ -13,7 +14,7 @@ export const tube = {
            color=Math.random() * 0xffffff,
            mass= 0,
            radius= 50,
-           holeRadiusPercent = 0.6, //Nr to multiply with the radius get the hole (Must be a nr > 0 and < 1)
+           holeRadiusPercent = 0.6,
            depth = 160,
            tiltX = 0,
            tiltY = Math.PI/2,
@@ -41,8 +42,6 @@ export const tube = {
         // AMMO:
         commons.createTriangleShapeAddToCompound(compoundShape, tubeMesh);
 
-
-
         let rigidBody = commons.createAmmoRigidBody(compoundShape, groupMesh, restitution, 0.6, position, mass);
         this.myPhysicsWorld.addPhysicsObject(
             rigidBody,
@@ -58,12 +57,6 @@ export const tube = {
             this.myPhysicsWorld.COLLISION_GROUP_HINGE_SPHERE |
             this.myPhysicsWorld.COLLISION_GROUP_TRIANGLE
         );
-
-
-
-
-
-
     },
 
     //https://stackoverflow.com/questions/11826798/how-do-i-construct-a-hollow-cylinder-in-three-js

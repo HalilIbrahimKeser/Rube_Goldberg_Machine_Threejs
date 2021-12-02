@@ -1,11 +1,12 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
+// utgangspunkt mygameboard.js og pinball.js
+
 export const flatTableUnder = {
     myPhysicsWorld: undefined,
-    //scene: undefined,
 
-    init(myPhysicsWorld) { // ammoPhysicsWorld
+    init(myPhysicsWorld) {
         this.myPhysicsWorld = myPhysicsWorld;
     },
 

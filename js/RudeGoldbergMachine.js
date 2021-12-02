@@ -1,40 +1,30 @@
 /**
  * Bruker et eksempel fra faglærer Werner som startpunkt skybox2.js
- *
- * Terreng har vi heller tatt i bruk terraing.js fra helpers
- *
+ * Terreng har vi tatt i bruk terraing.js fra helpers
  * MyThreeScene kommer fra lib mappen. Den er gjort noen få endringer på.
  * Tween er implementert i TweenElevator.js, kode hentet fra Tween1.js
  * Slutt animasjon er laget med partikler fra particles1.js
  *
- */
-/**
- * TODO list
- * Tween gjør at alt henger seg
- *
- *
+ * Laget av Nancy A. Lacsamana, Asbjørn Bjørge og Halil I. Keser
  */
 
 import * as THREE from "../lib/three/build/three.module.js";
-import {addSkybox} from "../js/HelperClass.js";
+import {addSkybox} from "./HelperClass.js";
 import {myTerrain} from "../lib/ammohelpers/MyTerrain.js";
 import {ammoPhysicsWorld} from "../lib/ammohelpers/lib/AmmoPhysicsWorld.js";
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
-import {sunGear} from "../js/SunGear.js";
-import {verticalChain} from "../js/VerticalChain.js";
-import {startGearHolder} from "../js/StartGearHolder.js";
-import {tweenElevator} from "../js/TweenElevator.js";
+import {sunGear} from "./SunGear.js";
+import {startGearHolder} from "./StartGearHolder.js";
 import {flatTableUnder} from "./FlatTableUnder.js";
-import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {mySphere} from "../lib/ammohelpers/MySphere.js";
-import {bricks} from "../js/Bricks.js";
 import {trampoline} from "./Trampoline.js";
-import {flapDoor} from "../js/FlapDoor.js";
+import {flapDoor} from "./FlapDoor.js";
 import {tube} from "./Tube.js";
 import {rightTrack} from "./RightTrack.js";
 import {flatTableTop} from "./FlatTableTop.js";
 import {leftTrack} from "./LeftTrack.js";
 import {domino} from "./Domino.js";
+import {verticalChain} from "./VerticalChain.js";
 
 let currentlyPressedKeys = {};
 let clock = new THREE.Clock();
@@ -54,11 +44,7 @@ export function main() {
 	//AMMO
 	ammoPhysicsWorld.init(myThreeScene.scene);
 
-	// // Camera
-	//camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 5000);
-
 	// TERRAIN
-	//addTerrain();
 	myTerrain.init(ammoPhysicsWorld);
 	myTerrain.create();
 
@@ -72,13 +58,8 @@ export function main() {
     document.addEventListener('keyup', handleKeyUp, false);
     document.addEventListener('keydown', handleKeyDown, false);
 
-
-
-
 	animate();
-
 }
-
 
 function addModels() {
 	// SUNGEAR
@@ -98,10 +79,6 @@ function addModels() {
 		{x: Math.PI/2, y: 0, z: 0},
 		0.2,
 		0.1);
-
-	//Chains
-	/*verticalChain.init(ammoPhysicsWorld);
-	verticalChain.create();*/
 
 	//startwall
 	startGearHolder.init(ammoPhysicsWorld);
@@ -153,15 +130,6 @@ function addModels() {
 		20,
 		0.5,
 		0.5);
-
-	// //Teste baller for brickene ///////////////////////////////
-	// mySphere.create(true,
-	// 	{x:140, y:200, z:120},
-	// 	Math.random() * 0xffffff,
-	// 	10,
-	// 	0.5,
-	// 	2);
-
 
 	// FlappDoor
 	flapDoor.init(ammoPhysicsWorld);
@@ -225,19 +193,21 @@ function addModels() {
 		{x:-95, y:475, z:-490},
 		Math.random() * 0xffffff,
 		0, 60, 30,
-		Math.PI/2, 1.4, 0, 5);
+		Math.PI/2, 1.4, 0, 5.2);
+
 	//Lower Trampoline towards left track
 	trampoline.create(true,
 		{x:-70, y:60, z:-250},
 		Math.random() * 0xffffff,
 		0, 50, 20,
-		Math.PI/2, 0.3, 0, 2);
+		Math.PI/2, 0.3, 0, 2.1);
 	//Middle Trampoline towards Left track
 	trampoline.create(true,
 		{x:-220, y:280, z:-250},
 		Math.random() * 0xffffff,
 		0, 60, 20,
 		-1.2, Math.PI/3, 0, 5);
+
 	//Upper trampoline towards left track
 	trampoline.create(true,
 		{x:200, y:450, z:-180},
@@ -273,18 +243,15 @@ function addModels() {
 	// Bricks
 	domino.init(ammoPhysicsWorld);
 	setLeftDominoes();
-	setRightDominoes();
 
 	leftTrack.init(ammoPhysicsWorld);
 	leftTrack.create();
 
 	// Elevator
-	// Kommentert ut, gjør at siden blir veldig forsinket. Sendt mail til Werner, ikke hørt noe enda.
+	// NB NB! Kommentert ut, gjør at siden blir veldig forsinket. Sendt mail til Werner, ikke hørt noe enda.
+
 	// tweenElevator.init(ammoPhysicsWorld);
 	// tweenElevator.create();
-
-	// Particles on finnish, set true to test
-	//addParticles();
 }
 
 function addParticles() {
@@ -330,7 +297,7 @@ function handleKeyDown(event) {
 export function animate(currentTime) {
 	requestAnimationFrame(animate);
 
-	let delta = clock.getDelta() * 5; //Juster denne for å få fart på ting under testing
+	let delta = clock.getDelta() * 1;
 
 	ammoPhysicsWorld.updatePhysics(delta);
 
@@ -339,8 +306,7 @@ export function animate(currentTime) {
 	//TWEEN.update(currentTime);
 
 	timer = currentTime;
-	if(timer > 150000) {
-
+	if(timer > 130000) {
 		finnished = true;
 	}
 	if (finnished) {
@@ -357,26 +323,14 @@ export function animate(currentTime) {
 	render();
 }
 
-function render(delta)
-{
-    //renderer.render(scene, camera);
-}
-
 function onWindowResize() {
 	/** myThreeScene.camera eller camera ? */
 	myThreeScene.camera.aspect = window.innerWidth / window.innerHeight;
 	myThreeScene.camera.updateProjectionMatrix();
-    //renderer.setSize(window.innerWidth, window.innerHeight);
-    //render();
 }
 
 export function animateOnMain(time) {
 	animate();
-}
-
-function degreesToRadians(degrees) {
-	let pi = Math.PI;
-	return degrees * (pi / 180);
 }
 
 function setLeftDominoes(){
@@ -423,80 +377,4 @@ function setLeftDominoes(){
 		1,
 		{x:2.5, y:8, z:8},
 		{x:0, y:1.4, z:0});
-}
-
-function setRightDominoes(){
-
-	domino.create(true,
-		{x:120, y:-50, z:140},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:140, y:-50, z:160},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:160, y:-50, z:180},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:180, y:-50, z:200},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:200, y:-50, z:220},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:220, y:-50, z:240},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-	domino.create(true,
-		{x:240, y:-50, z:260},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-
-	domino.create(true,
-		{x:260, y:-50, z:280},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:280, y:-50, z:300},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-	domino.create(true,
-		{x:300, y:-50, z:320},
-		Math.random() * 0xffffff,
-		1,
-		{x:2.5, y:8, z:8},
-		{x:0, y:0.5, z:0});
-
-
-
 }

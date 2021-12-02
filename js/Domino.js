@@ -1,6 +1,8 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
+//Basert på mycompoundtv.js
+
 export const domino = {
     myPhysicsWorld: undefined,
 

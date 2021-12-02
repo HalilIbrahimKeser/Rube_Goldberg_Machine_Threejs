@@ -1,7 +1,6 @@
 import * as THREE from "../lib/three/build/three.module.js";
 import {commons} from "../lib/ammohelpers/lib/Common.js";
 
-
 export const verticalChain = {
     myPhysicsWorld: undefined,
     scene: undefined,
@@ -9,7 +8,6 @@ export const verticalChain = {
 
     init(myPhysicsWorld){
         this.myPhysicsWorld = myPhysicsWorld;
-        //this.scene = scene;
     },
 
     create(setCollisionMask = true, mass = 1, color = 0x979A9A, position = {x:-235, y:250, z:12}, radius= 2.8, tube = 0.8, chainNr= 24){
@@ -18,7 +16,6 @@ export const verticalChain = {
         chainGroup.position.z = this.position.z;
         chainGroup.position.y = this.position.y;
         chainGroup.position.x = this.position.x;
-        //this.scene.add(chainGroup);
 
         let chainFrontGeo = new THREE.TorusGeometry(radius, tube, 16, 100, 6.3);
         let chainFrontMesh = new THREE.Mesh(chainFrontGeo, new THREE.MeshPhongMaterial({color: color}));
@@ -73,8 +70,6 @@ export const verticalChain = {
 
         );
     },
-
-
 }
 
 

@@ -1,11 +1,12 @@
 import * as THREE from "../lib/three/build/three.module.js";
-import {commons} from "../lib/ammohelpers/lib/Common.js";
 import {TWEEN} from "../lib/three/examples/jsm/libs/tween.module.min.js";
 import {GLTFLoader} from '../lib/three/examples/jsm/loaders/GLTFLoader.js';
 import * as SkeletonUtils from '../lib/three/examples/jsm/utils/SkeletonUtils.js';
 import {myThreeScene} from "../lib/threehelpers/MyThreeScene.js";
-import {animateOnMain} from "../js/RudeGoldbergMachine.js";
-import {myArbitraryTriangleMesh2} from "../lib/ammohelpers/MyArbitraryTriangleMesh2.js"; //må være slik for kark.no
+import {animateOnMain} from "./RudeGoldbergMachine.js";
+import {myArbitraryTriangleMesh2} from "../lib/ammohelpers/MyArbitraryTriangleMesh2.js";
+
+// Tween er implementert i TweenElevator.js, kode hentet fra Tween1.js
 
 export const tweenElevator = {
     myPhysicsWorld: undefined,
@@ -31,7 +32,7 @@ export const tweenElevator = {
     addTween() {
         // https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
         this.tween = new TWEEN.Tween({y: 220, x: 450})
-            .to({y: 175, x: 450}, 5000)
+            .to({y: 175, x: 450}, 200000)
             .easing(TWEEN.Easing.Bounce.InOut)
             .yoyo(true)
             .repeat(Infinity)
@@ -93,10 +94,6 @@ export const tweenElevator = {
                     console.log(child);
                 }
             });
-
-            // model.position.x = 250;
-            // model.position.x = 250;
-            // model.position.x = 250;
 
             const clonedScene = SkeletonUtils.clone(model.gltf.scene);
             const root = new THREE.Object3D();
